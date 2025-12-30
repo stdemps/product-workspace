@@ -1,0 +1,37 @@
+{
+  "agents": {
+    "engineer": {
+      "path": "./agents/engineer.js",
+      "description": "General purpose engineer agent for technical questions, debugging, and architecture discussions"
+    },
+    "designer": {
+      "path": "./agents/designer.js",
+      "description": "General purpose designer agent for UX, accessibility, and design decisions"
+    }
+  },
+  "skills": {
+    "engineer-review": {
+      "path": "./skills/engineer-review.js",
+      "description": "Review a file from an engineering perspective (technical feasibility, architecture)"
+    },
+    "designer-review": {
+      "path": "./skills/designer-review.js",
+      "description": "Review a file from a design perspective (UX, accessibility, design patterns)"
+    },
+    "prd-review": {
+      "path": "./skills/prd-review.js",
+      "description": "Comprehensive file review using all four agent perspectives"
+    },
+    "init-project": {
+      "path": "./skills/init-project.js",
+      "description": "Initialize a new project from this template"
+    }
+  },
+  "hooks": {
+    "pre-commit": "./hooks/quality-gate.sh"
+  },
+  "settings": {
+    "autoLoadAgents": true,
+    "mobileFirstEnforcement": true
+  }
+}

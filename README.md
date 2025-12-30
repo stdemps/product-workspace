@@ -1,11 +1,13 @@
 # Workspace Template
 
-A reusable workspace template for rapid prototyping with Next.js, TypeScript, Tailwind CSS, and shadcn/ui. Pre-configured with Cursor rules, documentation templates, and full dark mode support.
+A reusable workspace template for rapid prototyping with Next.js, TypeScript, Tailwind CSS, and shadcn/ui. Pre-configured with Cursor rules, Claude Code skills, documentation templates, and full dark mode support.
 
 ## Features
 
 - **Zero-config start:** Clone, `npm install`, `npm run dev` → working app
+- **Claude Code skills:** Built-in agent skills for PRD review, technical analysis, and design feedback
 - **Cursor-ready:** `.cursor/rules/` auto-loaded with UI guidelines and coding standards
+- **Quality gates:** Pre-commit hooks for linting, type checking, and mobile-first validation
 - **Documentation structure:** PRD templates, reviewer personas ready to use
 - **Dark mode:** Fully configured and working out of the box
 - **Type-safe:** TypeScript strict mode enabled
@@ -58,6 +60,17 @@ A reusable workspace template for rapid prototyping with Next.js, TypeScript, Ta
 
 ```
 workspace-template/
+├── .claude/
+│   ├── agents/             # Conversational agents
+│   │   ├── engineer.js
+│   │   └── designer.js
+│   ├── skills/             # Functional skills
+│   │   ├── engineer-review.js
+│   │   ├── designer-review.js
+│   │   └── prd-review.js
+│   ├── hooks/              # Quality gate hooks
+│   │   └── quality-gate.sh
+│   └── claude.json         # Claude Code configuration
 ├── .cursor/
 │   └── rules/              # Auto-loaded context (available via @ mentions)
 │       ├── ui-design-guidelines.mdc
@@ -83,6 +96,39 @@ workspace-template/
     └── utils.ts
 ```
 
+## Claude Code Integration
+
+This template includes both agents and skills for Claude Code:
+
+- **Agents** - Conversational personas for interactive questions
+- **Skills** - Functional tasks like file reviews and automation
+
+### Agents (Conversational)
+
+- **`/engineer "question"`** - Ask technical questions, debug, discuss architecture
+- **`/designer "question"`** - Ask UX questions, get design guidance, accessibility advice
+
+### Skills (Functional)
+
+- **`/engineer-review <file>`** - Technical feasibility and architecture review
+- **`/designer-review <file>`** - UX, accessibility, and design review
+- **`/prd-review <file>`** - Comprehensive review from all four perspectives
+
+### Examples
+
+```bash
+# Ask questions
+/engineer "How should I structure authentication for this Next.js app?"
+/designer "What's the best way to show loading states in forms?"
+
+# Review files
+/engineer-review docs/prds/my-feature.md
+/designer-review docs/prds/my-feature.md
+/prd-review docs/prds/my-feature.md
+```
+
+See [.claude/README.md](.claude/README.md) for complete documentation.
+
 ## Using Cursor Rules
 
 Files in `.cursor/rules/` are automatically loaded by Cursor and available via @ mentions:
@@ -95,6 +141,15 @@ Files in `.cursor/rules/` are automatically loaded by Cursor and available via @
 ```
 @ui-design-guidelines How should I make this component mobile-responsive?
 ```
+
+## Quality Gates
+
+Pre-commit hooks automatically run:
+1. **ESLint** - Code quality checks
+2. **TypeScript** - Type checking
+3. **Mobile-first validation** - Warns if desktop-first patterns detected in UI files
+
+The quality gate is configured in [.claude/hooks/quality-gate.sh](.claude/hooks/quality-gate.sh).
 
 ## Documentation Templates
 
