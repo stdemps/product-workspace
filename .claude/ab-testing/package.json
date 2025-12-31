@@ -1,0 +1,22 @@
+{
+  "name": "workspace-template-ab-testing",
+  "version": "1.0.0",
+  "description": "A/B testing framework for workspace templates",
+  "main": "compare.js",
+  "scripts": {
+    "test": "node compare.js --help",
+    "example": "node compare.js --scenario scenarios/component-gen.yml --variants variants/baseline.yml,variants/concise-rules.yml"
+  },
+  "keywords": [
+    "ab-testing",
+    "workspace",
+    "template",
+    "testing"
+  ],
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "MIT"
+}

@@ -1,0 +1,46 @@
+name: "Baseline Configuration"
+description: "Current workspace template setup (control group)"
+
+# Cursor rules to include
+cursor_rules:
+  - path: .cursor/rules/ui-design-guidelines.mdc
+    enabled: true
+  - path: .cursor/rules/coding-standards.mdc
+    enabled: true
+  - path: .cursor/rules/project-context.mdc
+    enabled: true
+
+# Claude Code agents
+claude_agents:
+  - path: .claude/agents/engineer.js
+    enabled: true
+  - path: .claude/agents/designer.js
+    enabled: true
+
+# Claude Code skills
+claude_skills:
+  - path: .claude/skills/engineer-review.js
+    enabled: true
+  - path: .claude/skills/designer-review.js
+    enabled: true
+  - path: .claude/skills/prd-review.js
+    enabled: true
+
+# Quality gates and hooks
+hooks:
+  - path: .claude/hooks/quality-gate.sh
+    enabled: true
+    trigger: pre-commit
+
+# Settings
+settings:
+  auto_context: true
+  mobile_first_validation: true
+  strict_typescript: true
+  accessibility_checks: true
+
+# Configuration metadata
+metadata:
+  version: "1.0.0"
+  created: "2025-01-15"
+  purpose: "Standard workspace template configuration"

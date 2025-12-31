@@ -14,8 +14,16 @@ This directory contains Claude Code configuration, skills, and hooks for enhance
 │   ├── engineer-review.js
 │   ├── designer-review.js
 │   └── prd-review.js
-└── hooks/               # Event hooks
-    └── quality-gate.sh
+├── hooks/               # Event hooks
+│   └── quality-gate.sh
+└── ab-testing/          # A/B testing framework for workspace templates
+    ├── README.md
+    ├── QUICK-START.md
+    ├── compare.js
+    ├── scenarios/
+    ├── variants/
+    ├── references/
+    └── results/
 ```
 
 ## Agents vs Skills
@@ -243,3 +251,46 @@ To create a new functional skill:
 - Document all settings in this README
 - Version control all configuration
 - Keep sensitive data out of config files
+
+## A/B Testing Your Workspace Template
+
+Not sure if a configuration change actually improves your workflow? Use the A/B testing framework to compare different workspace setups objectively.
+
+### Quick Example
+
+```bash
+# Compare baseline vs experimental configuration
+cd .claude/ab-testing
+npm install
+node compare.js \
+  --scenario scenarios/component-gen.yml \
+  --variants variants/baseline.yml,variants/backend-specialist.yml
+```
+
+**What it tests:**
+- Code quality metrics (TypeScript errors, accessibility, mobile-first)
+- Agent response quality (completeness, actionability, technical depth)
+- Development velocity (time to completion, iterations needed)
+
+**Use cases:**
+1. Should I add a new agent? (e.g., backend specialist)
+2. Are my Cursor rules too long? (test concise vs detailed)
+3. Does this hook improve code quality without slowing me down?
+
+### Learn More
+
+- **Quick Start:** [ab-testing/QUICK-START.md](ab-testing/QUICK-START.md)
+- **Full Guide:** [ab-testing/README.md](ab-testing/README.md)
+- **Example Scenarios:** [ab-testing/scenarios/](ab-testing/scenarios/)
+- **Example Variants:** [ab-testing/variants/](ab-testing/variants/)
+
+### Decision Framework
+
+| Improvement | Action |
+|-------------|--------|
+| < 5% | Not worth the complexity - keep baseline |
+| 5-10% | Consider if zero downsides (time, complexity) |
+| 10-20% | Strong candidate - adopt if no major issues |
+| > 20% | Significant improvement - adopt unless critical blockers |
+
+**Pro tip:** Run tests 3-5 times to account for LLM variability, then average the results.

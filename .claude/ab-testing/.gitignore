@@ -1,0 +1,13 @@
+# Test results (should not be committed)
+results/
+
+# Temporary files
+/tmp/
+*.tmp
+
+# Node modules (if you install dependencies)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db

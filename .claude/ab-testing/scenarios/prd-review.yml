@@ -1,0 +1,121 @@
+name: "PRD Review Quality"
+description: "Compare quality and depth of PRD review feedback"
+
+type: agent_response
+
+# Input PRD to review
+input:
+  file: "docs/prds/sample-auth-feature.md"
+  content: |
+    # Feature: User Authentication
+
+    ## Overview
+    Add user authentication to the app so users can sign up and log in.
+
+    ## Requirements
+    - Users can sign up with email and password
+    - Users can log in with email and password
+    - Users stay logged in between sessions
+    - Users can log out
+
+    ## Success Metrics
+    - 80% of users successfully create an account
+    - Less than 5% error rate on login
+
+    ## Timeline
+    - Launch in 2 weeks
+
+# The prompt/command to execute
+prompt: |
+  Review this PRD for completeness, clarity, and technical feasibility.
+  Provide actionable feedback from an engineering perspective.
+
+# Alternative: use a skill
+skill: "engineer-review"
+skill_args: "docs/prds/sample-auth-feature.md"
+
+# How to evaluate the response quality
+evaluation:
+  metrics:
+    - name: completeness_score
+      description: "How many critical aspects were addressed (0-10)"
+      method: checklist
+      checklist:
+        - "Mentioned security considerations (password hashing, etc.)"
+        - "Discussed session management approach"
+        - "Identified missing requirements (password reset, etc.)"
+        - "Questioned 2-week timeline feasibility"
+        - "Asked about OAuth/social login"
+        - "Mentioned GDPR/privacy concerns"
+        - "Discussed error handling"
+        - "Mentioned rate limiting"
+        - "Asked about MFA/2FA"
+        - "Discussed user data storage"
+      weight: 0.4
+
+    - name: actionability_score
+      description: "How actionable the feedback is (0-10)"
+      method: keyword_analysis
+      keywords:
+        positive:  # These indicate actionable advice
+          - "should"
+          - "recommend"
+          - "suggest"
+          - "consider adding"
+          - "need to"
+          - "must"
+          - "ensure"
+        negative:  # These indicate vague advice
+          - "maybe"
+          - "might want to"
+          - "could"
+          - "perhaps"
+      weight: 0.3
+
+    - name: depth_score
+      description: "Technical depth of analysis (0-10)"
+      method: keyword_analysis
+      keywords:
+        technical_terms:
+          - "bcrypt"
+          - "JWT"
+          - "session token"
+          - "OAuth"
+          - "CSRF"
+          - "XSS"
+          - "SQL injection"
+          - "rate limiting"
+          - "authentication"
+          - "authorization"
+        bonus_terms:
+          - "OWASP"
+          - "PBKDF2"
+          - "refresh token"
+          - "httpOnly cookie"
+          - "same-site"
+      scoring: |
+        # Score based on number of technical terms used appropriately
+        technical_count = count(technical_terms)
+        bonus_count = count(bonus_terms)
+
+        base_score = min(technical_count, 8)
+        bonus_points = min(bonus_count * 0.5, 2)
+
+        return base_score + bonus_points
+      weight: 0.3
+
+  # Manual evaluation prompts (for human review)
+  manual_evaluation:
+    - question: "Rate the overall usefulness of this review (1-10)"
+      weight: 0.0  # Don't include in automated score, but collect for analysis
+
+# Pass criteria
+pass_criteria:
+  completeness_score: ">= 6"
+  actionability_score: ">= 6"
+  depth_score: ">= 5"
+
+# Compare against reference (optional)
+reference_response:
+  file: ".claude/ab-testing/references/ideal-prd-review.md"
+  similarity_threshold: 0.7

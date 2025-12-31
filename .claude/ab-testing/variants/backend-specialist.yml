@@ -1,0 +1,142 @@
+name: "Backend Specialist Configuration"
+description: "Add dedicated backend/API agent for better API code quality"
+
+# Cursor rules to include
+cursor_rules:
+  - path: .cursor/rules/ui-design-guidelines.mdc
+    enabled: true
+  - path: .cursor/rules/coding-standards.mdc
+    enabled: true
+  - path: .cursor/rules/backend-api-standards.mdc  # NEW
+    enabled: true
+    content: |
+      # Backend & API Standards
+
+      ## API Design
+      - Follow RESTful conventions
+      - Use appropriate HTTP status codes
+      - Validate all inputs
+      - Return consistent error formats
+
+      ## Security
+      - Never trust client input
+      - Validate and sanitize all data
+      - Use parameterized queries
+      - Implement rate limiting
+      - Follow OWASP Top 10
+
+      ## TypeScript
+      - Strict typing for request/response
+      - Use Zod for runtime validation
+      - Type database queries
+      - Avoid 'any' types
+
+  - path: .cursor/rules/project-context.mdc
+    enabled: true
+
+# Claude Code agents
+claude_agents:
+  - path: .claude/agents/engineer.js
+    enabled: true
+  - path: .claude/agents/designer.js
+    enabled: true
+  - path: .claude/agents/backend.js  # NEW
+    enabled: true
+    content: |
+      You are a backend engineering specialist focused on API design,
+      database architecture, and server-side code quality.
+
+      Focus areas:
+      - RESTful API design
+      - Database schema design
+      - API security (OWASP)
+      - Request validation
+      - Error handling
+      - Performance optimization
+      - Testing strategies
+
+# Claude Code skills
+claude_skills:
+  - path: .claude/skills/engineer-review.js
+    enabled: true
+  - path: .claude/skills/designer-review.js
+    enabled: true
+  - path: .claude/skills/backend-review.js  # NEW
+    enabled: true
+    content: |
+      #!/usr/bin/env node
+      // Review API routes and backend code
+      const { spawn } = require('child_process');
+
+      const file = process.argv[2];
+      if (!file) {
+        console.error('Usage: /backend-review <file>');
+        process.exit(1);
+      }
+
+      const prompt = `
+      You are a backend engineering specialist. Review this file for:
+      - API design best practices
+      - Security vulnerabilities
+      - Input validation
+      - Error handling
+      - Performance concerns
+      - Database query optimization
+
+      File: ${file}
+      `;
+
+      spawn('claude-code', ['chat', '--prompt', prompt], {
+        stdio: 'inherit'
+      });
+
+  - path: .claude/skills/prd-review.js
+    enabled: true
+
+# Quality gates and hooks
+hooks:
+  - path: .claude/hooks/quality-gate.sh
+    enabled: true
+    trigger: pre-commit
+
+  - path: .claude/hooks/api-validation.sh  # NEW
+    enabled: true
+    trigger: pre-commit
+    content: |
+      #!/bin/bash
+      # Validate API routes
+
+      # Check for input validation in API routes
+      api_files=$(find app/api -name "route.ts" -o -name "route.js")
+
+      for file in $api_files; do
+        # Check for validation
+        if ! grep -q "zod\|yup\|validate" "$file"; then
+          echo "⚠️  Warning: $file missing input validation"
+        fi
+
+        # Check for error handling
+        if ! grep -q "try {" "$file"; then
+          echo "⚠️  Warning: $file missing error handling"
+        fi
+      done
+
+# Settings
+settings:
+  auto_context: true
+  mobile_first_validation: true
+  strict_typescript: true
+  accessibility_checks: true
+  api_validation: true  # NEW
+
+# Configuration metadata
+metadata:
+  version: "1.1.0"
+  created: "2025-01-15"
+  purpose: "Test hypothesis: dedicated backend agent improves API code quality"
+  hypothesis: "Adding backend-specific guidance will reduce API security issues and improve validation coverage"
+  changes:
+    - "Added backend-api-standards.mdc Cursor rule"
+    - "Added backend.js agent for API-focused reviews"
+    - "Added backend-review.js skill"
+    - "Added api-validation.sh pre-commit hook"
