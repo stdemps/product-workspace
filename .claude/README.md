@@ -2,28 +2,30 @@
 
 This directory contains Claude Code configuration, skills, and hooks for enhanced development workflows.
 
+## Quick Start
+
+**New here?** → See [QUICKSTART.md](QUICKSTART.md) for a 5-minute getting started guide.
+
 ## Directory Structure
 
 ```
 .claude/
 ├── claude.json          # Claude Code configuration
+├── QUICKSTART.md        # 5-minute getting started guide
+├── IMPROVEMENTS.md      # Changelog of improvements
 ├── agents/              # Conversational agents (persona wrappers)
-│   ├── engineer.js
-│   └── designer.js
+│   ├── engineer.js      # Technical/architecture agent
+│   ├── designer.js      # UX/design agent
+│   └── pm.js            # Product management agent
 ├── skills/              # Functional skills (tasks and actions)
 │   ├── engineer-review.js
 │   ├── designer-review.js
-│   └── prd-review.js
+│   ├── prd-review.js
+│   └── collab.js        # Multi-agent collaboration
 ├── hooks/               # Event hooks
-│   └── quality-gate.sh
-└── ab-testing/          # A/B testing framework for workspace templates
-    ├── README.md
-    ├── QUICK-START.md
-    ├── compare.js
-    ├── scenarios/
-    ├── variants/
-    ├── references/
-    └── results/
+│   └── quality-gate.sh  # Pre-commit quality enforcement
+└── ab-testing/          # A/B testing framework
+    └── README.md
 ```
 
 ## Agents vs Skills
@@ -58,6 +60,32 @@ Get UX guidance, design decisions, or accessibility advice.
 /designer "What's the best way to show loading states in a form?"
 /designer "Should this be a modal or a slide-over panel?"
 ```
+
+#### PM (`/pm`)
+
+Get product strategy, prioritization, and problem framing guidance.
+
+**Usage:**
+```bash
+/pm "What's the MVP for user notifications?"
+/pm "How should we prioritize these 5 features?"
+/pm "What problem are we actually solving here?"
+```
+
+#### Collab (`/collab`)
+
+Get all three perspectives (Engineer + Designer + PM) with synthesis.
+
+**Usage:**
+```bash
+/collab "Should we use modals or slide-overs for settings?"
+/collab "How should we implement real-time dashboard updates?"
+```
+
+**What it does:**
+- Runs engineer, designer, and PM agents in parallel
+- Shows all three perspectives
+- Asks Claude to synthesize into one recommendation
 
 ## Skills (Functional Tasks)
 

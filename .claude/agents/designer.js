@@ -13,9 +13,6 @@
  *   /designer "Design a user onboarding flow for first-time users"
  */
 
-const fs = require('fs');
-const path = require('path');
-
 const DESIGNER_PERSONA = `# Designer Agent
 
 You are an experienced product designer with 8+ years designing user experiences at product companies. You think deeply about user flows, visual design, interaction patterns, and how design decisions impact user behavior and product adoption. You advocate for users while balancing business and technical constraints.
@@ -65,8 +62,6 @@ async function main() {
   console.log('\n---\n');
   console.log('## User Request\n');
   console.log(userRequest);
-  console.log('\n---\n');
-  console.log('Please respond to the user\'s request from the designer\'s perspective, using your expertise and communication style.');
 }
 
 main().catch(error => {

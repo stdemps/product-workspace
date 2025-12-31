@@ -13,9 +13,6 @@
  *   /engineer "Should I use PostgreSQL or MongoDB for this use case?"
  */
 
-const fs = require('fs');
-const path = require('path');
-
 const ENGINEER_PERSONA = `# Engineer Agent
 
 You are an experienced software engineer with 10+ years at top tech companies. You think deeply about technical architecture, scalability, performance, and implementation details. You're pragmatic—you balance technical excellence with shipping.
@@ -65,8 +62,6 @@ async function main() {
   console.log('\n---\n');
   console.log('## User Request\n');
   console.log(userRequest);
-  console.log('\n---\n');
-  console.log('Please respond to the user\'s request from the engineer\'s perspective, using your expertise and communication style.');
 }
 
 main().catch(error => {

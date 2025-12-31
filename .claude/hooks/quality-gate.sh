@@ -7,9 +7,20 @@
 # 1. Linting standards
 # 2. Mobile-first pattern validation (if UI files changed)
 # 3. Type checking
+#
+# Prototype Mode: Set PROTOTYPE_MODE=1 to run checks without failing commit
+# Usage: PROTOTYPE_MODE=1 git commit -m "message"
 ###
 
 set -e
+
+# Check for prototype mode
+PROTOTYPE_MODE=${PROTOTYPE_MODE:-0}
+
+if [ "$PROTOTYPE_MODE" = "1" ]; then
+  echo "⚡ PROTOTYPE MODE: Running checks without failing commit"
+  echo ""
+fi
 
 echo "Running pre-commit quality gate..."
 
@@ -17,6 +28,7 @@ echo "Running pre-commit quality gate..."
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Track if we should fail the commit
@@ -28,7 +40,11 @@ if npm run lint --silent; then
   echo -e "${GREEN}✓ ESLint passed${NC}"
 else
   echo -e "${RED}✗ ESLint failed${NC}"
-  SHOULD_FAIL=1
+  if [ "$PROTOTYPE_MODE" = "0" ]; then
+    SHOULD_FAIL=1
+  else
+    echo -e "${BLUE}  (Prototype mode: continuing anyway)${NC}"
+  fi
 fi
 
 # 2. Check for mobile-first patterns in staged UI files
@@ -69,7 +85,11 @@ if npx tsc --noEmit; then
   echo -e "${GREEN}✓ Type check passed${NC}"
 else
   echo -e "${RED}✗ Type check failed${NC}"
-  SHOULD_FAIL=1
+  if [ "$PROTOTYPE_MODE" = "0" ]; then
+    SHOULD_FAIL=1
+  else
+    echo -e "${BLUE}  (Prototype mode: continuing anyway)${NC}"
+  fi
 fi
 
 # Summary
@@ -77,8 +97,14 @@ echo -e "\n${YELLOW}========================================${NC}"
 if [ $SHOULD_FAIL -eq 1 ]; then
   echo -e "${RED}✗ Quality gate FAILED${NC}"
   echo -e "${RED}Please fix the errors above before committing${NC}"
+  echo -e "\n${BLUE}Tip: Use PROTOTYPE_MODE=1 git commit to bypass during prototyping${NC}"
   exit 1
 else
-  echo -e "${GREEN}✓ Quality gate PASSED${NC}"
+  if [ "$PROTOTYPE_MODE" = "1" ]; then
+    echo -e "${BLUE}⚡ Quality gate completed (PROTOTYPE MODE)${NC}"
+    echo -e "${YELLOW}⚠ Some checks failed but commit allowed${NC}"
+  else
+    echo -e "${GREEN}✓ Quality gate PASSED${NC}"
+  fi
   exit 0
 fi
