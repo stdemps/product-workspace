@@ -1,468 +1,195 @@
-# A/B Testing Framework for Workspace Templates
+# A/B Testing: Claude Extension vs Cursor Chat
 
-This framework helps you compare different workspace template configurations to determine which setup produces better outcomes.
+Test which AI assistant works better for prototyping in Cursor IDE.
 
-## Overview
+---
 
-Unlike traditional A/B testing (which measures user behavior), workspace template A/B testing compares:
-- **Agent response quality** - Which template produces more useful agent outputs?
-- **Development velocity** - Which setup helps developers work faster?
-- **Code quality** - Which configuration produces better code?
-- **Context effectiveness** - Which Cursor rules provide more relevant context?
+## What This Tests
 
-## Structure
+**Environment:** Cursor IDE (both tests)
 
-```
-.claude/ab-testing/
-├── README.md              # This file
-├── scenarios/             # Test scenarios
-│   ├── prd-review.yml     # PRD review comparison
-│   ├── component-gen.yml  # Component generation comparison
-│   └── refactor.yml       # Code refactoring comparison
-├── variants/              # Template variants to test
-│   ├── variant-a.yml      # Baseline configuration
-│   └── variant-b.yml      # Experimental configuration
-├── results/               # Test results (gitignored)
-└── compare.js             # Comparison runner script
-```
+**Test A:** Claude Extension
+- Uses Claude AI through the extension
+- Your `.claude/` agent setup
+
+**Test B:** Cursor Native Chat
+- Uses Cursor's built-in AI
+- Your `.cursor/rules/` agent setup (`@engineer`, `@designer`)
+
+**Goal:** Find which produces better code quality and developer experience
+
+---
 
 ## Quick Start
 
-### 1. Define Test Scenarios
-
-Create test scenarios in `scenarios/`:
+### 1. Setup (2 minutes)
 
 ```bash
-# Example: Compare PRD review quality
-node compare.js --scenario prd-review --variants variant-a,variant-b
+# Clone workspace twice
+git clone /Users/stevendempsterair/Documents/GitHub/workspace-template claude-extension-test
+git clone /Users/stevendempsterair/Documents/GitHub/workspace-template cursor-chat-test
+
+# Install dependencies
+cd claude-extension-test && npm install && cd ..
+cd cursor-chat-test && npm install && cd ..
+
+# Copy test templates
+cp workspace-template/.claude/ab-testing/TEST-TEMPLATE-claude-extension.md claude-extension-test/test-log.md
+cp workspace-template/.claude/ab-testing/TEST-TEMPLATE-cursor-chat.md cursor-chat-test/test-log.md
 ```
 
-### 2. Analyze Results
-
-Results are saved in `results/` with timestamps. Use the built-in comparison report:
+### 2. Run Test A - Claude Extension (1-2 hours)
 
 ```bash
-# Generate comparison report
-node compare.js --report results/2025-01-15-prd-review.json
+cd claude-extension-test
+cursor .
 ```
 
-## Test Scenario Types
+- Use Claude extension only
+- Build the authentication flow
+- Track everything in `test-log.md`
 
-### 1. **Agent Response Quality**
-Measure agent output quality across identical prompts.
-
-**Metrics:**
-- Response relevance (1-10)
-- Completeness (% of requirements addressed)
-- Actionability (concrete vs. vague)
-- Time to response
-
-**Example scenarios:**
-- PRD review consistency
-- Design feedback depth
-- Code review thoroughness
-
-### 2. **Code Generation Quality**
-
-Compare code generated with different template configurations.
-
-**Metrics:**
-- Type safety (TypeScript errors: 0 = best)
-- Accessibility score (A11y violations)
-- Mobile-first compliance
-- Code duplication
-- Lines of code (brevity)
-
-**Example scenarios:**
-- Generate authentication component
-- Create API route with validation
-- Build responsive layout
-
-### 3. **Context Effectiveness**
-
-Measure how well Cursor rules provide relevant context.
-
-**Metrics:**
-- Context retrieval accuracy
-- Response time with context
-- Unnecessary context loaded (%)
-
-**Example scenarios:**
-- Ask design question (should load UI guidelines)
-- Ask API question (should load coding standards)
-- Ask business question (should load project context)
-
-### 4. **Development Velocity**
-
-Measure time-to-completion for common tasks.
-
-**Metrics:**
-- Time to complete task
-- Number of iterations required
-- Number of errors encountered
-
-**Example scenarios:**
-- Implement feature from PRD
-- Fix reported bug
-- Add new component
-
-## Defining Variants
-
-Variants represent different workspace template configurations. Define them in `variants/`:
-
-```yaml
-# variants/variant-a.yml
-name: "Baseline Configuration"
-description: "Current workspace template setup"
-
-cursor_rules:
-  - ui-design-guidelines.mdc
-  - coding-standards.mdc
-  - project-context.mdc
-
-claude_agents:
-  - engineer.js
-  - designer.js
-
-claude_skills:
-  - engineer-review.js
-  - designer-review.js
-  - prd-review.js
-
-hooks:
-  - quality-gate.sh
-
-settings:
-  auto_context: true
-  mobile_first_validation: true
-```
-
-```yaml
-# variants/variant-b.yml
-name: "Experimental: Separate Backend Agent"
-description: "Test adding dedicated backend reviewer agent"
-
-cursor_rules:
-  - ui-design-guidelines.mdc
-  - coding-standards.mdc
-  - backend-standards.mdc  # NEW
-  - project-context.mdc
-
-claude_agents:
-  - engineer.js
-  - designer.js
-  - backend.js  # NEW
-
-claude_skills:
-  - engineer-review.js
-  - designer-review.js
-  - backend-review.js  # NEW
-  - prd-review.js
-
-hooks:
-  - quality-gate.sh
-  - api-validation.sh  # NEW
-```
-
-## Defining Scenarios
-
-Scenarios are test cases that run against each variant:
-
-```yaml
-# scenarios/component-gen.yml
-name: "Component Generation Quality"
-description: "Compare quality of generated React components"
-
-type: code_generation
-
-prompt: |
-  Create a LoginForm component with:
-  - Email and password inputs
-  - Remember me checkbox
-  - Submit button with loading state
-  - Error message display
-  - Full accessibility (WCAG 2.1 AA)
-  - Mobile-responsive (mobile-first)
-  - Dark mode support
-
-evaluation:
-  metrics:
-    - name: typescript_errors
-      command: "npx tsc --noEmit"
-      weight: 0.3
-
-    - name: accessibility
-      command: "npx @axe-core/cli components/login-form.tsx"
-      weight: 0.3
-
-    - name: mobile_first
-      script: "check-mobile-first.js"
-      weight: 0.2
-
-    - name: lines_of_code
-      script: "count-loc.js"
-      weight: 0.1
-      inverse: true  # Lower is better
-
-    - name: code_quality
-      command: "npx eslint components/login-form.tsx --format json"
-      weight: 0.1
-
-expected_output:
-  files:
-    - components/login-form.tsx
-    - components/__tests__/login-form.test.tsx
-
-pass_criteria:
-  typescript_errors: 0
-  accessibility_violations: 0
-  mobile_first_score: ">= 8"
-```
-
-## Running Comparisons
-
-### Single Scenario
+### 3. Run Test B - Cursor Chat (1-2 hours)
 
 ```bash
-# Compare two variants on one scenario
-node compare.js \
-  --scenario scenarios/component-gen.yml \
-  --variants variants/variant-a.yml,variants/variant-b.yml \
-  --output results/component-gen-$(date +%Y-%m-%d).json
+cd cursor-chat-test
+cursor .
 ```
 
-### Multiple Scenarios (Suite)
+- **Disable Claude extension**
+- Use `@engineer`, `@designer`, Cursor chat
+- Build the same authentication flow
+- Track everything in `test-log.md`
 
-```bash
-# Run full test suite
-node compare.js \
-  --suite all \
-  --variants variants/variant-a.yml,variants/variant-b.yml \
-  --output results/full-suite-$(date +%Y-%m-%d).json
-```
+### 4. Compare Results
 
-### Batch Testing
-
-```bash
-# Test all variants against all scenarios
-node compare.js \
-  --batch \
-  --output results/batch-$(date +%Y-%m-%d)/
-```
-
-## Interpreting Results
-
-Results are saved as JSON with this structure:
-
-```json
-{
-  "timestamp": "2025-01-15T10:30:00Z",
-  "scenario": "component-gen",
-  "variants": {
-    "variant-a": {
-      "score": 8.7,
-      "metrics": {
-        "typescript_errors": 0,
-        "accessibility_violations": 0,
-        "mobile_first_score": 9,
-        "lines_of_code": 120,
-        "eslint_errors": 0
-      },
-      "time_seconds": 45,
-      "pass": true
-    },
-    "variant-b": {
-      "score": 9.2,
-      "metrics": {
-        "typescript_errors": 0,
-        "accessibility_violations": 0,
-        "mobile_first_score": 10,
-        "lines_of_code": 95,
-        "eslint_errors": 0
-      },
-      "time_seconds": 42,
-      "pass": true
-    }
-  },
-  "winner": "variant-b",
-  "improvement": "+5.7%"
-}
-```
-
-### Generate Report
-
-```bash
-# Human-readable comparison report
-node compare.js --report results/component-gen-2025-01-15.json
-
-# Output:
-# ✓ Component Generation Quality
-#
-# Winner: Variant B (+5.7%)
-#
-# Metrics Comparison:
-# ├─ TypeScript Errors:     0 vs 0 (tied)
-# ├─ Accessibility:         0 vs 0 (tied)
-# ├─ Mobile-First Score:    10 vs 9 (+11%)
-# ├─ Lines of Code:         95 vs 120 (-21%)
-# └─ ESLint Errors:         0 vs 0 (tied)
-#
-# Time: 42s vs 45s (-6.7%)
-#
-# Recommendation: Variant B produced more concise code with
-# better mobile-first adherence in less time.
-```
-
-## Best Practices
-
-### 1. Use Realistic Scenarios
-Don't test toy examples. Use actual features you plan to build.
-
-### 2. Test Multiple Dimensions
-Don't optimize for just one metric. Balance quality, speed, and developer experience.
-
-### 3. Run Multiple Times
-Run each test 3-5 times to account for LLM variability.
-
-### 4. Document Variants
-Clearly describe what changed between variants and why.
-
-### 5. Track Over Time
-Keep historical results to see if improvements stick.
-
-### 6. Small Changes
-Test one change at a time. Don't compare wildly different setups.
-
-## Example Use Cases
-
-### Use Case 1: Should I add a backend-specific agent?
-
-**Hypothesis:** Adding a dedicated backend reviewer will improve API code quality.
-
-**Test:**
-```bash
-# Create variant-backend.yml with new backend agent
-# Run API-focused scenarios
-node compare.js \
-  --scenario scenarios/api-review.yml \
-  --variants variants/baseline.yml,variants/variant-backend.yml
-```
-
-**Decision criteria:** If backend variant scores >10% higher on API scenarios with no regression on other scenarios, adopt it.
+Open both `test-log.md` files and compare:
+- Time to completion
+- TypeScript/ESLint errors
+- Code quality
+- Developer experience
 
 ---
 
-### Use Case 2: Are my Cursor rules too verbose?
+## What to Build (Same for Both)
 
-**Hypothesis:** Shorter Cursor rules will load faster without sacrificing quality.
+**User Authentication Flow:**
 
-**Test:**
-```bash
-# Create variant-concise-rules.yml with condensed rules
-# Run context effectiveness scenarios
-node compare.js \
-  --scenario scenarios/context-load-time.yml \
-  --variants variants/baseline.yml,variants/variant-concise.yml
-```
-
-**Decision criteria:** If concise rules are >20% faster with <5% quality drop, adopt them.
+1. **Signup form** - Email, password, confirm password
+2. **Login form** - Email, password, remember me checkbox
+3. **Validation logic** - Password requirements, email validation
+4. **Tests** - Unit tests for validation
+5. **Quality** - TypeScript strict, accessibility, mobile-first, dark mode
 
 ---
 
-### Use Case 3: Should I auto-run quality gates on save?
+## Decision Framework
 
-**Hypothesis:** Running quality gates on save will catch errors earlier but may slow development.
-
-**Test:**
-```bash
-# Create variant-auto-gates.yml with auto-run enabled
-# Run development velocity scenarios
-node compare.js \
-  --scenario scenarios/feature-implementation.yml \
-  --variants variants/baseline.yml,variants/variant-auto-gates.yml
-```
-
-**Decision criteria:** If auto-gates variant finds >30% more errors early with <15% time increase, adopt it.
-
-## Advanced: CI/CD Integration
-
-Run A/B tests in CI to validate template changes before merging:
-
-```yaml
-# .github/workflows/template-ab-test.yml
-name: Template A/B Test
-
-on:
-  pull_request:
-    paths:
-      - '.claude/**'
-      - '.cursor/**'
-      - 'agents/**'
-
-jobs:
-  ab-test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Run A/B test suite
-        run: |
-          node .claude/ab-testing/compare.js \
-            --suite critical \
-            --variants variants/main.yml,variants/pr.yml \
-            --output results/pr-${{ github.event.pull_request.number }}.json
-
-      - name: Post results
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const results = require('./results/pr-${{ github.event.pull_request.number }}.json')
-            // Post results as PR comment
-```
-
-## Metrics Reference
-
-### Code Quality Metrics
-- `typescript_errors`: TypeScript type errors (0 = best)
-- `eslint_errors`: ESLint violations (0 = best)
-- `accessibility_violations`: A11y issues (0 = best)
-- `mobile_first_score`: Mobile-first compliance (0-10, 10 = best)
-- `lines_of_code`: Code brevity (lower = better)
-- `cyclomatic_complexity`: Code complexity (lower = better)
-- `test_coverage`: Test coverage % (higher = better)
-
-### Agent Quality Metrics
-- `relevance_score`: How relevant the response is (0-10)
-- `completeness_score`: % of requirements addressed (0-100)
-- `actionability_score`: Concrete vs vague advice (0-10)
-- `accuracy_score`: Factual accuracy (0-10)
-
-### Performance Metrics
-- `time_seconds`: Total time to completion
-- `iterations`: Number of tries needed
-- `context_load_time_ms`: Time to load Cursor context
-- `tokens_used`: LLM tokens consumed
-
-## Troubleshooting
-
-### "Variant not found"
-Ensure variant YAML files exist in `variants/` directory.
-
-### "Scenario failed to run"
-Check that all commands in scenario are available on your system.
-
-### "Inconsistent results"
-LLMs have inherent variability. Run tests multiple times and average results.
-
-### "Metrics script failed"
-Ensure metric evaluation scripts have execute permissions and dependencies installed.
-
-## Further Reading
-
-- [Agent Comparison Guide](../../.claude/AGENT-COMPARISON.md)
-- [Cursor Rules Documentation](.cursor/rules/README.md)
-- [Claude Code Skills](../../.claude/README.md)
+| Scenario | Decision |
+|----------|----------|
+| One is **>20% faster** with same quality | ✅ Clear winner |
+| One has **significantly better code** | ✅ Use higher quality |
+| One has **much better DX** | ✅ Use better experience |
+| **Very close** results | ⚖️ Use whichever felt better |
 
 ---
 
-**Remember:** The goal isn't to find "the best" configuration universally, but to find the best configuration *for your team and use cases*.
+## Files in This Directory
+
+- **[CLAUDE-VS-CURSOR-IN-CURSOR.md](CLAUDE-VS-CURSOR-IN-CURSOR.md)** - Complete testing guide
+- **[CLAUDE-VS-CURSOR-QUICK-REF.md](CLAUDE-VS-CURSOR-QUICK-REF.md)** - One-page quick reference
+- **[TEST-TEMPLATE-claude-extension.md](TEST-TEMPLATE-claude-extension.md)** - Test log for Claude
+- **[TEST-TEMPLATE-cursor-chat.md](TEST-TEMPLATE-cursor-chat.md)** - Test log for Cursor
+- **results/** - Your test results (gitignored)
+- **archive/** - Automated testing framework (optional, for advanced users)
+
+---
+
+## What You'll Learn
+
+This test will tell you:
+
+1. ✅ **Which AI produces better code quality?**
+2. ✅ **Which AI understands your workspace context better?**
+3. ✅ **Which has better developer experience?**
+4. ✅ **Is your dual setup (`.claude/` + `.cursor/`) worth maintaining?**
+5. ✅ **Should you invest in one system or both?**
+
+---
+
+## Expected Time
+
+- **Setup:** 5 minutes
+- **Test A:** 1-2 hours
+- **Test B:** 1-2 hours
+- **Comparison:** 15 minutes
+- **Total:** ~4 hours (can split across days)
+
+---
+
+## Tips for Success
+
+### Do ✅
+
+- Use the **same task** for both tests
+- **Track everything** in the test logs
+- Be **honest** about iterations and frustrations
+- Run tests on **different days** if you get tired
+
+### Don't ❌
+
+- Don't mix tools during a single test
+- Don't skip tracking details
+- Don't test when rushed
+- Don't cherry-pick results
+
+---
+
+## After the Test
+
+### Document Your Winner
+
+Create a summary:
+
+```markdown
+# My Test Results
+
+**Winner:** [Claude Extension / Cursor Chat / Tied]
+
+**Why:**
+- [Reason 1]
+- [Reason 2]
+
+**What I'll do:**
+- [Your decision]
+```
+
+### Update Your Workflow
+
+Based on results:
+
+- **If Claude wins:** Focus on improving `.claude/` agents
+- **If Cursor wins:** Optimize `.cursor/rules/`
+- **If tied:** Use both strategically
+
+---
+
+## Advanced: Automated Testing Framework
+
+The `archive/` folder contains an automated A/B testing framework for testing:
+- Different agent configurations
+- Cursor rule variations
+- Quality gate effectiveness
+- Code generation metrics
+
+This is for advanced users who want to test workspace configuration changes automatically. Most users won't need this.
+
+---
+
+## Need Help?
+
+See the complete guide: [CLAUDE-VS-CURSOR-IN-CURSOR.md](CLAUDE-VS-CURSOR-IN-CURSOR.md)
+
+---
+
+**Ready to start?** Follow the Quick Start steps above! 🚀

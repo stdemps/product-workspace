@@ -62,7 +62,20 @@
 
 ## 🎯 Common Use Cases
 
-### Use Case 1: "Should I add this agent?"
+### Use Case 1: "Claude Extension vs Cursor Chat - which is better in Cursor?"
+
+**Manual test:** Build the same prototype twice in Cursor IDE, once with Claude extension, once with native Cursor chat.
+
+```bash
+# See the complete guide
+cat CLAUDE-VS-CURSOR-IN-CURSOR.md
+```
+
+**Decision:** Use whichever produces better code quality and developer experience
+
+---
+
+### Use Case 2: "Should I add this agent?"
 
 ```bash
 # Test if new agent improves output quality
@@ -75,7 +88,7 @@ node compare.js \
 
 ---
 
-### Use Case 2: "Are my rules too long?"
+### Use Case 3: "Are my rules too long?"
 
 ```bash
 # Test if concise rules maintain quality
@@ -88,7 +101,7 @@ node compare.js \
 
 ---
 
-### Use Case 3: "Does this hook help?"
+### Use Case 4: "Does this hook help?"
 
 ```bash
 # Test if quality gate catches more issues

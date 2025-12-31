@@ -252,45 +252,42 @@ To create a new functional skill:
 - Version control all configuration
 - Keep sensitive data out of config files
 
-## A/B Testing Your Workspace Template
+## A/B Testing: Claude Extension vs Cursor Chat
 
-Not sure if a configuration change actually improves your workflow? Use the A/B testing framework to compare different workspace setups objectively.
+Not sure which AI assistant works better in Cursor IDE? Test both to find out!
 
-### Quick Example
+### What to Test
+
+Build the same prototype twice in Cursor:
+1. **Test A:** Using Claude extension
+2. **Test B:** Using native Cursor chat (`@engineer`, `@designer`)
+
+Then compare code quality, speed, and developer experience.
+
+### Quick Setup
 
 ```bash
-# Compare baseline vs experimental configuration
-cd .claude/ab-testing
-npm install
-node compare.js \
-  --scenario scenarios/component-gen.yml \
-  --variants variants/baseline.yml,variants/backend-specialist.yml
+# Clone workspace twice (one for each test)
+git clone workspace-template claude-extension-test
+git clone workspace-template cursor-chat-test
+
+# Copy test templates
+cp .claude/ab-testing/TEST-TEMPLATE-claude-extension.md claude-extension-test/test-log.md
+cp .claude/ab-testing/TEST-TEMPLATE-cursor-chat.md cursor-chat-test/test-log.md
 ```
 
-**What it tests:**
-- Code quality metrics (TypeScript errors, accessibility, mobile-first)
-- Agent response quality (completeness, actionability, technical depth)
-- Development velocity (time to completion, iterations needed)
+### What You'll Learn
 
-**Use cases:**
-1. Should I add a new agent? (e.g., backend specialist)
-2. Are my Cursor rules too long? (test concise vs detailed)
-3. Does this hook improve code quality without slowing me down?
+This test will tell you:
+- ✅ Which AI produces better code quality?
+- ✅ Which understands your workspace context better?
+- ✅ Which has better developer experience?
+- ✅ Is maintaining both `.claude/` and `.cursor/` setups worth it?
 
 ### Learn More
 
-- **Quick Start:** [ab-testing/QUICK-START.md](ab-testing/QUICK-START.md)
-- **Full Guide:** [ab-testing/README.md](ab-testing/README.md)
-- **Example Scenarios:** [ab-testing/scenarios/](ab-testing/scenarios/)
-- **Example Variants:** [ab-testing/variants/](ab-testing/variants/)
+- **Complete Guide:** [ab-testing/README.md](ab-testing/README.md)
+- **Quick Reference:** [ab-testing/CLAUDE-VS-CURSOR-QUICK-REF.md](ab-testing/CLAUDE-VS-CURSOR-QUICK-REF.md)
+- **Test Templates:** [ab-testing/TEST-TEMPLATE-*.md](ab-testing/)
 
-### Decision Framework
-
-| Improvement | Action |
-|-------------|--------|
-| < 5% | Not worth the complexity - keep baseline |
-| 5-10% | Consider if zero downsides (time, complexity) |
-| 10-20% | Strong candidate - adopt if no major issues |
-| > 20% | Significant improvement - adopt unless critical blockers |
-
-**Pro tip:** Run tests 3-5 times to account for LLM variability, then average the results.
+**Time commitment:** ~4 hours total (can split across days)

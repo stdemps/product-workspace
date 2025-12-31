@@ -1,12 +1,12 @@
 # Test results (should not be committed)
 results/
 
-# Temporary files
-/tmp/
-*.tmp
-
-# Node modules (if you install dependencies)
+# Node modules (from archived automated framework)
 node_modules/
+package-lock.json
+
+# Temporary files
+*.tmp
 
 # OS files
 .DS_Store
