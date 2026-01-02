@@ -1,326 +1,286 @@
-# Quick Start: Claude Code Agents & Skills
+# Quick Start: Using Claude Agents & Skills
 
-Get up and running with Claude Code in 5 minutes.
+**Get started with the workspace agent system in 5 minutes.**
 
 ---
 
-## ⚡ 5-Minute Setup
+## What You Get
 
-### 1. Test That It Works (30 seconds)
+This workspace includes:
+- **3 Conversational Agents**: Engineer, Designer, PM (ask questions, get perspectives)
+- **4 File Review Skills**: Engineer review, Designer review, PM review, PRD review
+- **1 Collaboration Skill**: Multi-agent synthesis (get all 3 perspectives at once)
+- **Quality Gate Hook**: Pre-commit checks for TypeScript, ESLint, mobile-first patterns
+
+---
+
+## 5-Minute Setup
+
+### 1. Test Agent Invocation
+
+The agents are registered as skills, so you can invoke them using `/` commands:
 
 ```bash
-# Test conversational agents
+# Test the engineer agent
 /engineer "What's the best way to handle authentication in Next.js?"
-/designer "How should the mobile navigation work?"
-/pm "What's the MVP for user onboarding?"
+
+# Test the designer agent
+/designer "How should I structure a multi-step form?"
+
+# Test the PM agent
+/pm "What's the MVP for a user dashboard?"
 ```
 
-If these work, you're done! If not, continue below.
+### 2. Try Multi-Agent Collaboration
+
+Get all three perspectives at once:
+
+```bash
+/collab "Should I use optimistic updates for the todo list?"
+```
+
+This will:
+1. Run Engineer, Designer, and PM agents in parallel
+2. Show all three perspectives
+3. Ask Claude to synthesize them into a cohesive recommendation
+
+### 3. Review a File
+
+Use the review skills for file-specific analysis:
+
+```bash
+# Engineering perspective (architecture, complexity, risks)
+/engineer-review components/dashboard.tsx
+
+# Design perspective (UX, accessibility, responsive)
+/designer-review components/signup-form.tsx
+
+# Comprehensive review (all perspectives)
+/prd-review docs/prds/user-auth.md
+```
 
 ---
 
-### 2. Verify Setup (1 minute)
+## Common Workflows
 
-Check that skills are registered:
+### Planning a New Feature
 
+**Recommended approach:**
 ```bash
-# List all available skills
-claude-code --list-skills
-
-# You should see:
-# - engineer (💬 Conversational)
-# - designer (💬 Conversational)
-# - pm (💬 Conversational)
-# - engineer-review (📄 File Review)
-# - designer-review (📄 File Review)
-# - prd-review (📄 File Review)
-# - collab (🤝 Multi-Agent)
-# - init-project (🔧 Utility)
-```
-
----
-
-## 🎯 Common Workflows
-
-### Workflow 1: Planning a New Feature
-
-```bash
-# 1. Define the problem and scope
-/pm "We want users to customize their dashboard. What's the MVP?"
+# 1. Frame the problem with PM
+/pm "We need a way for users to share their projects. What's the MVP?"
 
 # 2. Get design perspective
-/designer "How should dashboard customization work? Consider mobile users."
+/designer "How should project sharing work from a UX perspective?"
 
 # 3. Get technical feasibility
-/engineer "Technical approach for saving user dashboard layouts?"
+/engineer "What's the architecture for project sharing with permissions?"
 
-# 4. Or get all perspectives at once
-/collab "How should we implement dashboard customization?"
+# 4. Or get all at once
+/collab "How should we implement project sharing?"
+```
+
+### Debugging an Issue
+
+```bash
+# Ask engineer with full error context
+/engineer "Debug this error: [paste full stack trace and context]"
+```
+
+### Making a Design Decision
+
+```bash
+# Ask designer for UX guidance
+/designer "Should I use a modal or slide-over for settings?"
+
+# Or get multiple perspectives
+/collab "Modal vs slide-over for settings panel?"
+```
+
+### Prioritizing Features
+
+```bash
+# Ask PM for prioritization help
+/pm "I have 5 features to build: [list features]. How should I prioritize?"
+```
+
+### Reviewing Code Before PR
+
+```bash
+# Get engineering review
+/engineer-review src/services/api.ts
+
+# Get design review for UI components
+/designer-review components/profile-card.tsx
 ```
 
 ---
 
-### Workflow 2: Reviewing a PRD
+## Quality Gate Hook
+
+The pre-commit hook runs automatically before every commit and checks:
+1. **ESLint** - Code linting standards
+2. **Mobile-first patterns** - Responsive design conventions
+3. **TypeScript** - Type checking with `tsc --noEmit`
+
+### Prototype Mode (Bypass Hook)
+
+During rapid prototyping or A/B testing, you can run checks without blocking commits:
 
 ```bash
-# Comprehensive review from all perspectives
-/prd-review docs/prds/my-feature.md
+# Enable prototype mode for one commit
+CLAUDE_PROTOTYPE_MODE=true git commit -m "Add feature prototype"
 
-# Or get individual perspectives
-/engineer-review docs/prds/my-feature.md
-/designer-review docs/prds/my-feature.md
+# Checks still run but won't fail the commit
+# You'll see warnings instead of errors
 ```
+
+**When to use prototype mode:**
+- A/B testing experiments
+- Rapid prototyping
+- Quick demos
+- Learning/exploration
+
+**When NOT to use prototype mode:**
+- Production code
+- PR submissions
+- Shared branches
 
 ---
 
-### Workflow 3: Making a Design Decision
+## Agent Personas
 
-```bash
-# Get multiple perspectives
-/collab "Should I use modals or slide-overs for the settings panel?"
+### 👨‍💻 Engineer
+- **Focus**: Technical architecture, scalability, performance, implementation
+- **Best for**: System design, debugging, technology choices, technical trade-offs
+- **Philosophy**: "Good enough to ship" beats "perfect but never ships"
 
-# Follow up with specific questions
-/designer "Show me examples of accessible modal implementations"
-/engineer "What are the performance implications of modals vs slide-overs?"
-```
+### 🎨 Designer
+- **Focus**: User experience, accessibility, visual design, interaction patterns
+- **Best for**: User flows, component design, responsive patterns, accessibility
+- **Philosophy**: "User needs first" — Design for real users, not edge cases
 
----
-
-### Workflow 4: Debugging an Issue
-
-```bash
-# Get technical help
-/engineer "Debug this error: Cannot read property 'map' of undefined in UserList component"
-
-# Follow up
-/engineer "Should I add optional chaining or use a loading state?"
-```
+### 📊 PM
+- **Focus**: Problem framing, prioritization, metrics, user value
+- **Best for**: Feature scoping, prioritization, success metrics, trade-off analysis
+- **Philosophy**: "Ship fast, learn faster" — Perfect is the enemy of shipped
 
 ---
 
-### Workflow 5: Prototyping (Fast Mode)
-
-```bash
-# Use prototype mode to bypass quality gates
-PROTOTYPE_MODE=1 git commit -m "WIP: Add dashboard customization"
-
-# Still runs checks, shows errors, but allows commit
-# Perfect for A/B testing or rapid iteration
-```
-
----
-
-## 📋 Cheat Sheet
-
-### Conversational Agents (Ask Questions)
-
-```bash
-/engineer "question"   # Technical/architecture questions
-/designer "question"   # UX/design questions
-/pm "question"         # Product/prioritization questions
-/collab "question"     # All three perspectives + synthesis
-```
-
-### File Review Skills (Review Documents)
-
-```bash
-/engineer-review <file>   # Technical feasibility
-/designer-review <file>   # UX and accessibility
-/prd-review <file>        # All four perspectives
-```
-
-### Utility Skills
-
-```bash
-/init-project             # Initialize new project from template
-```
-
----
-
-## 🚀 Decision Tree: Which Skill to Use?
-
-```
-Do you have a specific file to review?
-├─ Yes → Use file review skills
-│  ├─ Technical focus? → /engineer-review
-│  ├─ Design focus? → /designer-review
-│  └─ Want all perspectives? → /prd-review
-│
-└─ No, you have a question → Use conversational agents
-   ├─ Technical question? → /engineer
-   ├─ Design question? → /designer
-   ├─ Product question? → /pm
-   └─ Want multiple perspectives? → /collab
-```
-
----
-
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Problem: `/engineer` says "Unknown skill"
 
-**Fix:** Check registration in `.claude/claude.json`:
+**Fix**: The agents should be registered in `.claude/claude.json` under `"skills"`. Check that the file contains:
 
 ```json
 {
   "skills": {
     "engineer": {
       "path": "./agents/engineer.js",
-      "description": "..."
+      "description": "💬 Conversational: Ask technical questions..."
     }
   }
 }
 ```
 
----
+### Problem: Quality gate fails on TypeScript errors
 
-### Problem: Quality gate failing on prototype code
+**Fix Option 1**: Fix the TypeScript errors (recommended)
 
-**Fix:** Use prototype mode:
-
+**Fix Option 2**: Use prototype mode during rapid development:
 ```bash
-PROTOTYPE_MODE=1 git commit -m "message"
+CLAUDE_PROTOTYPE_MODE=true git commit -m "WIP: Feature prototype"
 ```
 
-This runs checks but allows commit even if they fail.
+### Problem: Agent script isn't executable
 
-**When to use:**
-- ✅ Rapid prototyping
-- ✅ A/B testing for velocity
-- ✅ WIP commits
-
-**When NOT to use:**
-- ❌ Production code
-- ❌ Code review
-- ❌ PR submissions
-
----
-
-### Problem: Agent response seems generic
-
-**Check:** Is the persona loading correctly?
-
+**Fix**: Make the script executable:
 ```bash
-# Test directly
-node .claude/agents/engineer.js "test"
-
-# Should output the persona first, then your question
+chmod +x .claude/agents/engineer.js
+chmod +x .claude/agents/designer.js
+chmod +x .claude/agents/pm.js
 ```
 
-If persona doesn't show, the agent file may have syntax errors.
+### Problem: Mobile-first warnings in quality gate
 
----
+**Fix**: Review the flagged files and ensure responsive patterns follow mobile-first approach:
 
-### Problem: `/collab` is slow
+```tsx
+// ❌ Desktop-first (will trigger warning)
+<div className="lg:w-1/2">
 
-**Expected:** `/collab` runs 3 agents in parallel, takes ~10-15 seconds.
-
-**Tip:** Use individual agents (`/engineer`, `/designer`, `/pm`) when you only need one perspective.
-
----
-
-## 💡 Pro Tips
-
-### Tip 1: Be Specific in Questions
-
-❌ Bad: `/engineer "How do I do auth?"`
-✅ Good: `/engineer "Should I use NextAuth.js or build custom auth with JWT for a B2B SaaS app?"`
-
-### Tip 2: Use `/collab` for Trade-offs
-
-When you need to balance multiple concerns:
-
-```bash
-/collab "Should we implement infinite scroll or pagination for the feed?"
-
-# You'll get:
-# - Engineer: Technical implementation and performance
-# - Designer: User experience and accessibility
-# - PM: User behavior and metrics
-# - Synthesis: Balanced recommendation
-```
-
-### Tip 3: Chain Conversations
-
-```bash
-# Start broad
-/pm "What's the MVP for user notifications?"
-
-# Then get specific
-/designer "Design the notification badge and dropdown"
-
-# Then implementation
-/engineer "How should we handle real-time notification updates?"
-```
-
-### Tip 4: Use Prototype Mode Strategically
-
-```bash
-# During prototyping: lenient
-PROTOTYPE_MODE=1 git commit -m "WIP: notification system"
-
-# Before PR: strict
-git commit -m "feat: Add notification system"
-# Will fail if quality checks don't pass
+// ✅ Mobile-first (correct)
+<div className="w-full lg:w-1/2">
 ```
 
 ---
 
-## 📊 Usage Examples
+## Tips for Better Results
 
-### Example 1: Feature Planning
+### 1. Be Specific with Context
 
+**Instead of:**
 ```bash
-$ /collab "How should we implement user profiles?"
-
-# Returns:
-# Engineer Perspective: Database schema, API design, caching
-# Designer Perspective: Profile layout, edit flow, privacy controls
-# PM Perspective: MVP scope, success metrics, phasing
-# Synthesis: Start with read-only profiles, add editing in v2
+/engineer "How do I fix this error?"
 ```
 
-### Example 2: Code Review
-
+**Do this:**
 ```bash
-$ /engineer-review docs/specs/api-design.md
-
-# Returns:
-# Technical Feasibility: ✅ Achievable
-# Complexity: Medium (2-3 days)
-# Risks: Rate limiting needed, consider caching
-# Recommendations: Use Redis for caching, add API versioning
+/engineer "Debug this error:
+Error: Cannot read property 'user' of undefined
+Location: src/components/profile.tsx:45
+Context: Occurs after login when navigating to /profile
+Stack trace: [paste full trace]"
 ```
 
-### Example 3: Quick Question
+### 2. Ask for Trade-offs
+
+**Instead of:**
+```bash
+/engineer "Should I use PostgreSQL or MongoDB?"
+```
+
+**Do this:**
+```bash
+/engineer "Should I use PostgreSQL or MongoDB for user data?
+Context: 10K users, need ACID transactions for billing, mostly relational queries
+What are the trade-offs?"
+```
+
+### 3. Use Collab for Complex Decisions
+
+When a decision has UX, technical, AND product implications:
 
 ```bash
-$ /designer "Loading state for form submission?"
+/collab "Should we implement real-time updates or polling for the dashboard?
+Context: 1000 active users, updates every 5-30 seconds, want to minimize server load"
+```
 
-# Returns:
-# - Disable submit button
-# - Show spinner inside button
-# - Add aria-live announcement
-# - Consider skeleton loading for data
+### 4. Review Files Before Sharing
+
+Before creating a PR or sharing code:
+
+```bash
+# Quick engineering check
+/engineer-review src/services/auth.ts
+
+# Full multi-perspective review
+/prd-review docs/prds/new-feature.md
 ```
 
 ---
 
-## 🎓 Next Steps
+## Next Steps
 
-1. **Try each agent** - Get a feel for their perspectives
-2. **Review the full guide** - [README.md](README.md)
-3. **Check agent definitions** - `agents/*.js` to see personas
-4. **Customize for your team** - Edit personas to match your standards
-
----
-
-## 🤔 Questions?
-
-- **Full documentation:** [.claude/README.md](.claude/README.md)
-- **Improvements log:** [.claude/IMPROVEMENTS.md](.claude/IMPROVEMENTS.md)
-- **A/B testing:** [.claude/ab-testing/README.md](.claude/ab-testing/README.md)
+1. **Try the agents**: Run `/engineer "your question"` right now
+2. **Review a file**: Use `/engineer-review` on an existing file
+3. **Plan a feature**: Use `/collab` for your next feature planning
+4. **Read the README**: See `.claude/README.md` for full documentation
 
 ---
 
-**You're ready!** Start with `/engineer "test"` to verify it's working, then ask your first real question. 🚀
+**Questions?** Check the main README or ask:
+```bash
+/pm "How should I use these agents effectively?"
+```
