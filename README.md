@@ -1,18 +1,30 @@
-# Workspace Template
+# Product Workspace
 
-A reusable workspace template for rapid prototyping with Next.js, TypeScript, Tailwind CSS, and shadcn/ui. Pre-configured with Cursor rules, Claude Code skills, documentation templates, and full dark mode support.
+A comprehensive product development workspace with multi-agent collaboration, quality gates, and mobile-first enforcement. Built on Next.js, TypeScript, Tailwind CSS, and shadcn/ui.
+
+> **Looking for a simpler starter?** Check out [prototype-starter](https://github.com/stdemps/cursor-workspace-template) for rapid prototyping without the full product development features.
 
 ## Features
 
-- **Zero-config start:** Clone, `npm install`, `npm run dev` → working app
-- **Claude Code skills:** Built-in agent skills for PRD review, technical analysis, and design feedback
-- **Cursor-ready:** `.cursor/rules/` auto-loaded with UI guidelines and coding standards
-- **Quality gates:** Pre-commit hooks for linting, type checking, and mobile-first validation
-- **Documentation structure:** PRD templates, reviewer personas ready to use
-- **Dark mode:** Fully configured and working out of the box
-- **Type-safe:** TypeScript strict mode enabled
-- **Accessible:** WCAG 2.1 AA guidelines built-in
-- **Mobile-first:** Responsive patterns documented and ready
+### Multi-Agent Collaboration
+- **3 Specialized Agents:** Engineer, Designer, and Product Manager perspectives
+- **Conversational Skills:** Interactive Q&A with domain experts (`/engineer`, `/designer`, `/pm`)
+- **File Review Skills:** Comprehensive document analysis (`/engineer-review`, `/designer-review`, `/prd-review`)
+- **Orchestration:** Multi-agent collaboration via `/collab` for synthesized perspectives
+
+### Quality & Enforcement
+- **Quality Gates:** Pre-commit hooks for linting, type checking, and mobile-first validation
+- **Prototype Mode:** Fast iteration mode that runs checks without blocking commits (`PROTOTYPE_MODE=1`)
+- **Type Safety:** TypeScript strict mode enabled
+- **Accessibility:** WCAG 2.1 AA guidelines built-in
+- **Mobile-First:** Pattern validation for responsive design
+
+### Developer Experience
+- **Zero-config Start:** Clone, `npm install`, `npm run dev` → working app
+- **Cursor-Ready:** `.cursor/rules/` auto-loaded with UI guidelines and coding standards
+- **Quick Start Guide:** [.claude/QUICKSTART.md](.claude/QUICKSTART.md) for 5-minute setup
+- **Documentation Structure:** PRD templates, reviewer personas ready to use
+- **Dark Mode:** Fully configured and working out of the box
 
 ## Quick Start
 
@@ -30,7 +42,7 @@ A reusable workspace template for rapid prototyping with Next.js, TypeScript, Ta
 
 1. **Clone this repository:**
    ```bash
-   git clone https://github.com/yourusername/workspace-template.git my-project
+   git clone https://github.com/stdemps/product-workspace.git my-project
    cd my-project
    ```
 
@@ -96,38 +108,42 @@ workspace-template/
     └── utils.ts
 ```
 
-## Claude Code Integration
+## Multi-Agent Collaboration
 
-This template includes both agents and skills for Claude Code:
+This workspace includes specialized agents for comprehensive product development:
 
-- **Agents** - Conversational personas for interactive questions
-- **Skills** - Functional tasks like file reviews and automation
+### Conversational Agents
 
-### Agents (Conversational)
+- **`/engineer "question"`** - Technical questions, debugging, architecture
+- **`/designer "question"`** - UX questions, design guidance, accessibility
+- **`/pm "question"`** - Product strategy, prioritization, problem framing
+- **`/collab "question"`** - Get all three perspectives + synthesis
 
-- **`/engineer "question"`** - Ask technical questions, debug, discuss architecture
-- **`/designer "question"`** - Ask UX questions, get design guidance, accessibility advice
-
-### Skills (Functional)
+### File Review Skills
 
 - **`/engineer-review <file>`** - Technical feasibility and architecture review
 - **`/designer-review <file>`** - UX, accessibility, and design review
-- **`/prd-review <file>`** - Comprehensive review from all four perspectives
+- **`/prd-review <file>`** - Comprehensive multi-perspective review
 
 ### Examples
 
 ```bash
-# Ask questions
+# Ask questions to individual agents
 /engineer "How should I structure authentication for this Next.js app?"
 /designer "What's the best way to show loading states in forms?"
+/pm "What's the MVP for user onboarding?"
+
+# Get multi-agent collaboration
+/collab "Should I use modals or slide-overs for settings?"
+# Returns: Engineer + Designer + PM perspectives + synthesis
 
 # Review files
-/engineer-review docs/prds/my-feature.md
-/designer-review docs/prds/my-feature.md
 /prd-review docs/prds/my-feature.md
 ```
 
-See [.claude/README.md](.claude/README.md) for complete documentation.
+**Getting Started:** See [.claude/QUICKSTART.md](.claude/QUICKSTART.md) for workflows and examples.
+
+**Full Documentation:** [.claude/README.md](.claude/README.md)
 
 ## Using Cursor Rules
 
@@ -148,6 +164,28 @@ Pre-commit hooks automatically run:
 1. **ESLint** - Code quality checks
 2. **TypeScript** - Type checking
 3. **Mobile-first validation** - Warns if desktop-first patterns detected in UI files
+
+### Prototype Mode
+
+Use `PROTOTYPE_MODE=1` for rapid iteration:
+
+```bash
+# Production mode (strict - commit fails if checks fail)
+git commit -m "feat: Add feature"
+
+# Prototype mode (lenient - shows errors but allows commit)
+PROTOTYPE_MODE=1 git commit -m "WIP: Prototyping feature"
+```
+
+**When to use prototype mode:**
+- ✅ Rapid prototyping and experimentation
+- ✅ A/B testing for velocity comparison
+- ✅ WIP commits during development
+
+**When NOT to use:**
+- ❌ Production code
+- ❌ Code review submissions
+- ❌ Before opening PRs
 
 The quality gate is configured in [.claude/hooks/quality-gate.sh](.claude/hooks/quality-gate.sh).
 
@@ -196,12 +234,38 @@ npx shadcn@latest add [component-name]
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
 
+## Related Projects
+
+### Product Workspace vs Prototype Starter
+
+This repository (**product-workspace**) is designed for comprehensive product development with:
+- Multi-agent collaboration (Engineer, Designer, PM)
+- Quality gates with prototype mode
+- Extensive documentation and guides
+- Mobile-first enforcement
+
+For simpler rapid prototyping without these features, use:
+- [**prototype-starter**](https://github.com/stdemps/cursor-workspace-template) - Minimal setup, faster onboarding
+
+**Choose product-workspace when:**
+- Building production applications
+- Need multi-perspective feedback on decisions
+- Want strict quality enforcement with flexible prototype mode
+- Working in teams with multiple roles
+
+**Choose prototype-starter when:**
+- Quick prototyping and experimentation
+- Solo development or small teams
+- Don't need agent orchestration
+- Want minimal configuration
+
 ## Resources
 
 - [Next.js Documentation](https://nextjs.org/docs)
 - [shadcn/ui Components](https://ui.shadcn.com)
 - [Tailwind CSS](https://tailwindcss.com/docs)
 - [Cursor Documentation](https://cursor.sh/docs)
+- [Claude Code Documentation](https://docs.anthropic.com/claude/docs)
 
 ## License
 
