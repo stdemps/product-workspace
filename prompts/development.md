@@ -32,6 +32,12 @@ Create a new [ComponentName] component in [file-path]. The component should:
 - Handle [specific interactions]
 - Use [specific shadcn/ui components]
 ]
+
+For forms, also specify:
+- Validation timing: onBlur, onChange, or onSubmit
+- Error display: inline below field, toast, or modal
+- Loading states: button disabled, spinner, text change
+- Success states: message, redirect, form reset
 ```
 
 ## Example Usage
@@ -48,6 +54,121 @@ Create a new TaskCard component in components/task-card.tsx. The component shoul
 
 **Expected Output:**
 A complete, production-ready component following all workspace standards
+
+---
+
+## Create a Form Component
+
+**Category:** Development
+
+**When to use:** When creating forms with validation, error handling, and user feedback
+
+**Context needed:** Form fields, validation requirements, submission behavior, and UX patterns
+
+---
+
+## Prompt
+
+```
+Create a [FormName] component in [file-path] with the following requirements:
+
+Fields:
+- [Field 1]: [type, required/optional]
+- [Field 2]: [type, required/optional]
+- [Additional fields...]
+
+Validation:
+- Trigger on blur (when user leaves input field)
+- Show error immediately below the field
+- Use aria-describedby to link error to input
+- Set aria-invalid='true' on invalid inputs
+- Clear error when field becomes valid
+- Validate all fields on submit before allowing submission
+
+UX Patterns:
+- Loading: Disable submit button, show "[Action]..." text
+- Success: Show success message, [redirect/reset form/other]
+- Errors: Inline below field with icon (use AlertCircle from lucide-react)
+- Form reset: [specify behavior after success]
+
+Components:
+- Use [Card, CardHeader, CardTitle, CardContent] from shadcn/ui
+- Use Input, Label, Button from shadcn/ui
+- Use AlertCircle icon from lucide-react for errors
+
+Accessibility:
+- All inputs have associated labels (use htmlFor)
+- Errors announced to screen readers via aria-describedby
+- Keyboard navigation works properly
+- Focus management on errors
+
+Responsive:
+- Mobile-first: p-4, gap-4
+- Tablet: md:p-6, md:gap-5
+- Desktop: lg:p-8, lg:gap-6
+
+Before implementing, confirm this approach matches your understanding.
+```
+
+## Example Usage
+
+**Input:**
+```
+Create a SignupForm component in components/signup-form.tsx with:
+
+Fields:
+- Email: type="email", required
+- Password: type="password", required
+- Confirm Password: type="password", required
+
+Validation on blur, errors inline below fields, loading state on submit, success message after submission.
+```
+
+**Expected Output:**
+A complete form component with proper validation timing, error handling, accessibility, and responsive design
+
+---
+
+## Request Approach Review Before Implementation
+
+**Category:** Development
+
+**When to use:** Before implementing complex features to ensure the approach matches your preferences
+
+**Context needed:** What you're building and any specific UX or technical preferences
+
+---
+
+## Prompt
+
+```
+Before implementing [feature/component], describe your approach:
+
+1. What validation timing will you use? (onBlur, onChange, onSubmit)
+2. How will errors be displayed? (inline below field, toast, modal)
+3. What accessibility features will you include? (ARIA labels, keyboard navigation, screen reader support)
+4. What responsive breakpoints will you use? (mobile-first patterns)
+5. How will loading states be handled? (button disabled, spinner, text change)
+6. What will happen on success? (message, redirect, form reset)
+7. How will errors be handled? (network errors, validation errors, edge cases)
+
+Once confirmed, proceed with implementation.
+```
+
+## Example Usage
+
+**Input:**
+```
+Before implementing the login form, describe your approach:
+1. Validation timing?
+2. Error display method?
+3. Accessibility features?
+4. Loading state handling?
+5. Success behavior?
+```
+
+**Expected Output:**
+A detailed description of the implementation approach, allowing you to confirm or adjust before coding begins
 
 ---
 
