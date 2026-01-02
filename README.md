@@ -2,7 +2,7 @@
 
 A comprehensive product development workspace with multi-agent collaboration, quality gates, and mobile-first enforcement. Built on Next.js, TypeScript, Tailwind CSS, and shadcn/ui.
 
-> **Looking for a simpler starter?** Check out [prototype-starter](https://github.com/stdemps/cursor-workspace-template) for rapid prototyping without the full product development features.
+> **Looking for a simpler starter?** Check out [prototype-starter](https://github.com/stdemps/prototype-starter) for rapid prototyping without the full product development features.
 
 ## Features
 
@@ -245,7 +245,7 @@ This repository (**product-workspace**) is designed for comprehensive product de
 - Mobile-first enforcement
 
 For simpler rapid prototyping without these features, use:
-- [**prototype-starter**](https://github.com/stdemps/cursor-workspace-template) - Minimal setup, faster onboarding
+- [**prototype-starter**](https://github.com/stdemps/prototype-starter) - Minimal setup, faster onboarding
 
 **Choose product-workspace when:**
 - Building production applications
