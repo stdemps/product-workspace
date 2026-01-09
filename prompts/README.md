@@ -167,6 +167,4 @@ This gives you both the structured prompt AND the designer's UX expertise.
 - [Architecture Prompts](./architecture.md)
 - [Workspace-Specific Prompts](./workspace-specific.md)
 
-## Reference
-
-- [Workspace Standards](./STANDARDS.md) - Common requirements (accessibility, responsive design, TypeScript, etc.) referenced by all prompts
+## Reference- [Workspace Standards](./STANDARDS.md) - Common requirements (accessibility, responsive design, TypeScript, etc.) referenced by all prompts

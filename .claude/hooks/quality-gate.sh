@@ -7,10 +7,15 @@
 # 1. Linting standards
 # 2. Mobile-first pattern validation (if UI files changed)
 # 3. Type checking
+# 4. Tests (optional, set RUN_TESTS=true)
 #
 # Prototype Mode:
 # Set CLAUDE_PROTOTYPE_MODE=true to run checks without failing commit
 # Example: CLAUDE_PROTOTYPE_MODE=true git commit -m "Add feature"
+#
+# Run Tests:
+# Set RUN_TESTS=true to include test execution in quality gate
+# Example: RUN_TESTS=true git commit -m "Add feature with tests"
 ###
 
 set -e
@@ -25,17 +30,29 @@ NC='\033[0m' # No Color
 
 # Check for prototype mode
 PROTOTYPE_MODE=${CLAUDE_PROTOTYPE_MODE:-false}
+RUN_TESTS=${RUN_TESTS:-false}
 
 if [ "$PROTOTYPE_MODE" = "true" ]; then
   echo -e "${YELLOW}⚠ PROTOTYPE MODE ENABLED${NC}"
   echo -e "${YELLOW}  Checks will run but won't block commit${NC}\n"
 fi
 
+if [ "$RUN_TESTS" = "true" ]; then
+  echo -e "${YELLOW}🧪 TEST MODE ENABLED${NC}"
+  echo -e "${YELLOW}  Tests will be executed as part of quality gate${NC}\n"
+fi
+
 # Track if we should fail the commit
 SHOULD_FAIL=0
 
+# Determine number of checks
+TOTAL_CHECKS=3
+if [ "$RUN_TESTS" = "true" ]; then
+  TOTAL_CHECKS=4
+fi
+
 # 1. Run ESLint
-echo -e "\n${YELLOW}[1/3] Running ESLint...${NC}"
+echo -e "\n${YELLOW}[1/$TOTAL_CHECKS] Running ESLint...${NC}"
 if npm run lint --silent; then
   echo -e "${GREEN}✓ ESLint passed${NC}"
 else
@@ -44,7 +61,7 @@ else
 fi
 
 # 2. Check for mobile-first patterns in staged UI files
-echo -e "\n${YELLOW}[2/3] Checking mobile-first patterns...${NC}"
+echo -e "\n${YELLOW}[2/$TOTAL_CHECKS] Checking mobile-first patterns...${NC}"
 
 # Get list of staged TypeScript/TSX files in components or app directories
 STAGED_UI_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(tsx|ts)$' | grep -E '(components/|app/)' || true)
@@ -76,12 +93,23 @@ else
 fi
 
 # 3. Run TypeScript type checking
-echo -e "\n${YELLOW}[3/3] Running TypeScript type check...${NC}"
+echo -e "\n${YELLOW}[3/$TOTAL_CHECKS] Running TypeScript type check...${NC}"
 if npx tsc --noEmit; then
   echo -e "${GREEN}✓ Type check passed${NC}"
 else
   echo -e "${RED}✗ Type check failed${NC}"
   SHOULD_FAIL=1
+fi
+
+# 4. Run tests (if enabled)
+if [ "$RUN_TESTS" = "true" ]; then
+  echo -e "\n${YELLOW}[4/$TOTAL_CHECKS] Running tests...${NC}"
+  if npm test -- --reporter=list; then
+    echo -e "${GREEN}✓ Tests passed${NC}"
+  else
+    echo -e "${RED}✗ Tests failed${NC}"
+    SHOULD_FAIL=1
+  fi
 fi
 
 # Summary

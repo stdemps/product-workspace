@@ -218,6 +218,82 @@ Use shadcn/ui CLI to add more components:
 npx shadcn@latest add [component-name]
 ```
 
+## Testing Infrastructure
+
+Product-workspace includes **pre-configured Playwright** for comprehensive end-to-end testing with screenshot verification.
+
+### Quick Start
+
+```bash
+# Run all tests
+npm test
+
+# Run tests interactively
+npm run test:ui
+
+# Debug tests
+npm run test:debug
+```
+
+### Features
+
+- ✅ **E2E Testing** - Playwright configured with example tests
+- ✅ **Screenshot Verification** - Visual UI correctness validation
+- ✅ **Responsive Testing** - Mobile (375px), Tablet (768px), Desktop (1024px)
+- ✅ **Accessibility Testing** - WCAG 2.1 AA compliance checks
+- ✅ **Multi-Browser** - Chrome, Firefox, Safari support
+- ✅ **Quality Gate Integration** - Optional test execution in pre-commit hook
+
+### TDD + UI Verification Workflow
+
+For autonomous feature development with Ralph Loop:
+
+**Full TDD + UI Verification Prompt**: See [prompts/tdd-ralph-loop.md](./prompts/tdd-ralph-loop.md)
+
+**Quick example:**
+```bash
+/ralph-loop "Task: Implement [FEATURE] using strict TDD and UI Verification workflow.
+[See prompts/tdd-ralph-loop.md for complete prompt]
+You MUST output TDD_UI_WORKFLOW_VERIFIED_AND_COMPLETE_20260109 ONLY when all tests pass AND all screenshots verified." --max-iterations 40
+```
+
+### Ralph Loop for Autonomous Development
+
+**[Ralph Loop](https://github.com/anthropics/claude-code/blob/main/plugins/ralph-wiggum/README.md)** enables autonomous, self-correcting development workflows.
+
+**Install:**
+```bash
+/plugin install ralph-wiggum@claude-plugins-official
+```
+
+**Perfect for:**
+- Autonomous TDD + UI verification workflows
+- Quality gate compliance
+- Multi-agent collaboration with testing
+- Production-ready feature development
+
+**Learn more:** [Ralph Loop Guide](./docs/ralph-loop-guide.md)
+
+### Running Tests with Quality Gate
+
+By default, tests are NOT run in pre-commit hooks. Enable with:
+
+```bash
+# Run quality gate including tests
+RUN_TESTS=true git commit -m "Add feature with tests"
+
+# Bypass all quality gates (prototype mode)
+CLAUDE_PROTOTYPE_MODE=true git commit -m "WIP"
+```
+
+### Example Tests
+
+See [e2e/example.spec.ts](./e2e/example.spec.ts) for comprehensive test examples including:
+- Functional behavior testing
+- Accessibility validation
+- Responsive design verification
+- Screenshot generation for visual review
+
 ## Tech Stack
 
 - **Next.js 16** - React framework with App Router
@@ -226,6 +302,7 @@ npx shadcn@latest add [component-name]
 - **shadcn/ui** - Component library
 - **next-themes** - Dark mode support
 - **Lucide React** - Icons
+- **Playwright** - E2E testing with screenshot verification
 
 ## Scripts
 
@@ -233,6 +310,9 @@ npx shadcn@latest add [component-name]
 - `npm run build` - Build for production
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
+- `npm test` - Run E2E tests
+- `npm run test:ui` - Run tests interactively
+- `npm run test:debug` - Debug tests step-by-step
 
 ## Related Projects
 
