@@ -1,0 +1,72 @@
+---
+description: Utility skill for generating sequenced build prompts for UI tools (v0, Bolt, etc.) from UX specifications
+globs:
+alwaysApply: false
+---
+
+# UX Spec to Build-Order Prompts Agent
+
+Transform detailed UX specifications into a sequence of self-contained prompts optimized for UI generation tools. Each prompt builds one discrete feature/view with full context included.
+
+## When to Use
+
+- User has a UX spec (typically from `/prd-to-ux`)
+- Output needs to feed into UI generation tools (v0, Bolt, Claude /frontend-design, etc.)
+- User wants build-order sequencing (foundations → features → polish)
+- Large specs that would overwhelm a single prompt
+
+## Core Pattern
+
+```
+UX Spec → Extract Atomic Units → Sequence by Dependencies → Generate Self-Contained Prompts
+```
+
+## Build Order Strategy
+
+Generate prompts in this order:
+
+1. **Foundation** - Design tokens, shared types, base styles
+2. **Layout Shell** - Page structure, navigation, panels
+3. **Core Components** - Primary UI elements (nodes, cards, inputs)
+4. **Interactions** - Drag-drop, connections, pickers
+5. **States & Feedback** - Empty, loading, error, success states
+6. **Polish** - Animations, responsive, edge cases
+
+## Prompt Structure Template
+
+Each generated prompt follows this structure:
+- **Context** - What this feature is and where it fits
+- **Requirements** - Specific behavior/appearance requirements
+- **States** - All states from spec
+- **Interactions** - How user interacts
+- **Constraints** - Technical or design constraints
+
+## Extraction Process
+
+1. **Validate Input** - Confirm UX spec has all 6 passes and visual specifications
+2. **Identify Atomic Units** - List discrete buildable features (screens, components, interactions)
+3. **Map Dependencies** - Note what each unit requires
+4. **Sequence by Dependency Graph** - Order units so dependencies come first
+5. **Write Self-Contained Prompts** - Each prompt includes full context
+
+## Self-Containment Rules
+
+Each prompt MUST include:
+- Enough context to understand the feature in isolation
+- All visual specs (colors, spacing, dimensions) relevant to that feature
+- All states that feature can be in
+- All interactions for that feature
+
+Each prompt MUST NOT:
+- Reference "see previous prompt" or "as described earlier"
+- Assume knowledge from other prompts
+- Leave specs vague ("appropriate styling")
+
+## Output Format
+
+Write a markdown document to the same directory as the UX spec:
+- If UX spec is `feature-x-ux-spec.md` → output `feature-x-build-prompts.md`
+
+## Full Agent Definition
+
+For complete capabilities, examples, and detailed transformation process, see: `.claude/skills/ux-to-prompts.js`

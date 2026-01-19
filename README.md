@@ -7,7 +7,8 @@ A comprehensive product development workspace with multi-agent collaboration, qu
 ## Features
 
 ### Multi-Agent Collaboration
-- **3 Specialized Agents:** Engineer, Designer, and Product Manager perspectives
+- **3 Conversational Agents:** Engineer, Designer, PM
+- **Agent-Specific Skills:** Each agent has specialized tasks (PM: PRDs, Designer: UX/brand, Engineer: reviews)
 - **Conversational Skills:** Interactive Q&A with domain experts (`/engineer`, `/designer`, `/pm`)
 - **File Review Skills:** Comprehensive document analysis (`/engineer-review`, `/designer-review`, `/prd-review`)
 - **Orchestration:** Multi-agent collaboration via `/collab` for synthesized perspectives
@@ -73,13 +74,19 @@ A comprehensive product development workspace with multi-agent collaboration, qu
 ```
 workspace-template/
 ├── .claude/
-│   ├── agents/             # Conversational agents
+│   ├── agents/             # Conversational agents (personas)
 │   │   ├── engineer.js
-│   │   └── designer.js
-│   ├── skills/             # Functional skills
-│   │   ├── engineer-review.js
-│   │   ├── designer-review.js
-│   │   └── prd-review.js
+│   │   ├── designer.js
+│   │   └── pm.js
+│   ├── skills/             # Functional skills (tasks by agent)
+│   │   ├── engineer-review.js        # Engineer skill
+│   │   ├── designer-review.js        # Designer skill
+│   │   ├── designer-brand-identity.js # Designer skill
+│   │   ├── designer-prd-to-ux.js     # Designer skill
+│   │   ├── pm-generate-prd.js        # PM skill
+│   │   ├── pm-clarify-prd.js         # PM skill
+│   │   ├── prd-review.js             # Utility skill
+│   │   └── ux-to-prompts.js          # Utility skill
 │   ├── hooks/              # Quality gate hooks
 │   │   └── quality-gate.sh
 │   └── claude.json         # Claude Code configuration
@@ -125,6 +132,23 @@ This workspace includes specialized agents for comprehensive product development
 - **`/designer-review <file>`** - UX, accessibility, and design review
 - **`/prd-review <file>`** - Comprehensive multi-perspective review
 
+### PRD Workflow Skills
+
+Turn rough ideas into buildable specifications (skills owned by their respective agents):
+
+```
+Rough idea → /pm-generate-prd → /pm-clarify-prd → /designer-prd-to-ux → /ux-to-prompts → Build
+```
+
+- **`/pm-generate-prd "idea"`** - PM generates structured PRDs from ideas
+- **`/pm-clarify-prd <file>`** - PM refines PRDs through structured questioning
+- **`/designer-prd-to-ux <file>`** - Designer translates PRDs to UX specs (6-pass framework)
+- **`/ux-to-prompts <file>`** - Utility generates build prompts for UI tools
+
+### Brand Identity (Designer Skill)
+
+- **`/designer-brand-identity "request"`** - Apply consistent styling and copywriting
+
 ### Examples
 
 ```bash
@@ -139,6 +163,12 @@ This workspace includes specialized agents for comprehensive product development
 
 # Review files
 /prd-review docs/prds/my-feature.md
+
+# PRD workflow (idea to build) - using agent-specific skills
+/pm-generate-prd "A dashboard for monitoring API usage"
+/pm-clarify-prd docs/prds/api-dashboard.md
+/designer-prd-to-ux docs/prds/api-dashboard.md
+/ux-to-prompts docs/prds/api-dashboard-ux-spec.md
 ```
 
 **Getting Started:** See [.claude/QUICKSTART.md](.claude/QUICKSTART.md) for workflows and examples.

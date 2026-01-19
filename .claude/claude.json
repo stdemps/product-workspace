@@ -2,15 +2,15 @@
   "skills": {
     "engineer": {
       "path": "./agents/engineer.js",
-      "description": "💬 Conversational: Ask technical questions, debug issues, discuss architecture"
+      "description": "💬 Agent: Ask technical questions, debug issues, discuss architecture"
     },
     "designer": {
       "path": "./agents/designer.js",
-      "description": "💬 Conversational: Ask UX questions, get design guidance, accessibility advice"
+      "description": "💬 Agent: Ask UX questions, get design guidance, accessibility advice"
     },
     "pm": {
       "path": "./agents/pm.js",
-      "description": "💬 Conversational: Product strategy, prioritization, problem framing, metrics"
+      "description": "💬 Agent: Product strategy, prioritization, problem framing, scope management"
     },
     "engineer-review": {
       "path": "./skills/engineer-review.js",
@@ -31,6 +31,34 @@
     "init-project": {
       "path": "./skills/init-project.js",
       "description": "🔧 Utility: Initialize a new project from this template"
+    },
+    "designer-brand-identity": {
+      "path": "./skills/designer-brand-identity.js",
+      "description": "🎨 Designer Skill: Apply brand tokens, styling, and voice/tone guidelines"
+    },
+    "pm-generate-prd": {
+      "path": "./skills/pm-generate-prd.js",
+      "description": "📝 PM Skill: Convert rough MVP ideas into structured PRDs"
+    },
+    "pm-clarify-prd": {
+      "path": "./skills/pm-clarify-prd.js",
+      "description": "📝 PM Skill: Clarify PRDs through structured questioning"
+    },
+    "designer-prd-to-ux": {
+      "path": "./skills/designer-prd-to-ux.js",
+      "description": "🎨 Designer Skill: Translate PRDs into UX specifications (6-pass framework)"
+    },
+    "ux-to-prompts": {
+      "path": "./skills/ux-to-prompts.js",
+      "description": "🔧 Utility: Generate sequenced build prompts for UI tools (v0, Bolt, etc.)"
+    },
+    "executive": {
+      "path": "./agents/executive.js",
+      "description": "💼 Agent: Strategic reviews, business cases, prioritization, stakeholder alignment"
+    },
+    "user-researcher": {
+      "path": "./agents/user-researcher.js",
+      "description": "🔍 Agent: User validation, research planning, Jobs-to-be-Done, insight synthesis"
     }
   },
   "hooks": {

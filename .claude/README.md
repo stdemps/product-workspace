@@ -18,10 +18,15 @@ This directory contains Claude Code configuration, skills, and hooks for enhance
 │   ├── designer.js      # UX/design agent
 │   └── pm.js            # Product management agent
 ├── skills/              # Functional skills (tasks and actions)
-│   ├── engineer-review.js
-│   ├── designer-review.js
-│   ├── prd-review.js
-│   └── collab.js        # Multi-agent collaboration
+│   ├── engineer-review.js        # Engineer file review
+│   ├── designer-review.js        # Designer file review
+│   ├── designer-brand-identity.js # Designer: Brand tokens & styling
+│   ├── designer-prd-to-ux.js     # Designer: Translate PRDs to UX specs
+│   ├── pm-generate-prd.js        # PM: Generate PRDs from ideas
+│   ├── pm-clarify-prd.js         # PM: Refine PRDs through questioning
+│   ├── prd-review.js             # Multi-perspective PRD review
+│   ├── collab.js                 # Multi-agent collaboration
+│   └── ux-to-prompts.js          # Utility: Generate build prompts
 ├── hooks/               # Event hooks
 │   └── quality-gate.sh  # Pre-commit quality enforcement
 └── ab-testing/          # A/B testing framework
@@ -123,6 +128,22 @@ Review a file from a design perspective.
 - Mobile-first responsive patterns
 - Interaction patterns and error states
 
+#### Designer: Brand Identity (`/designer-brand-identity`)
+
+Apply brand consistency across UI components, styling, and copywriting (Designer skill).
+
+**Usage:**
+```bash
+/designer-brand-identity "What colors should I use for the primary button?"
+/designer-brand-identity "Generate a login form component following brand guidelines"
+/designer-brand-identity "Write error messages for form validation"
+```
+
+**What it does:**
+- Reads brand tokens from `skills/brand-identity/resources/`
+- Applies design tokens (colors, fonts, spacing) to shadcn/ui components
+- Ensures voice & tone consistency in copywriting
+
 #### PRD Review (`/prd-review`)
 
 Comprehensive file review from all four perspectives.
@@ -137,6 +158,81 @@ Comprehensive file review from all four perspectives.
 - Design: UX flows and accessibility
 - Executive: Business value and strategy
 - User Research: User needs and validation
+
+### PRD Workflow Skills
+
+These skills form a pipeline for turning ideas into buildable specifications:
+
+```
+Rough idea → /pm-generate-prd → /pm-clarify-prd → /designer-prd-to-ux → /ux-to-prompts → Build
+```
+
+#### PM: Generate PRD (`/pm-generate-prd`)
+
+Convert rough MVP ideas into structured PRDs (PM skill).
+
+**Usage:**
+```bash
+/pm-generate-prd "An app that helps users track their daily water intake"
+/pm-generate-prd "A dashboard for monitoring API usage metrics"
+```
+
+**What it does:**
+- Takes a rough idea or description
+- Generates a complete 8-section PRD
+- Labels assumptions clearly
+- Optimizes for demo-grade clarity
+
+#### PM: Clarify PRD (`/pm-clarify-prd`)
+
+Refine and clarify PRDs through structured questioning (PM skill).
+
+**Usage:**
+```bash
+/pm-clarify-prd docs/prds/my-feature.md
+```
+
+**What it does:**
+- Reads an existing PRD
+- Asks clarifying questions (5-35 based on depth preference)
+- Creates a tracking document with Q&A
+- Identifies and resolves ambiguities
+
+#### Designer: PRD to UX (`/designer-prd-to-ux`)
+
+Translate PRDs into UX specifications using a 6-pass framework (Designer skill).
+
+**Usage:**
+```bash
+/designer-prd-to-ux docs/prds/my-feature.md
+```
+
+**What it does (6 passes):**
+1. Mental Model - User intent alignment
+2. Information Architecture - Concept groupings
+3. Affordances - Visual/interaction signals
+4. Cognitive Load - Friction reduction
+5. State Design - All UI states
+6. Flow Integrity - Risk and visibility decisions
+
+**Output:** `{prd-basename}-ux-spec.md`
+
+#### UX to Prompts (`/ux-to-prompts`)
+
+Transform UX specs into sequenced build prompts for UI tools (Utility skill).
+
+**Usage:**
+```bash
+/ux-to-prompts docs/prds/my-feature-ux-spec.md
+```
+
+**What it does:**
+- Extracts atomic UI units from UX spec
+- Maps dependencies between components
+- Sequences by dependency graph
+- Generates self-contained prompts for v0, Bolt, or Claude
+
+**Output:** `{ux-basename}-build-prompts.md`
 
 ## Hooks
 

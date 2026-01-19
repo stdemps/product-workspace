@@ -7,8 +7,11 @@
 ## What You Get
 
 This workspace includes:
-- **3 Conversational Agents**: Engineer, Designer, PM (ask questions, get perspectives)
-- **4 File Review Skills**: Engineer review, Designer review, PM review, PRD review
+- **3 Conversational Agents**: Engineer, Designer, PM
+- **3 Designer Skills**: Brand identity, PRD-to-UX, file review
+- **2 PM Skills**: Generate PRD, clarify PRD
+- **1 Engineer Skill**: File review
+- **2 Utility Skills**: PRD review (multi-perspective), UX-to-prompts
 - **1 Collaboration Skill**: Multi-agent synthesis (get all 3 perspectives at once)
 - **Quality Gate Hook**: Pre-commit checks for TypeScript, ESLint, mobile-first patterns
 
@@ -112,6 +115,37 @@ Use the review skills for file-specific analysis:
 
 # Get design review for UI components
 /designer-review components/profile-card.tsx
+```
+
+### Building a Feature from Scratch (PRD Workflow)
+
+The complete idea-to-build pipeline using agent-specific skills:
+
+```bash
+# 1. PM generates a PRD from your rough idea
+/pm-generate-prd "A dashboard for monitoring API usage metrics"
+
+# 2. PM clarifies the PRD through structured questioning
+/pm-clarify-prd docs/prds/api-dashboard.md
+
+# 3. Designer translates the PRD into UX specifications
+/designer-prd-to-ux docs/prds/api-dashboard.md
+
+# 4. Utility generates build prompts for UI tools (v0, Bolt, etc.)
+/ux-to-prompts docs/prds/api-dashboard-ux-spec.md
+```
+
+### Applying Brand Consistency (Designer Skill)
+
+```bash
+# Get brand-specific colors and styling
+/designer-brand-identity "What colors should I use for the primary button?"
+
+# Generate brand-consistent components
+/designer-brand-identity "Create a login form following brand guidelines"
+
+# Write copy that matches brand voice
+/designer-brand-identity "Write error messages for form validation"
 ```
 
 ---
