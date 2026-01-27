@@ -2,7 +2,7 @@
 
 A comprehensive product development workspace with multi-agent collaboration, quality gates, and mobile-first enforcement. Built on Next.js, TypeScript, Tailwind CSS, and shadcn/ui.
 
-> **Looking for a simpler starter?** Check out [prototype-starter](https://github.com/stdemps/prototype-starter) for rapid prototyping without the full product development features.
+> **Looking for a simpler starter?** Check out other starter templates for rapid prototyping without the full product development features.
 
 ## Features
 
@@ -43,7 +43,7 @@ A comprehensive product development workspace with multi-agent collaboration, qu
 
 1. **Clone this repository:**
    ```bash
-   git clone https://github.com/stdemps/product-workspace.git my-project
+   git clone https://github.com/yourusername/product-workspace.git my-project
    cd my-project
    ```
 
@@ -250,7 +250,7 @@ npx shadcn@latest add [component-name]
 
 ## Testing Infrastructure
 
-Product-workspace includes **pre-configured Playwright** for comprehensive end-to-end testing with screenshot verification.
+This workspace includes **pre-configured Playwright** for comprehensive end-to-end testing with screenshot verification.
 
 ### Quick Start
 
@@ -348,16 +348,15 @@ See [e2e/example.spec.ts](./e2e/example.spec.ts) for comprehensive test examples
 
 ### Product Workspace vs Prototype Starter
 
-This repository (**product-workspace**) is designed for comprehensive product development with:
+This repository is designed for comprehensive product development with:
 - Multi-agent collaboration (Engineer, Designer, PM)
 - Quality gates with prototype mode
 - Extensive documentation and guides
 - Mobile-first enforcement
 
-For simpler rapid prototyping without these features, use:
-- [**prototype-starter**](https://github.com/stdemps/prototype-starter) - Minimal setup, faster onboarding
+For simpler rapid prototyping without these features, consider using a minimal starter template with faster onboarding.
 
-**Choose product-workspace when:**
+**Choose this workspace when:**
 - Building production applications
 - Need multi-perspective feedback on decisions
 - Want strict quality enforcement with flexible prototype mode

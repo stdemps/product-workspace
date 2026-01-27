@@ -56,7 +56,7 @@ You can also use prompts directly in Cursor chat without agents. The workspace r
 ### With Claude Code Skills
 
 **Using Slash Commands:**
-Product-workspace includes Engineer, Designer, and PM skills:
+This workspace includes Engineer, Designer, and PM skills:
 ```bash
 /engineer "How should I structure authentication for this Next.js app?"
 /designer "What's the best mobile navigation pattern?"

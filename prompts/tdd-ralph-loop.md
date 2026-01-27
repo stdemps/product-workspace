@@ -274,7 +274,7 @@ You MUST output \"TDD_UI_WORKFLOW_VERIFIED_AND_COMPLETE_20260109\" ONLY when ALL
 
 ## Comparison with Simplified TDD Prompt
 
-| Feature | Simplified TDD (prototype-starter) | Full TDD + Ralph Loop (product-workspace) |
+| Feature | Simplified TDD (minimal setup) | Full TDD + Ralph Loop (this workspace) |
 |---------|-----------------------------------|-------------------------------------------|
 | **Framework** | Any (bring your own) | Playwright required |
 | **Screenshots** | Optional suggestion | Mandatory with verification |

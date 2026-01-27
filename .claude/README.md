@@ -12,7 +12,6 @@ This directory contains Claude Code configuration, skills, and hooks for enhance
 .claude/
 ├── claude.json          # Claude Code configuration
 ├── QUICKSTART.md        # 5-minute getting started guide
-├── IMPROVEMENTS.md      # Changelog of improvements
 ├── agents/              # Conversational agents (persona wrappers)
 │   ├── engineer.js      # Technical/architecture agent
 │   ├── designer.js      # UX/design agent
@@ -27,10 +26,8 @@ This directory contains Claude Code configuration, skills, and hooks for enhance
 │   ├── prd-review.js             # Multi-perspective PRD review
 │   ├── collab.js                 # Multi-agent collaboration
 │   └── ux-to-prompts.js          # Utility: Generate build prompts
-├── hooks/               # Event hooks
-│   └── quality-gate.sh  # Pre-commit quality enforcement
-└── ab-testing/          # A/B testing framework
-    └── README.md
+└── hooks/               # Event hooks
+    └── quality-gate.sh  # Pre-commit quality enforcement
 ```
 
 ## Agents vs Skills
@@ -376,42 +373,3 @@ To create a new functional skill:
 - Version control all configuration
 - Keep sensitive data out of config files
 
-## A/B Testing: Claude Extension vs Cursor Chat
-
-Not sure which AI assistant works better in Cursor IDE? Test both to find out!
-
-### What to Test
-
-Build the same prototype twice in Cursor:
-1. **Test A:** Using Claude extension
-2. **Test B:** Using native Cursor chat (`@engineer`, `@designer`)
-
-Then compare code quality, speed, and developer experience.
-
-### Quick Setup
-
-```bash
-# Clone workspace twice (one for each test)
-git clone workspace-template claude-extension-test
-git clone workspace-template cursor-chat-test
-
-# Copy test templates
-cp .claude/ab-testing/TEST-TEMPLATE-claude-extension.md claude-extension-test/test-log.md
-cp .claude/ab-testing/TEST-TEMPLATE-cursor-chat.md cursor-chat-test/test-log.md
-```
-
-### What You'll Learn
-
-This test will tell you:
-- ✅ Which AI produces better code quality?
-- ✅ Which understands your workspace context better?
-- ✅ Which has better developer experience?
-- ✅ Is maintaining both `.claude/` and `.cursor/` setups worth it?
-
-### Learn More
-
-- **Complete Guide:** [ab-testing/README.md](ab-testing/README.md)
-- **Quick Reference:** [ab-testing/CLAUDE-VS-CURSOR-QUICK-REF.md](ab-testing/CLAUDE-VS-CURSOR-QUICK-REF.md)
-- **Test Templates:** [ab-testing/TEST-TEMPLATE-*.md](ab-testing/)
-
-**Time commitment:** ~4 hours total (can split across days)

@@ -17,7 +17,7 @@ Ralph Loop (officially: Ralph Wiggum plugin) is a Claude Code plugin that enable
 ### Not Ideal For:
 - ❌ **Exploratory work** - Open-ended research or discovery tasks
 - ❌ **Subjective decisions** - Tasks requiring human judgment or aesthetic choices
-- ❌ **Quick prototypes** - Use prototype-starter for rapid iteration
+- ❌ **Quick prototypes** - Use simpler starter templates for rapid iteration
 
 ## Installation
 
@@ -168,7 +168,7 @@ Ralph Loop works best with measurable success criteria:
 
 ### 4. Combine with Quality Gates
 
-product-workspace has quality gates that check:
+This workspace includes quality gates that check:
 - ESLint (code quality)
 - TypeScript (type safety)
 - Mobile-first patterns (responsive design)
@@ -359,7 +359,7 @@ Exit when: All feedback addressed AND /collab re-review approves" --max-iteratio
 
 ### With Testing Infrastructure
 
-product-workspace has Playwright pre-configured:
+This workspace includes Playwright pre-configured:
 
 ```bash
 # Ralph Loop automatically uses existing test infrastructure
@@ -416,17 +416,17 @@ Exit when: Refactor complete AND all tests pass AND no quality regressions" --ma
 - [Quality Gate Hook](../.claude/hooks/quality-gate.sh) - Pre-commit quality enforcement
 - [Ralph Loop Official Docs](https://github.com/anthropics/claude-code/blob/main/plugins/ralph-wiggum/README.md)
 
-## When to Use prototype-starter Instead
+## When to Use Simpler Templates Instead
 
-Ralph Loop in product-workspace is optimized for **production-quality features**. For rapid prototyping without testing overhead:
+Ralph Loop in this workspace is optimized for **production-quality features**. For rapid prototyping without testing overhead:
 
-**Use prototype-starter when:**
+**Use simpler templates when:**
 - Quick experiments and throwaway code
 - Exploring ideas without test coverage
 - Need speed over quality
 - Solo prototyping without multi-agent review
 
-**Use product-workspace when:**
+**Use this workspace when:**
 - Building production applications
 - Need comprehensive testing
 - Want multi-agent collaboration
