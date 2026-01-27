@@ -73,7 +73,7 @@ After receiving the depth selection, update the tracking document and begin aski
 
 Before starting, check if related outputs exist:
 - If a UX spec exists (\`{prd-name}-ux-spec.md\`): Note any UX decisions that might inform PRD clarifications
-- If build prompts exist (\`{prd-name}-build-prompts.md\`): Check if implementation revealed ambiguities
+- If implementation plan exists (\`{prd-name}-implementation-plan.md\`): Check if implementation revealed ambiguities
 - These can inform which sections need the most clarification
 
 ## Question Categories

@@ -1,71 +1,54 @@
 ---
-description: Utility skill for generating sequenced build prompts for UI tools (v0, Bolt, etc.) from UX specifications
+description: Utility skill for generating implementation plans with small, context-efficient chunks from UX specifications
 globs:
 alwaysApply: false
 ---
 
-# UX Spec to Build-Order Prompts Agent
+# UX Spec to Implementation Plan Agent
 
-Transform detailed UX specifications into a sequence of self-contained prompts optimized for UI generation tools. Each prompt builds one discrete feature/view with full context included.
+Transform detailed UX specifications into a structured implementation plan with small, context-efficient chunks that can be implemented incrementally by agents without requiring the full UX spec context.
 
 ## When to Use
 
-- User has a UX spec (typically from `/prd-to-ux`)
-- Output needs to feed into UI generation tools (v0, Bolt, Claude /frontend-design, etc.)
-- User wants build-order sequencing (foundations → features → polish)
-- Large specs that would overwhelm a single prompt
+- User has a UX spec (typically from `/designer-prd-to-ux`)
+- Ready to start implementation
+- Want a clear, phased approach to building the feature
+- Need tasks small enough for agents to implement without overwhelming context
 
 ## Core Pattern
 
 ```
-UX Spec → Extract Atomic Units → Sequence by Dependencies → Generate Self-Contained Prompts
+UX Spec → High-Level Plan → Small Implementation Chunks → Context-Efficient Tasks
 ```
 
-## Build Order Strategy
+## Implementation Plan Structure
 
-Generate prompts in this order:
+The plan is organized into phases:
 
-1. **Foundation** - Design tokens, shared types, base styles
-2. **Layout Shell** - Page structure, navigation, panels
-3. **Core Components** - Primary UI elements (nodes, cards, inputs)
-4. **Interactions** - Drag-drop, connections, pickers
-5. **States & Feedback** - Empty, loading, error, success states
-6. **Polish** - Animations, responsive, edge cases
+1. **Foundation Phase** - Setup, types, utilities, design tokens
+2. **Core Components Phase** - Primary UI components
+3. **Layout & Structure Phase** - Page layouts, navigation, containers
+4. **Interactions Phase** - User interactions, state management
+5. **States & Feedback Phase** - Loading, error, empty, success states
+6. **Polish Phase** - Responsive design, animations, edge cases
 
-## Prompt Structure Template
+## Task Chunking Principles
 
-Each generated prompt follows this structure:
-- **Context** - What this feature is and where it fits
-- **Requirements** - Specific behavior/appearance requirements
-- **States** - All states from spec
-- **Interactions** - How user interacts
-- **Constraints** - Technical or design constraints
+Each task should be:
+- **Small** - Can be implemented in one focused session (30-60 minutes)
+- **Self-contained** - Includes just enough context to implement without the full spec
+- **Testable** - Has clear acceptance criteria
+- **Independent** - Can be implemented without other tasks (or minimal dependencies)
 
-## Extraction Process
+## Task Format
 
-1. **Validate Input** - Confirm UX spec has all 6 passes and visual specifications
-2. **Identify Atomic Units** - List discrete buildable features (screens, components, interactions)
-3. **Map Dependencies** - Note what each unit requires
-4. **Sequence by Dependency Graph** - Order units so dependencies come first
-5. **Write Self-Contained Prompts** - Each prompt includes full context
-
-## Self-Containment Rules
-
-Each prompt MUST include:
-- Enough context to understand the feature in isolation
-- All visual specs (colors, spacing, dimensions) relevant to that feature
-- All states that feature can be in
-- All interactions for that feature
-
-Each prompt MUST NOT:
-- Reference "see previous prompt" or "as described earlier"
-- Assume knowledge from other prompts
-- Leave specs vague ("appropriate styling")
-
-## Output Format
-
-Write a markdown document to the same directory as the UX spec:
-- If UX spec is `feature-x-ux-spec.md` → output `feature-x-build-prompts.md`
+Each task includes:
+- **Goal** - What this task accomplishes
+- **Context** - Brief context (2-3 sentences max)
+- **Requirements** - Specific requirements with exact values from spec
+- **Acceptance Criteria** - Measurable criteria
+- **Dependencies** - What must exist first
+- **Implementation Notes** - Technical considerations and workspace standards
 
 ## Full Agent Definition
 

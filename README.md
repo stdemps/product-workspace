@@ -137,13 +137,13 @@ This workspace includes specialized agents for comprehensive product development
 Turn rough ideas into buildable specifications (skills owned by their respective agents):
 
 ```
-Rough idea → /pm-generate-prd → /pm-clarify-prd → /designer-prd-to-ux → /ux-to-prompts → Build
+Rough idea → /pm-generate-prd → /pm-clarify-prd → /designer-prd-to-ux → /ux-to-implementation-plan → Build
 ```
 
 - **`/pm-generate-prd "idea"`** - PM generates structured PRDs from ideas
 - **`/pm-clarify-prd <file>`** - PM refines PRDs through structured questioning
 - **`/designer-prd-to-ux <file>`** - Designer translates PRDs to UX specs (6-pass framework)
-- **`/ux-to-prompts <file>`** - Utility generates build prompts for UI tools
+- **`/ux-to-implementation-plan <file>`** - Utility generates implementation plan with small, context-efficient chunks
 
 ### Brand Identity (Designer Skill)
 

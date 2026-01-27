@@ -214,22 +214,28 @@ Translate PRDs into UX specifications using a 6-pass framework (Designer skill).
 
 **Output:** `{prd-basename}-ux-spec.md`
 
-#### UX to Prompts (`/ux-to-prompts`)
+#### UX to Implementation Plan (`/ux-to-implementation-plan`)
 
-Transform UX specs into sequenced build prompts for UI tools (Utility skill).
+Transform UX specs into structured implementation plans with small, context-efficient chunks (Utility skill).
 
 **Usage:**
 ```bash
-/ux-to-prompts docs/prds/my-feature-ux-spec.md
+/ux-to-implementation-plan docs/prds/my-feature-ux-spec.md
 ```
 
 **What it does:**
-- Extracts atomic UI units from UX spec
-- Maps dependencies between components
-- Sequences by dependency graph
-- Generates self-contained prompts for v0, Bolt, or Claude
+- Creates a high-level implementation plan with phases
+- Breaks down into small, focused tasks (30-60 minute implementations)
+- Extracts only relevant context for each task
+- Ensures each task is self-contained and implementable without full spec
 
-**Output:** `{ux-basename}-build-prompts.md`
+**Output:** `{ux-basename}-implementation-plan.md`
+
+**Why this approach:**
+- Tasks are small enough for agents to implement without overwhelming context
+- Each task includes just enough information to implement
+- Clear dependencies and acceptance criteria
+- Can be worked on incrementally
 
 ## Hooks
 

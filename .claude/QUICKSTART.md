@@ -11,7 +11,7 @@ This workspace includes:
 - **3 Designer Skills**: Brand identity, PRD-to-UX, file review
 - **2 PM Skills**: Generate PRD, clarify PRD
 - **1 Engineer Skill**: File review
-- **2 Utility Skills**: PRD review (multi-perspective), UX-to-prompts
+- **2 Utility Skills**: PRD review (multi-perspective), UX-to-implementation-plan
 - **1 Collaboration Skill**: Multi-agent synthesis (get all 3 perspectives at once)
 - **Quality Gate Hook**: Pre-commit checks for TypeScript, ESLint, mobile-first patterns
 
@@ -131,8 +131,8 @@ The complete idea-to-build pipeline using agent-specific skills:
 # 3. Designer translates the PRD into UX specifications
 /designer-prd-to-ux docs/prds/api-dashboard.md
 
-# 4. Utility generates build prompts for UI tools (v0, Bolt, etc.)
-/ux-to-prompts docs/prds/api-dashboard-ux-spec.md
+# 4. Utility generates implementation plan with small, context-efficient chunks
+/ux-to-implementation-plan docs/prds/api-dashboard-ux-spec.md
 ```
 
 ### Applying Brand Consistency (Designer Skill)
