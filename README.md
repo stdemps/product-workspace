@@ -276,33 +276,13 @@ npm run test:debug
 
 ### TDD + UI Verification Workflow
 
-For autonomous feature development with Ralph Loop:
+For feature development with visual verification:
 
-**Full TDD + UI Verification Prompt**: See [prompts/tdd-ralph-loop.md](./prompts/tdd-ralph-loop.md)
-
-**Quick example:**
-```bash
-/ralph-loop "Task: Implement [FEATURE] using strict TDD and UI Verification workflow.
-[See prompts/tdd-ralph-loop.md for complete prompt]
-You MUST output TDD_UI_WORKFLOW_VERIFIED_AND_COMPLETE_20260109 ONLY when all tests pass AND all screenshots verified." --max-iterations 40
-```
-
-### Ralph Loop for Autonomous Development
-
-**[Ralph Loop](https://github.com/anthropics/claude-code/blob/main/plugins/ralph-wiggum/README.md)** enables autonomous, self-correcting development workflows.
-
-**Install:**
-```bash
-/plugin install ralph-wiggum@claude-plugins-official
-```
-
-**Perfect for:**
-- Autonomous TDD + UI verification workflows
-- Quality gate compliance
-- Multi-agent collaboration with testing
-- Production-ready feature development
-
-**Learn more:** [Ralph Loop Guide](./docs/ralph-loop-guide.md)
+1. **Write tests first** - Define expected behavior in `e2e/[feature].spec.ts`
+2. **Implement feature** - Write code to pass tests
+3. **Generate screenshots** - Capture UI states during test runs
+4. **Verify screenshots** - Check for correct styling, accessibility, responsiveness
+5. **Rename verified** - Add `verified_` prefix to approved screenshots
 
 ### Running Tests with Quality Gate
 

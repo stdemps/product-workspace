@@ -79,19 +79,10 @@ All tests verify:
 4. **Review screenshots** - Check visual correctness
 5. **Refactor** - Improve code while keeping tests green
 
-## Using with Ralph Loop
+## TDD + UI Verification Workflow
 
-For autonomous TDD + UI verification workflows:
-
-```bash
-/ralph-loop "Implement [FEATURE] with TDD + screenshots:
-1. Write tests in e2e/[feature].spec.ts
+1. Write tests in `e2e/[feature].spec.ts`
 2. Implement feature to pass tests
-3. Generate screenshots
-4. Verify screenshots show correct UI
-5. Rename verified screenshots with verified_ prefix
-
-Exit only when: All tests pass AND all screenshots prefixed with verified_" --max-iterations 40
-```
-
-See `docs/ralph-loop-guide.md` for more patterns.
+3. Generate screenshots during test runs
+4. Review screenshots for UI correctness
+5. Rename verified screenshots with `verified_` prefix

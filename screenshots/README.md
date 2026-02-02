@@ -41,15 +41,10 @@ This ensures only approved UI states are committed.
 
 ## TDD + UI Verification Workflow
 
-When using Ralph Loop with the TDD + UI verification prompt:
-
 1. Tests generate screenshots automatically
-2. Agent reviews screenshots for UI correctness
-3. Agent renames correct screenshots with `verified_` prefix
-4. Double-loop constraint ensures verification in separate iteration
-5. Exit only when ALL screenshots have `verified_` prefix
-
-See [../prompts/tdd-ralph-loop.md](../prompts/tdd-ralph-loop.md) for the full workflow.
+2. Review screenshots for UI correctness
+3. Rename correct screenshots with `verified_` prefix
+4. Only verified screenshots are tracked in git
 
 ## Naming Convention
 
@@ -80,6 +75,6 @@ ls screenshots/verified_*.png
 
 ## Integration with Quality Gates
 
-Screenshots are reviewed manually or by autonomous agents (Ralph Loop).
+Screenshots are reviewed manually or by Claude during development.
 
 They are NOT automatically checked by pre-commit hooks - verification is a human or agent review process.
