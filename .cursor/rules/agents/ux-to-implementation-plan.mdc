@@ -52,4 +52,4 @@ Each task includes:
 
 ## Full Agent Definition
 
-For complete capabilities, examples, and detailed transformation process, see: `.claude/skills/ux-to-prompts.js`
+For complete capabilities, examples, and detailed transformation process, see: `.claude/skills/ux-to-implementation-plan.js`

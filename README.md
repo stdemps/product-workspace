@@ -86,7 +86,7 @@ workspace-template/
 │   │   ├── pm-generate-prd.js        # PM skill
 │   │   ├── pm-clarify-prd.js         # PM skill
 │   │   ├── prd-review.js             # Utility skill
-│   │   └── ux-to-prompts.js          # Utility skill
+│   │   └── ux-to-implementation-plan.js  # Utility skill
 │   ├── hooks/              # Quality gate hooks
 │   │   └── quality-gate.sh
 │   └── claude.json         # Claude Code configuration

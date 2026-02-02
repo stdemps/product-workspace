@@ -25,7 +25,7 @@ This directory contains Claude Code configuration, skills, and hooks for enhance
 │   ├── pm-clarify-prd.js         # PM: Refine PRDs through questioning
 │   ├── prd-review.js             # Multi-perspective PRD review
 │   ├── collab.js                 # Multi-agent collaboration
-│   └── ux-to-prompts.js          # Utility: Generate build prompts
+│   └── ux-to-implementation-plan.js  # Utility: Generate implementation plan
 └── hooks/               # Event hooks
     └── quality-gate.sh  # Pre-commit quality enforcement
 ```
