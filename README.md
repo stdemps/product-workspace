@@ -168,7 +168,7 @@ Rough idea → /pm-generate-prd → /pm-clarify-prd → /designer-prd-to-ux → 
 /pm-generate-prd "A dashboard for monitoring API usage"
 /pm-clarify-prd docs/prds/api-dashboard.md
 /designer-prd-to-ux docs/prds/api-dashboard.md
-/ux-to-prompts docs/prds/api-dashboard-ux-spec.md
+/ux-to-implementation-plan docs/prds/api-dashboard-ux-spec.md
 ```
 
 **Getting Started:** See [.claude/QUICKSTART.md](.claude/QUICKSTART.md) for workflows and examples.

@@ -161,7 +161,7 @@ Comprehensive file review from all four perspectives.
 These skills form a pipeline for turning ideas into buildable specifications:
 
 ```
-Rough idea → /pm-generate-prd → /pm-clarify-prd → /designer-prd-to-ux → /ux-to-prompts → Build
+Rough idea → /pm-generate-prd → /pm-clarify-prd → /designer-prd-to-ux → /ux-to-implementation-plan → Build
 ```
 
 #### PM: Generate PRD (`/pm-generate-prd`)

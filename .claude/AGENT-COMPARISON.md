@@ -150,6 +150,8 @@ agents/engineer.md (source of truth)
 3. Update CLI agent in `.claude/agents/*.js`
 4. Update any related skills in `.claude/skills/` if they embed the persona
 
+**Utility skills (no persona in `agents/`):** Some skills are task-only and don’t have an `agents/*.md` definition. Examples: `ux-to-implementation-plan` (UX spec → implementation plan), `prd-review` (multi-perspective review). For these, keep `.cursor/rules/agents/*.mdc` and `.claude/skills/*.js` in sync; the CLI command is defined in `.claude/claude.json` (e.g. `ux-to-implementation-plan` → `skills/ux-to-prompts.js`).
+
 ---
 
 ## Summary Table
