@@ -55,6 +55,7 @@ Generate a PRD following the template structure with all 8 sections:
 4. **Generate the complete PRD** filling all 8 sections matching the template structure
 5. **Validate against template** - Ensure all required sections are present
 6. **Keep it tight**—a builder should be able to read this in 5 minutes
+7. **After generating (or when the user is about to save to `docs/prds/`):** If project context is still the default template (i.e. `.cursor/rules/project-context.mdc` contains "Replace this file with your project-specific context"), suggest: "Want to capture project context from this PRD? Run @setup-project-context and reference this PRD (e.g. @setup-project-context use docs/prds/[filename].md) to pre-fill and then answer a few questions."
 
 ## Rules
 

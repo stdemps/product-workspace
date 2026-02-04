@@ -122,6 +122,7 @@ After all questions are complete:
 2. List any remaining ambiguities not fully resolved
 3. Suggest priority order for addressing unresolved items
 4. Offer to update the PRD with the clarified requirements
+5. If project context is still the template (\`.cursor/rules/project-context.mdc\` contains "Replace this file with your project-specific context"), offer to run the project-context bootstrap: "Key clarifications from this session can inform project context. Run \`/setup-project-context\` and pass this PRD path (e.g. \`/setup-project-context docs/prds/[this PRD filename].md\`) to pre-fill and answer a few questions."
 
 ## Error Handling & Recovery
 

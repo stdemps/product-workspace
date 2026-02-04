@@ -1,5 +1,5 @@
 ---
-alwaysApply: true
+alwaysApply: false
 ---
 
 ## Project Context Template
@@ -51,7 +51,7 @@ This file should include:
 
 ### CRITICAL: Mobile-First Requirement
 This project uses **mobile-first responsive design** for ALL features. Before starting any UI work:
-- ✅ Review the [Responsive Design Checklist](../../../docs/reviewers/responsive-design-checklist.md)
+- ✅ Review the [Responsive Design Checklist](../checklists/responsive-design-checklist.md)
 - ✅ Start with mobile layout (no breakpoint prefix)
 - ✅ Enhance for larger screens with `md:` and `lg:` prefixes
 - ❌ NEVER build desktop-first and retrofit mobile
@@ -60,7 +60,7 @@ This project uses **mobile-first responsive design** for ALL features. Before st
 
 ## Resources
 
-- **Responsive Design Checklist:** [/docs/reviewers/responsive-design-checklist.md](../../../docs/reviewers/responsive-design-checklist.md) ⭐ **READ THIS FIRST**
+- **Responsive Design Checklist:** [.cursor/checklists/responsive-design-checklist.md](../checklists/responsive-design-checklist.md) ⭐ **READ THIS FIRST**
 - [Link to documentation]
 - [Link to design system]
 ```

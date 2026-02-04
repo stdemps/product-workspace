@@ -10,7 +10,7 @@ alwaysApply: true
 This project experienced significant rework due to desktop-first implementation. To prevent this:
 - ✅ **ALWAYS start with mobile layout** (no breakpoint prefix = mobile)
 - ✅ **Build mobile experience FIRST, then enhance for larger screens**
-- ✅ **Review the [Responsive Design Checklist](../../../docs/reviewers/responsive-design-checklist.md) before starting any UI work**
+- ✅ **Review the [Responsive Design Checklist](../checklists/responsive-design-checklist.md) before starting any UI work**
 - ❌ **NEVER build desktop-first and add mobile as afterthought**
 
 ### Breakpoints (Tailwind Default)
@@ -332,8 +332,9 @@ import { CheckCircle2, XCircle, AlertCircle } from "lucide-react"
 ### Color System
 - Use semantic color tokens: `bg-primary`, `text-foreground`, `border-border`
 - Don't use raw color values: `bg-blue-500` → use `bg-primary`
-- Colors defined in `globals.css` CSS variables
+- Colors defined in `globals.css` CSS variables (shadcn/ui theme system)
 - Support both light and dark modes
+- **For brand customization:** Use `@brand-identity` agent or `skills/brand-identity/resources/design-tokens.json` to customize colors, then implement in `globals.css` as CSS variables
 
 ### Spacing
 - Use Tailwind spacing scale: `p-4`, `m-6`, `gap-8`
@@ -391,7 +392,7 @@ import { CheckCircle2, XCircle, AlertCircle } from "lucide-react"
 - [ ] **Tested at key sizes:** 375px (mobile), 768px (tablet), 1024px (desktop)
 - [ ] **No horizontal scroll** at any breakpoint
 - [ ] **Content prioritized** for mobile (what's most important?)
-- [ ] **See [Responsive Design Checklist](../../../docs/reviewers/responsive-design-checklist.md) for complete requirements**
+- [ ] **See [Responsive Design Checklist](../checklists/responsive-design-checklist.md) for complete requirements**
 
 **Accessibility:**
 - [ ] Keyboard accessible (tab through entire interface)
