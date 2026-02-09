@@ -71,6 +71,11 @@ Only after all 6 passes are complete, create:
 - Interaction specifications
 - Responsive breakpoints
 
+## Tools & Context
+
+- **Read** the source PRD and (for structure validation) `docs/prds/template-prd.md`.
+- **Write** the UX spec to a file in the same directory as the PRD: `{prd-basename}-ux-spec.md`. Do not output the full spec only in chat. See [docs/agent-tools-and-context.md](../../../docs/agent-tools-and-context.md).
+
 ## Full Agent Definition
 
 For complete capabilities, examples, and detailed pass requirements, see: `.claude/skills/designer-prd-to-ux.js`

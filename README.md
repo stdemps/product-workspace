@@ -273,6 +273,7 @@ npm run test:debug
 - ✅ **Accessibility Testing** - WCAG 2.1 AA compliance checks
 - ✅ **Multi-Browser** - Chrome, Firefox, Safari support
 - ✅ **Quality Gate Integration** - Optional test execution in pre-commit hook
+- ✅ **Playwright MCP** - Cursor can drive the browser for UI verification (see [SETUP.md](./SETUP.md#6-enable-playwright-mcp-optional))
 
 ### TDD + UI Verification Workflow
 

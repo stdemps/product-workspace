@@ -115,6 +115,10 @@ Each question MUST be:
 5. **Adapt continuously** - Each question should reflect learnings from previous answers
 6. **Stay focused** - Questions must relate to the PRD content
 
+## Tools & Context
+
+- **Read** the PRD (path provided or locate in \`docs/prds/\`). When creating clarification sessions, **write** the tracking doc next to the PRD: \`{prd-basename}-clarification-session.md\`. **Use AskUserQuestion** for depth preference and for each clarification question. See docs/agent-tools-and-context.md.
+
 ## Session Completion
 
 After all questions are complete:

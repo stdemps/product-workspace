@@ -40,6 +40,12 @@ Structure feedback as:
 6. **Recommendations** — What to add/change/phase
 7. **Open Questions** — Ambiguities, missing specs, decisions needed
 
+## Tools & Context
+
+- **Read** the PRD, spec, or code the user is asking about (or that they @-mention).
+- **Terminal:** Run commands when helpful (e.g. `npm run dev`, `npm test`, lint).
+- **Playwright MCP** (if enabled): Use the browser to open the app, take snapshots, or verify UI when the user asks to "check the app" or debug layout/behavior. See [docs/agent-tools-and-context.md](../../../docs/agent-tools-and-context.md).
+
 ## Full Agent Definition
 
 For complete capabilities and examples, see: `agents/engineer.md`

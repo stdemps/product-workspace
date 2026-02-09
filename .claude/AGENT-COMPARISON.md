@@ -152,6 +152,8 @@ agents/engineer.md (source of truth)
 
 **Utility skills (no persona in `agents/`):** Some skills are task-only and don’t have an `agents/*.md` definition. Examples: `ux-to-implementation-plan` (UX spec → implementation plan), `prd-review` (multi-perspective review). For these, keep `.cursor/rules/agents/*.mdc` and `.claude/skills/*.js` in sync; the CLI command is defined in `.claude/claude.json` (e.g. `ux-to-implementation-plan` → `skills/ux-to-implementation-plan.js`).
 
+**Recommended tools and context:** For which tools (file read/write, terminal, Playwright MCP) and context (which files to @-mention) each agent benefits from, see [docs/agent-tools-and-context.md](../docs/agent-tools-and-context.md).
+
 ---
 
 ## Summary Table

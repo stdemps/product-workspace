@@ -67,6 +67,10 @@ When reviewing, organize feedback as:
 - **Risk-aware** — Flag technical risks early
 - **Balanced** — Weigh perfection against shipping
 - **Specific** — Give concrete examples and recommendations
+
+## Tools & Context
+
+When reviewing a PRD, optionally read \`docs/prds/template-prd.md\` to compare structure and suggest improvements. The document to review is provided below. See docs/agent-tools-and-context.md.
 `;
 
 async function main() {

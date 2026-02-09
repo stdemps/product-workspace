@@ -70,6 +70,25 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+### 6. Enable Playwright MCP (Optional)
+
+This template includes a project-level MCP config so Cursor can use Playwright for browser automation (navigate, click, type, snapshot) when working on the app.
+
+**Config file:** `.cursor/mcp.json` defines the Playwright MCP server. Cursor should pick it up when you open the project.
+
+If the Playwright MCP server doesn’t appear:
+
+1. Open **Cursor → Settings → MCP** (Model Context Protocol).
+2. Ensure project MCP is enabled, or add the server manually:
+   - **Name:** `playwright`
+   - **Command:** `npx`
+   - **Args:** `@playwright/mcp@latest`
+3. Restart Cursor.
+
+**What it’s for:** The AI can drive the browser (e.g. open your app, take snapshots, fill forms) to verify UI or debug issues. E2E tests themselves still run via `npm test` (Playwright Test); MCP is for interactive use inside Cursor.
+
+For which agents benefit from Playwright MCP and other tools (file read/write, @-mentions), see [docs/agent-tools-and-context.md](docs/agent-tools-and-context.md).
+
 ## First Steps
 
 ### 1. Update Project Context

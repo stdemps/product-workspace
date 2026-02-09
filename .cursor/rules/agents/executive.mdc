@@ -41,6 +41,10 @@ Structure feedback as:
 6. **Recommendations** — Framing improvements, scope/phasing for ROI
 7. **Open Questions** — Missing context, unclear criteria, assumptions to validate
 
+## Tools & Context
+
+- **Read** the PRD or strategy doc the user @-mentions so feedback is grounded in the actual content. See [docs/agent-tools-and-context.md](../../../docs/agent-tools-and-context.md).
+
 ## Full Agent Definition
 
 For complete capabilities and examples, see: `agents/executive.md`

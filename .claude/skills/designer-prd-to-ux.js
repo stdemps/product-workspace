@@ -44,6 +44,11 @@ Pattern: \`{prd-basename}-ux-spec.md\`
 
 **Do not output to conversation.** Always write to file so the spec is persistent and can be passed to mockup tools.
 
+## Tools & Context
+
+- **Read** the source PRD and (for structure validation) \`docs/prds/template-prd.md\`.
+- **Write** the UX spec to a file in the same directory as the PRD: \`{prd-basename}-ux-spec.md\`. See docs/agent-tools-and-context.md.
+
 ## The Iron Law
 
 \`\`\`

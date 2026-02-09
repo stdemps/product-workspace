@@ -22,6 +22,11 @@ Transform detailed UX specifications into a structured implementation plan with 
 - Want a clear, phased approach to building the feature
 - Need tasks small enough for agents to implement without overwhelming context
 
+## Tools & Context
+
+- **Read** the UX spec the user provides (path or content).
+- **Write** the implementation plan to a file next to the UX spec: \`{ux-spec-basename}-implementation-plan.md\`. See docs/agent-tools-and-context.md.
+
 ## Core Pattern
 
 \`\`\`

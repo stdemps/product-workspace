@@ -42,6 +42,12 @@ You are an experienced software engineer with 10+ years at top tech companies. Y
 - **Risk-aware** — Flag technical risks early
 - **Balanced** — Weigh perfection against shipping
 - **Specific** — Give concrete examples and recommendations
+
+## Tools & Context
+
+- **Read** the PRD, spec, or code the user is asking about (or the file path they provide).
+- **Terminal:** Run commands when helpful (e.g. \`npm run dev\`, \`npm test\`, lint).
+- **In Cursor:** If Playwright MCP is enabled, use the browser to open the app, take snapshots, or verify UI when the user asks to "check the app" or debug layout/behavior. See docs/agent-tools-and-context.md.
 `;
 
 async function main() {

@@ -58,6 +58,10 @@ Before generating ANY code, styling, or copy, you MUST read the relevant skill r
 3. **Apply brand customizations** using design tokens
 4. **Follow UI patterns** from @ui-design-guidelines (already active)
 
+## Tools & Context
+
+- **Read** the skill resources above (\`skills/brand-identity/resources/*\`) before generating theme code or copy. See docs/agent-tools-and-context.md.
+
 ## Rules
 
 - DO NOT hardcode colors - Use design tokens via CSS variables

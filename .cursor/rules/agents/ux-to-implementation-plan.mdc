@@ -50,6 +50,11 @@ Each task includes:
 - **Dependencies** - What must exist first
 - **Implementation Notes** - Technical considerations and workspace standards
 
+## Tools & Context
+
+- **Read** the UX spec the user @-mentions or provides (e.g. from `designer-prd-to-ux`).
+- **Write** the implementation plan to a file next to the UX spec: `{ux-spec-basename}-implementation-plan.md`. See [docs/agent-tools-and-context.md](../../../docs/agent-tools-and-context.md).
+
 ## Full Agent Definition
 
 For complete capabilities, examples, and detailed transformation process, see: `.claude/skills/ux-to-implementation-plan.js`

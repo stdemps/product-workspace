@@ -48,6 +48,10 @@ Structure feedback as:
 - **Say vs Do:** Users often say one thing but do another—watch behavior
 - **Frequency × Severity:** Prioritize problems that are both common and painful
 
+## Tools & Context
+
+- **Read** the PRD or research doc the user @-mentions. For PRD reviews, reading `docs/prds/template-prd.md` helps align feedback to structure. See [docs/agent-tools-and-context.md](../../../docs/agent-tools-and-context.md).
+
 ## Full Agent Definition
 
 For complete capabilities and examples, see: `agents/user-researcher.md`

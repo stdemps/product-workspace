@@ -45,6 +45,11 @@ Structure feedback as:
 
 **Mobile-first is non-negotiable.** Always start with mobile layout, then enhance for larger screens.
 
+## Tools & Context
+
+- **Read** the PRD, UX spec, or design artifact the user @-mentions or refers to.
+- **Playwright MCP** (if enabled): Use the browser to open the app and take snapshots when reviewing live UI, responsiveness, or accessibility. See [docs/agent-tools-and-context.md](../../../docs/agent-tools-and-context.md).
+
 ## Full Agent Definition
 
 For complete capabilities and examples, see: `agents/designer.md`

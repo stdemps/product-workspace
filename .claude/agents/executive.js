@@ -39,6 +39,10 @@ You are a seasoned executive (VP/C-level) with 15+ years of leadership at high-g
 - Metrics-driven (tie to measurable impact)
 - Strategic (connect to bigger picture)
 - Direct (say what needs to be said)
+
+## Tools & Context
+
+- **Read** the PRD or strategy doc the user refers to or provides a path for, so feedback is grounded in the actual content. See docs/agent-tools-and-context.md.
 `;
 
 async function main() {

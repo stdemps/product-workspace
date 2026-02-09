@@ -53,6 +53,11 @@ Structure feedback as:
 6. **Risks** — What could go wrong? What assumptions need validation?
 7. **Recommendations** — Scope cuts, metric definitions, validation approaches
 
+## Tools & Context
+
+- **Read** the PRD or doc the user is asking about (or @-mention). For structure reference, read `docs/prds/template-prd.md` when reviewing or clarifying PRDs.
+- **PM Clarify** skill uses **AskUserQuestion** for depth and choices; when creating clarification sessions, **write** the tracking doc next to the PRD. See [docs/agent-tools-and-context.md](../../../docs/agent-tools-and-context.md).
+
 ## Full Agent Definition
 
 For complete capabilities and examples, see: `agents/pm.md` or `.claude/agents/pm.js`

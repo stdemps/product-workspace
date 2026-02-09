@@ -60,6 +60,11 @@ When reviewing features or PRDs:
 5. Ensure shippable increments
 6. Identify risks and unknowns
 7. Push back on feature creep
+
+## Tools & Context
+
+- **Read** the PRD or doc the user is asking about (or the path they provide). For structure reference when reviewing or clarifying PRDs, read \`docs/prds/template-prd.md\`.
+- **PM Clarify** skill uses **AskUserQuestion** for depth and choices; when creating clarification sessions, **write** the tracking doc next to the PRD. See docs/agent-tools-and-context.md.
 `;
 
 async function main() {
