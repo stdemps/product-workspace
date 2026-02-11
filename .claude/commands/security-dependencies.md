@@ -1,0 +1,84 @@
+---
+name: security-dependencies
+description: Dependency vulnerability scanning and SBOM generation across npm, Python, Go, and Rust ecosystems
+---
+
+# Dependency Vulnerability Scanning
+
+Multi-ecosystem dependency security analysis for vulnerability management.
+
+## Core Components
+
+The framework includes a `DependencyScanner` class that detects and analyzes vulnerabilities across npm, Python, Go, and Rust ecosystems. It automatically identifies project types through manifest file detection (package.json, requirements.txt, go.mod, Cargo.toml) and executes appropriate scanning tools.
+
+## Key Capabilities
+
+**Vulnerability Detection**: Run ecosystem-specific audits using:
+- `npm audit --json` for JavaScript dependencies
+- Safety and pip-audit for Python packages
+- govulncheck for Go modules
+- cargo audit for Rust crates
+
+**Prioritization System**: Calculate risk scores based on CVSS metrics, exploit availability, and fix accessibility, enabling teams to address the most critical issues first.
+
+**Automated Remediation**: Generate actionable remediation plans with specific version upgrade paths and shell scripts for `npm audit fix && npm update` or equivalent commands per ecosystem.
+
+**SBOM Generation**: Create CycloneDX-formatted Software Bills of Materials tracking all dependencies with package URLs.
+
+## Quick Start
+
+```bash
+# npm
+npm audit --json > npm-audit.json
+
+# Python
+pip install safety pip-audit
+safety check --json > safety-report.json
+pip-audit --format=json > pip-audit-report.json
+
+# Go
+go install golang.org/x/vuln/cmd/govulncheck@latest
+govulncheck ./...
+
+# Rust
+cargo install cargo-audit
+cargo audit --json > cargo-audit.json
+```
+
+## CI/CD Integration
+
+```yaml
+# GitHub Actions
+name: Dependency Scan
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 6am
+  pull_request:
+    branches: [main]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run dependency scan
+        run: |
+          npm audit --json > npm-audit.json || true
+          pip-audit --format=json > pip-audit.json || true
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-reports
+          path: |
+            npm-audit.json
+            pip-audit.json
+```
+
+## Best Practices
+
+1. Implement daily scanning via CI/CD
+2. Prioritize vulnerabilities by severity
+3. Automate patch updates while requiring manual approval for major versions
+4. Maintain comprehensive test coverage
+5. Preserve rollback capabilities
+6. Generate and maintain SBOMs for compliance

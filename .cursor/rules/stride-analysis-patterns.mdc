@@ -1,0 +1,141 @@
+---
+description: Apply STRIDE methodology to systematically identify threats. Use when analyzing system security, conducting threat modeling sessions, or creating security documentation.
+globs:
+alwaysApply: false
+---
+
+# STRIDE Analysis Patterns
+
+Systematic threat identification using the STRIDE methodology.
+
+## When to Use
+
+- Starting new threat modeling sessions
+- Analyzing existing system architecture
+- Reviewing security design decisions
+- Creating threat documentation
+- Training teams on threat identification
+- Compliance and audit preparation
+
+## STRIDE Categories
+
+```
+S - Spoofing              --> Authentication threats
+T - Tampering             --> Integrity threats
+R - Repudiation           --> Non-repudiation threats
+I - Information Disclosure --> Confidentiality threats
+D - Denial of Service     --> Availability threats
+E - Elevation of Privilege --> Authorization threats
+```
+
+## Threat Analysis Matrix
+
+| Category            | Key Question                                  | Control Family |
+| ------------------- | --------------------------------------------- | -------------- |
+| **Spoofing**        | Can attacker pretend to be someone else?       | Authentication |
+| **Tampering**       | Can attacker modify data in transit/rest?      | Integrity      |
+| **Repudiation**     | Can attacker deny actions?                     | Logging/Audit  |
+| **Info Disclosure** | Can attacker access unauthorized data?         | Encryption     |
+| **DoS**             | Can attacker disrupt availability?             | Rate limiting  |
+| **Elevation**       | Can attacker gain higher privileges?           | Authorization  |
+
+## STRIDE Questionnaire Per Component
+
+### Spoofing Questions
+- Can an attacker impersonate a legitimate user?
+- Are authentication tokens properly validated?
+- Can session identifiers be predicted or stolen?
+- Is multi-factor authentication available?
+
+### Tampering Questions
+- Can data be modified in transit?
+- Can data be modified at rest?
+- Are input validation controls sufficient?
+- Can an attacker manipulate application logic?
+
+### Repudiation Questions
+- Are all security-relevant actions logged?
+- Can logs be tampered with?
+- Is there sufficient attribution for actions?
+- Are timestamps reliable and synchronized?
+
+### Information Disclosure Questions
+- Is sensitive data encrypted at rest?
+- Is sensitive data encrypted in transit?
+- Can error messages reveal sensitive information?
+- Are access controls properly enforced?
+
+### Denial of Service Questions
+- Are rate limits implemented?
+- Can resources be exhausted by malicious input?
+- Is there protection against amplification attacks?
+- Are there single points of failure?
+
+### Elevation of Privilege Questions
+- Are authorization checks performed consistently?
+- Can users access other users' resources?
+- Can privilege escalation occur through parameter manipulation?
+- Is the principle of least privilege followed?
+
+## STRIDE Per Element Type
+
+| Element Type | Applicable STRIDE Categories |
+|-------------|------------------------------|
+| External Entity | S, R |
+| Process | S, T, R, I, D, E |
+| Data Store | T, R, I, D |
+| Data Flow | T, I, D |
+
+## Risk Assessment
+
+### Risk Matrix
+
+```
+              IMPACT
+         Low  Med  High Crit
+    Low   1    2    3    4
+L   Med   2    4    6    8
+I   High  3    6    9   12
+K   Crit  4    8   12   16
+```
+
+### Prioritization
+- Score >= 12: Critical — Immediate action
+- Score >= 6: High — Address this sprint
+- Score >= 3: Medium — Plan for next sprint
+- Score < 3: Low — Track and monitor
+
+## Threat Model Document Template
+
+1. **System Overview** — Description, data flow diagram, trust boundaries
+2. **Assets** — What needs protection (credentials, PII, sessions, config)
+3. **STRIDE Analysis** — Threats per category with ID, target, impact, likelihood
+4. **Mitigations** — Checklist per category
+5. **Risk Assessment** — Risk matrix and prioritized risks
+6. **Recommendations** — Immediate, short-term (30 days), long-term (90 days)
+
+## Common Mitigations by Category
+
+| Category | Key Mitigations |
+|----------|----------------|
+| Spoofing | MFA, secure session management, account lockout, secure tokens |
+| Tampering | Input validation, parameterized queries, integrity checks (HMAC), CSP |
+| Repudiation | Comprehensive audit logging, log integrity protection, digital signatures |
+| Info Disclosure | Encryption at rest/in transit, access controls, sanitized error messages |
+| DoS | Rate limiting, auto-scaling, DDoS protection, circuit breakers |
+| Elevation | Proper authorization, least privilege, server-side validation, RBAC |
+
+## Best Practices
+
+- **Involve stakeholders** — Security, dev, and ops perspectives
+- **Be systematic** — Cover all STRIDE categories
+- **Prioritize realistically** — Focus on high-impact threats
+- **Update regularly** — Threat models are living documents
+- **Use visual aids** — DFDs help communication
+- **Don't skip categories** — Each reveals different threats
+- **Don't ignore low-probability** — High-impact threats matter
+
+## Resources
+
+- [Microsoft STRIDE Documentation](https://docs.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-threats)
+- [OWASP Threat Modeling](https://owasp.org/www-community/Threat_Modeling)

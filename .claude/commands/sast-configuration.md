@@ -1,0 +1,89 @@
+---
+name: sast-configuration
+description: Set up and configure SAST tools (Semgrep, SonarQube, CodeQL) with custom rules, CI/CD integration, and false positive management
+---
+
+# SAST Configuration
+
+Setup and configuration guidance for SAST tools including Semgrep, SonarQube, and CodeQL.
+
+## When to Use
+
+- Setting up SAST scanning in CI/CD pipelines
+- Creating custom security rules for your codebase
+- Configuring quality gates and compliance policies
+- Optimizing scan performance and reducing false positives
+- Integrating multiple SAST tools for defense-in-depth
+
+## Tool Capabilities
+
+### Semgrep
+- Custom rule creation with pattern matching
+- Language-specific security rules (Python, JavaScript, Go, Java, etc.)
+- CI/CD integration (GitHub Actions, GitLab CI, Jenkins)
+- False positive tuning and rule optimization
+
+### SonarQube
+- Quality gate configuration
+- Security hotspot analysis
+- Code coverage and technical debt tracking
+- Custom quality profiles for languages
+
+### CodeQL
+- GitHub Advanced Security integration
+- Custom query development
+- Vulnerability variant analysis
+- SARIF result processing
+
+## Quick Start
+
+```bash
+# Semgrep
+pip install semgrep
+semgrep --config=auto --error
+
+# SonarQube with Docker
+docker run -d --name sonarqube -p 9000:9000 sonarqube:latest
+
+# CodeQL CLI
+gh extension install github/gh-codeql
+codeql database create mydb --language=python
+```
+
+## CI/CD Integration
+
+### GitHub Actions
+```yaml
+- name: Run Semgrep
+  uses: returntocorp/semgrep-action@v1
+  with:
+    config: >-
+      p/security-audit
+      p/owasp-top-ten
+```
+
+### Pre-commit Hook
+```yaml
+# .pre-commit-config.yaml
+- repo: https://github.com/returntocorp/semgrep
+  rev: v1.45.0
+  hooks:
+    - id: semgrep
+      args: ['--config=auto', '--error']
+```
+
+## Best Practices
+
+1. **Start with Baseline** — Run initial scan, prioritize critical/high findings
+2. **Incremental Adoption** — Begin with security rules, gradually add quality rules
+3. **False Positive Management** — Document suppressions, create allow lists, review regularly
+4. **Performance** — Exclude test/generated code, use incremental scanning, cache results
+5. **Team Enablement** — Security training, internal documentation, security champions
+
+## Tool Comparison
+
+| Tool      | Best For                 | Language Support | Cost            | Integration   |
+| --------- | ------------------------ | ---------------- | --------------- | ------------- |
+| Semgrep   | Custom rules, fast scans | 30+ languages    | Free/Enterprise | Excellent     |
+| SonarQube | Code quality + security  | 25+ languages    | Free/Commercial | Good          |
+| CodeQL    | Deep analysis, research  | 10+ languages    | Free (OSS)      | GitHub native |

@@ -1,0 +1,72 @@
+---
+name: security-hardening
+description: Orchestrate defense-in-depth security hardening across application layers with 4-phase execution and mandatory checkpoints
+---
+
+# Security Hardening Orchestrator
+
+Comprehensive security hardening workflow with defense-in-depth strategies across application layers.
+
+## Execution Model
+
+This workflow enforces sequential step execution without skipping or reordering. Each step produces output files in `.security-hardening/` directory, with subsequent steps reading from prior outputs rather than relying on context memory.
+
+## Critical Rules
+
+- Sequential execution of all steps in prescribed order
+- File-based state persistence with checkpoint validation
+- Mandatory user approval at three phase gates before proceeding
+- Immediate halt on any failure with error presentation
+- No cross-plugin agent dependencies
+
+## Phase Structure
+
+### Phase 1: Assessment & Threat Modeling (Steps 1-3)
+
+1. **Vulnerability Scanning** — Run SAST/DAST/dependency scanning
+2. **STRIDE Threat Modeling** — Apply STRIDE to system architecture
+3. **Architecture Security Review** — Review security design decisions
+
+**CHECKPOINT 1: Review findings before proceeding**
+
+### Phase 2: Vulnerability Remediation (Steps 4-7)
+
+4. **Critical Vulnerability Fixes** — Address critical/high findings
+5. **Backend Hardening** — Server-side security controls
+6. **Frontend Hardening** — Client-side security controls
+7. **Mobile Hardening** — Mobile-specific security (if applicable)
+
+**CHECKPOINT 2: Review remediations before proceeding**
+
+### Phase 3: Security Controls & Infrastructure (Steps 8-10)
+
+8. **Authentication Enhancement** — MFA, session management, OAuth
+9. **Infrastructure Security** — Network, firewall, cloud security
+10. **Secrets Management** — Vault, key rotation, secret scanning
+
+**CHECKPOINT 3: Review controls before proceeding**
+
+### Phase 4: Validation & Compliance (Steps 11-13)
+
+11. **Penetration Testing** — Validate security controls
+12. **Compliance Verification** — Check against frameworks
+13. **SIEM Integration** — Monitoring and alerting setup
+
+## Parameters
+
+- `--depth [quick|standard|comprehensive]` — Assessment scope
+- `--compliance [owasp,soc2,gdpr,hipaa,pci-dss]` — Target frameworks
+
+## State Management
+
+Maintains persistent `state.json` tracking:
+- Current step
+- Completed steps
+- Compliance frameworks
+- Session status (enables resume)
+
+## Usage
+
+```
+/security-hardening --depth standard --compliance owasp,soc2
+```

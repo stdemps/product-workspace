@@ -1,0 +1,125 @@
+---
+name: attack-tree-construction
+description: Build comprehensive attack trees to visualize threat paths. Use when mapping attack scenarios, identifying defense gaps, or communicating security risks to stakeholders.
+---
+
+# Attack Tree Construction
+
+Systematic attack path visualization and analysis.
+
+## When to Use This Skill
+
+- Visualizing complex attack scenarios
+- Identifying defense gaps and priorities
+- Communicating risks to stakeholders
+- Planning defensive investments
+- Penetration test planning
+- Security architecture review
+
+## Core Concepts
+
+### Attack Tree Structure
+
+```
+                    [Root Goal]
+                         |
+            +------------+------------+
+            |                         |
+       [Sub-goal 1]              [Sub-goal 2]
+       (OR node)                 (AND node)
+            |                         |
+      +-----+-----+             +-----+-----+
+      |           |             |           |
+   [Attack]   [Attack]      [Attack]   [Attack]
+    (leaf)     (leaf)        (leaf)     (leaf)
+```
+
+### Node Types
+
+| Type     | Symbol    | Description             |
+| -------- | --------- | ----------------------- |
+| **OR**   | Oval      | Any child achieves goal |
+| **AND**  | Rectangle | All children required   |
+| **Leaf** | Box       | Atomic attack step      |
+
+### Attack Attributes
+
+| Attribute     | Description             | Values             |
+| ------------- | ----------------------- | ------------------ |
+| **Cost**      | Resources needed        | $, $$, $$$         |
+| **Time**      | Duration to execute     | Hours, Days, Weeks |
+| **Skill**     | Expertise required      | Low, Medium, High  |
+| **Detection** | Likelihood of detection | Low, Medium, High  |
+
+## Analysis Methodology
+
+### 1. Define Root Goal
+State the attacker's ultimate objective (e.g., "Gain unauthorized access to user account")
+
+### 2. Decompose Into Sub-Goals
+Break the root goal into alternative approaches (OR nodes) or required steps (AND nodes)
+
+### 3. Add Leaf Attacks
+Define specific, atomic attack techniques at each branch endpoint
+
+### 4. Assign Attributes
+Rate each leaf attack for cost, time, skill, and detection risk
+
+### 5. Analyze Paths
+
+**Find easiest path**: Follow OR branches with lowest difficulty
+**Find cheapest path**: Follow OR branches with lowest cost
+**Find stealthiest path**: Follow OR branches with lowest detection risk
+
+### 6. Identify Critical Nodes
+Nodes that appear in the most attack paths are highest priority for mitigation
+
+### 7. Map Mitigations
+For each leaf attack, identify security controls that prevent or detect it
+
+## Example: Account Takeover Tree
+
+```
+Take Over User Account (OR)
+├── Steal Credentials (OR)
+│   ├── Phishing Attack [Low skill, Low cost, Med detection]
+│   ├── Credential Stuffing [Trivial skill, Low cost, High detection]
+│   └── Keylogger Malware [Med skill, Med cost, Med detection]
+├── Bypass Authentication (OR)
+│   ├── Session Hijacking [Med skill, Low cost, Low detection]
+│   └── Auth Bypass Vulnerability [High skill, Low cost, Low detection]
+└── Social Engineering (AND)
+    ├── Gather Personal Information [Low skill, Free, No detection]
+    └── Call Support Desk [Med skill, Free, Med detection]
+```
+
+## Coverage Analysis
+
+After mapping mitigations, calculate:
+- **Total attack paths** — how many unique paths exist
+- **Blocked paths** — paths where at least one leaf has mitigation
+- **Open paths** — unmitigated attack paths (highest priority)
+- **Coverage percentage** — blocked / total paths
+
+## Prioritizing Mitigations
+
+Rank mitigations by:
+1. Number of attack paths blocked (coverage impact)
+2. Difficulty of the attacks they block (easier attacks = higher priority)
+3. Implementation cost vs. risk reduction
+
+## Best Practices
+
+- **Start with clear goals** — Define what attacker wants
+- **Be exhaustive** — Consider all attack vectors
+- **Attribute attacks** — Cost, skill, and detection
+- **Update regularly** — New threats emerge
+- **Validate with experts** — Red team review
+- **Don't oversimplify** — Real attacks are complex
+- **Don't ignore insider threats** — Not all attackers are external
+
+## Resources
+
+- [Attack Trees by Bruce Schneier](https://www.schneier.com/academic/archives/1999/12/attack_trees.html)
+- [MITRE ATT&CK Framework](https://attack.mitre.org/)
+- [OWASP Attack Surface Analysis](https://owasp.org/www-community/controls/Attack_Surface_Analysis_Cheat_Sheet)

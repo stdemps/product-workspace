@@ -1,0 +1,138 @@
+---
+name: security-sast
+description: Static Application Security Testing (SAST) for code vulnerability analysis across multiple languages and frameworks
+---
+
+# SAST Security Analysis
+
+Static Application Security Testing for comprehensive code vulnerability detection across multiple languages, frameworks, and security patterns.
+
+## Capabilities
+
+- **Multi-language SAST**: Python, JavaScript/TypeScript, Java, Ruby, PHP, Go, Rust
+- **Tool integration**: Bandit, Semgrep, ESLint Security, SonarQube, CodeQL, PMD, SpotBugs, Brakeman, gosec, cargo-clippy
+- **Vulnerability patterns**: SQL injection, XSS, hardcoded secrets, path traversal, IDOR, CSRF, insecure deserialization
+- **Framework analysis**: Django, Flask, React, Express, Spring Boot, Rails, Laravel
+- **Custom rule authoring**: Semgrep pattern development for organization-specific security policies
+
+## Tool Selection
+
+| Tool      | Best For                 | Language Support | Cost            |
+| --------- | ------------------------ | ---------------- | --------------- |
+| Semgrep   | Custom rules, fast scans | 30+ languages    | Free/Enterprise |
+| SonarQube | Code quality + security  | 25+ languages    | Free/Commercial |
+| CodeQL    | Deep analysis, research  | 10+ languages    | Free (OSS)      |
+| Bandit    | Python security          | Python           | Free            |
+| ESLint    | JS/TS security           | JS/TS            | Free            |
+
+## Quick Start
+
+```bash
+# Semgrep (multi-language)
+pip install semgrep
+semgrep --config=auto --json --output=semgrep-report.json
+semgrep --config=p/security-audit --json
+semgrep --config=p/owasp-top-ten --json
+
+# Python: Bandit
+pip install bandit
+bandit -r . -f json -o bandit-report.json
+
+# JavaScript/TypeScript: ESLint Security
+npm install --save-dev eslint @eslint/plugin-security
+eslint . --ext .js,.jsx,.ts,.tsx --format json > eslint-security.json
+
+# Java
+mvn spotbugs:check
+
+# Ruby
+brakeman -o report.json -f json
+
+# Go
+gosec -fmt=json -out=gosec.json ./...
+
+# Rust
+cargo clippy -- -W clippy::unwrap_used
+```
+
+## Custom Semgrep Rules
+
+```yaml
+rules:
+  - id: sql-injection-format-string
+    pattern: cursor.execute("... %s ..." % $VAR)
+    message: SQL injection via string formatting
+    severity: ERROR
+    languages: [python]
+    metadata:
+      cwe: "CWE-89"
+      owasp: "A03:2021-Injection"
+
+  - id: hardcoded-aws-credentials
+    patterns:
+      - pattern: $KEY = "AKIA..."
+    message: Hardcoded AWS credentials detected
+    severity: ERROR
+    languages: [python, javascript, java]
+```
+
+## Key Vulnerability Patterns to Detect
+
+| Pattern | CWE | Detection | Secure Fix |
+|---------|-----|-----------|------------|
+| SQL Injection | CWE-89 | String formatting in queries | Parameterized queries, ORM |
+| XSS | CWE-79 | Unsanitized DOM manipulation | textContent, DOMPurify |
+| Hardcoded Secrets | CWE-798 | Keys/tokens in source | Environment variables, secret managers |
+| Command Injection | CWE-78 | Shell execution with user input | Array args without shell |
+| Path Traversal | CWE-22 | File ops with unsanitized input | Path validation, allowlists |
+| Insecure Deserialization | CWE-502 | Unsafe deserializers with untrusted data | Safe alternatives (json, safe_load) |
+| Insecure Randomness | CWE-338 | Math.random/random for security | crypto.randomBytes, secrets module |
+
+## Framework Security Checks
+
+### Django
+- Ensure `DEBUG = False` in production
+- Use `SECRET_KEY` from environment
+- Enable SecurityMiddleware, CsrfViewMiddleware, XFrameOptionsMiddleware
+- Set `SECURE_SSL_REDIRECT`, `SESSION_COOKIE_SECURE`, `CSRF_COOKIE_SECURE`
+
+### Express.js
+- Use `helmet()` middleware for security headers
+- Configure CORS with specific origins (not wildcard)
+- Implement rate limiting
+
+### Flask
+- Use `secret_key` from environment
+- Enable `flask-talisman` for HTTPS and security headers
+- Configure CORS with specific origins
+
+## CI/CD Integration
+
+```yaml
+# GitHub Actions
+name: SAST Scan
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  sast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Semgrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: >-
+            p/security-audit
+            p/owasp-top-ten
+```
+
+## Best Practices
+
+1. Run early and often — pre-commit hooks and CI/CD
+2. Combine multiple tools — different tools catch different vulnerabilities
+3. Tune false positives — configure exclusions and thresholds
+4. Prioritize findings — focus on CRITICAL/HIGH first
+5. Framework-aware scanning — use specific rulesets
+6. Custom rules — organization-specific patterns
+7. Incremental remediation — fix gradually, track progress

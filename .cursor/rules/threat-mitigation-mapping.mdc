@@ -1,0 +1,135 @@
+---
+description: Map identified threats to appropriate security controls and mitigations. Use when prioritizing security investments, creating remediation plans, or validating control effectiveness.
+globs:
+alwaysApply: false
+---
+
+# Threat Mitigation Mapping
+
+Connect threats to controls for effective security planning.
+
+## When to Use
+
+- Prioritizing security investments
+- Creating remediation roadmaps
+- Validating control coverage
+- Designing defense-in-depth
+- Security architecture review
+- Risk treatment planning
+
+## Core Concepts
+
+### Control Categories
+
+```
+Preventive -----> Stop attacks before they occur
+                  (Firewall, Input validation)
+
+Detective  -----> Identify attacks in progress
+                  (IDS, Log monitoring)
+
+Corrective -----> Respond and recover from attacks
+                  (Incident response, Backup restore)
+```
+
+### Control Layers
+
+| Layer           | Examples                             |
+| --------------- | ------------------------------------ |
+| **Network**     | Firewall, WAF, DDoS protection       |
+| **Application** | Input validation, authentication     |
+| **Data**        | Encryption, access controls          |
+| **Endpoint**    | EDR, patch management                |
+| **Process**     | Security training, incident response |
+
+### Defense in Depth
+
+```
+                    +----------------------+
+                    |      Perimeter       | <-- Firewall, WAF
+                    |   +--------------+   |
+                    |   |   Network    |   | <-- Segmentation, IDS
+                    |   |  +--------+  |   |
+                    |   |  |  Host  |  |   | <-- EDR, Hardening
+                    |   |  | +----+ |  |   |
+                    |   |  | |App | |  |   | <-- Auth, Validation
+                    |   |  | |Data| |  |   | <-- Encryption
+                    |   |  | +----+ |  |   |
+                    |   |  +--------+  |   |
+                    |   +--------------+   |
+                    +----------------------+
+```
+
+## Standard Control Library
+
+### Authentication Controls
+- **AUTH-001**: Multi-Factor Authentication — Preventive, Application layer, High effectiveness
+- **AUTH-002**: Account Lockout Policy — Preventive, Application layer, Medium effectiveness
+
+### Input Validation Controls
+- **VAL-001**: Input Validation Framework — Preventive, Application layer, High effectiveness
+- **VAL-002**: Web Application Firewall — Preventive, Network layer, Medium effectiveness
+
+### Encryption Controls
+- **ENC-001**: Data Encryption at Rest — Preventive, Data layer, High effectiveness (AES-256, KMS)
+- **ENC-002**: TLS Encryption — Preventive, Network layer, High effectiveness (TLS 1.3)
+
+### Logging Controls
+- **LOG-001**: Security Event Logging — Detective, Application layer, Medium effectiveness
+- **LOG-002**: Log Integrity Protection — Preventive, Data layer, Medium effectiveness
+
+### Access Controls
+- **ACC-001**: Role-Based Access Control — Preventive, Application layer, High effectiveness
+
+### Availability Controls
+- **AVL-001**: Rate Limiting — Preventive, Application layer, Medium effectiveness
+- **AVL-002**: DDoS Protection — Preventive, Network layer, High effectiveness
+
+## Mapping Process
+
+1. **List all threats** from STRIDE analysis or attack trees
+2. **For each threat**, identify applicable controls from library
+3. **Assess coverage** — Calculate what percentage of attack paths are mitigated
+4. **Check defense-in-depth** — Ensure multiple layers are covered per threat
+5. **Check control diversity** — Ensure mix of preventive, detective, corrective
+6. **Identify gaps** — Threats with <50% coverage, single-layer, or single-type controls
+7. **Prioritize investments** — Focus on critical threats with lowest coverage
+
+## Gap Analysis
+
+Check for these issues per threat:
+- **Insufficient coverage** (<50%) — Add more controls or improve existing ones
+- **No defense in depth** — Controls only at one layer, add controls at different layers
+- **No control diversity** — Only preventive controls, add detective/corrective controls
+- **Unmitigated threats** — No controls at all, highest priority for remediation
+
+## Implementation Roadmap
+
+### Phase 1: Critical (Immediate)
+- Address critical threats with low coverage
+- Top 5 controls by risk reduction
+
+### Phase 2: High (30 days)
+- Address high-impact threats
+- Top 5 controls by coverage impact
+
+### Phase 3: Medium (90 days)
+- Fill remaining gaps
+- Improve control diversity
+
+## Best Practices
+
+- **Map all threats** — No threat should be unmapped
+- **Layer controls** — Defense in depth is essential
+- **Mix control types** — Preventive, detective, corrective
+- **Track effectiveness** — Measure and improve
+- **Review regularly** — Controls degrade over time
+- **Don't rely on single controls** — Single points of failure
+- **Don't ignore cost** — ROI matters
+- **Don't skip testing** — Untested controls may fail
+
+## Resources
+
+- [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework)
+- [CIS Controls](https://www.cisecurity.org/controls)
+- [MITRE D3FEND](https://d3fend.mitre.org/)
