@@ -43,6 +43,8 @@ Run the customization script to update project name and metadata:
 node template.config.js
 ```
 
+**If you run Playwright E2E tests:** Run this script before relying on tests that assert on the app title (e.g. "App Name"). The example tests in `e2e/example.spec.ts` expect the page title to match the name set by the template script; re-run the script after changing the project name so tests stay in sync.
+
 Or manually update:
 - `package.json` - Project name and version
 - `app/layout.tsx` - App metadata
@@ -121,6 +123,17 @@ Install shadcn/ui components as needed:
 ```bash
 npx shadcn@latest add [component-name]
 ```
+
+## Security tooling
+
+This template includes security guidance and example workflows:
+
+- **SECURITY.md** (repo root) – Secrets, authentication, input validation, and security practices.
+- **.cursor/rules/** – SAST and hardening rules (e.g. `security-sast.mdc`, `security-hardening.mdc`). Use these when configuring Semgrep, CodeQL, or similar in CI.
+- **docs/examples/github-actions-sast.yml** – Example workflow to run SAST (e.g. Semgrep) on push/PR. Copy to `.github/workflows/sast.yml` to enable.
+- **docs/production-hardening.md** – Checklist for production (headers, TLS, secrets, CI).
+
+Never commit `.env.local` or real secrets; use your platform’s secret manager or CI environment variables for production.
 
 ## Environment Variables
 

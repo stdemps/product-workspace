@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
+import Link from "next/link"
 
 export default function Home() {
   return (
@@ -32,14 +33,14 @@ export default function Home() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Documentation</CardTitle>
+            <CardTitle>Contact (example API + form)</CardTitle>
             <CardDescription>
-              Read the docs to learn more
+              Secure form with zod validation
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button variant="outline" className="w-full">
-              View Docs
+            <Button variant="outline" className="w-full" asChild>
+              <Link href="/contact">Contact</Link>
             </Button>
           </CardContent>
         </Card>

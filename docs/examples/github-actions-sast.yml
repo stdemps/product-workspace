@@ -1,0 +1,45 @@
+# Example SAST workflow (e.g. Semgrep)
+# Copy to .github/workflows/sast.yml and customize as needed.
+# See .cursor/rules/security-sast.mdc and sast-configuration.mdc for tool options and custom rules.
+#
+# name: SAST
+#
+# on:
+#   push:
+#     branches: [main, develop]
+#   pull_request:
+#     branches: [main, develop]
+#
+# jobs:
+#   semgrep:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#
+#       - name: Run Semgrep
+#         uses: returntocorp/semgrep-action@v1
+#         with:
+#           config: >-
+#             p/security-audit
+#             p/owasp-top-ten
+#             p/javascript
+#           generateSarif: true
+#
+#       - name: Upload Semgrep SARIF
+#         if: always()
+#         uses: github/codeql-action/upload-sarif@v3
+#         with:
+#           sarif_file: semgrep.sarif
+#
+# Optional: dependency audit
+#   audit:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: actions/setup-node@v4
+#         with:
+#           node-version: "20"
+#           cache: "npm"
+#       - run: npm ci
+#       - run: npm audit --audit-level=high
+#         continue-on-error: true  # Set to false to fail the job on high/critical

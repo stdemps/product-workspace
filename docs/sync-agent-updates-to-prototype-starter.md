@@ -117,3 +117,58 @@ The script only copies into **existing** directories (e.g. if prototype-starter 
 1. In prototype-starter, ensure any paths in the copied files (e.g. `docs/agent-tools-and-context.md`, `docs/prds/template-prd.md`) exist or adjust paths if the repo layout differs.
 2. If prototype-starter uses a different `claude.json`, add or update the `ux-to-implementation-plan` skill entry to point to `./skills/ux-to-implementation-plan.js`.
 3. Run a quick sanity check (e.g. run one agent or skill in prototype-starter) to confirm nothing is broken.
+
+---
+
+## Security and template readiness (optional sync)
+
+When product-workspace gains security or template-readiness improvements, consider sending these to prototype-starter so both templates stay consistent and safe-by-default.
+
+### Recommended to send
+
+| What | Why |
+|------|-----|
+| **SECURITY.md** | Same secrets/auth/validation guidance; prototypes often add APIs or env vars. |
+| **Secure API + contact form** | One copy-paste pattern (`app/api/contact/route.ts` + form + contact page) so prototypes that add a form or API start from a validated, safe example. |
+| **README Security subsection** | Short block linking to SECURITY.md and “never commit .env.local” so it’s discoverable. |
+| **SETUP Security tooling + template/Playwright note** | Same “never commit secrets” and, if prototype-starter has a template script + E2E, the note about running the template script before Playwright so title assertions stay in sync. |
+| **CI workflow** | At least lint + type-check (and optionally E2E with `test:ci` if prototype-starter has Playwright). Keeps prototypes from drifting. |
+
+### Optional for prototype-starter
+
+| What | Why |
+|------|-----|
+| **docs/examples/github-actions-sast.yml** | Reference only; add when prototype-starter starts running SAST in CI. |
+| **docs/production-hardening.md** | Lower priority; or add a one-line link: “If you promote to production, see product-workspace’s production-hardening checklist.” |
+
+### Files to copy (from product-workspace root)
+
+```bash
+# Assume PROTOTYPE_STARTER is set (e.g. ../prototype-starter)
+
+# Core security doc (adapt intro if prototype-starter is minimal)
+cp SECURITY.md $PROTOTYPE_STARTER/
+
+# Example secure API + form (only if prototype-starter has same app/ structure and deps: zod, react-hook-form, shadcn form/input/textarea/button)
+mkdir -p $PROTOTYPE_STARTER/app/api/contact $PROTOTYPE_STARTER/app/contact
+cp app/api/contact/route.ts        $PROTOTYPE_STARTER/app/api/contact/
+cp components/contact-form.tsx     $PROTOTYPE_STARTER/components/
+cp app/contact/page.tsx            $PROTOTYPE_STARTER/app/contact/
+
+# Example workflows (copy into docs/examples or .github/workflows as desired)
+mkdir -p $PROTOTYPE_STARTER/docs/examples
+cp docs/examples/github-actions-ci.yml    $PROTOTYPE_STARTER/docs/examples/
+cp docs/examples/github-actions-sast.yml $PROTOTYPE_STARTER/docs/examples/
+```
+
+Then in prototype-starter:
+
+- **README:** Merge in the “Security” section (link to SECURITY.md, short tooling line).
+- **SETUP:** Merge in the “Security tooling” subsection and the “run template script before Playwright” note under Customize Project (if it has that script and E2E).
+- **CI:** Either copy `.github/workflows/ci.yml` and add `test:ci` to package.json if they have Playwright, or add a lighter CI (lint + tsc only) and document it in README.
+- **Home page:** Optionally add a “Contact” card/link to `/contact` like product-workspace, or leave the homepage as-is.
+
+### What to skip or shorten
+
+- **Production-hardening checklist** – Omit or a single link; prototype-starter is not aimed at production by default.
+- **Long SAST/security rules** – Only add if prototype-starter already uses `.cursor/rules` for security; otherwise SECURITY.md is enough.

@@ -349,6 +349,12 @@ For simpler rapid prototyping without these features, consider using a minimal s
 - Don't need agent orchestration
 - Want minimal configuration
 
+## Security
+
+- **[SECURITY.md](./SECURITY.md)** – Secrets, auth, input validation, and security tooling guidance.
+- **Security tooling:** This repo includes Cursor/Claude rules for SAST and hardening. See `.cursor/rules/security-sast.mdc`, `.cursor/rules/security-hardening.mdc`, and `.cursor/rules/sast-configuration.mdc`. To run SAST in CI, use the example workflow in `docs/examples/github-actions-sast.yml`. For a full CI pipeline (lint, type-check, E2E), see `docs/examples/github-actions-ci.yml` or the active workflow in `.github/workflows/ci.yml`.
+- **Production:** Before going live, review the [Production hardening checklist](./docs/production-hardening.md).
+
 ## Resources
 
 - [Next.js Documentation](https://nextjs.org/docs)

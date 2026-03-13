@@ -1,0 +1,37 @@
+# CI workflow reference (active workflow is in .github/workflows/ci.yml)
+# This file is a backup/reference. To customize CI, edit .github/workflows/ci.yml.
+#
+# name: CI
+#
+# on:
+#   push:
+#     branches: [main, develop]
+#   pull_request:
+#     branches: [main, develop]
+#
+# jobs:
+#   quality:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: "20"
+#           cache: "npm"
+#
+#       - name: Install dependencies
+#         run: npm ci
+#
+#       - name: Lint
+#         run: npm run lint
+#
+#       - name: Type check
+#         run: npx tsc --noEmit
+#
+#       - name: Install Playwright browsers
+#         run: npx playwright install --with-deps chromium
+#
+#       - name: E2E tests (Chromium)
+#         run: npm run test:ci
