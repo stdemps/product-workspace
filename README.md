@@ -69,10 +69,15 @@ A comprehensive product development workspace with multi-agent collaboration, qu
    - Drop your PRD into `docs/prds/`
    - Start coding with all context loaded!
 
+### For maintainers (GitHub template)
+
+To show **Use this template** on GitHub: **Settings → General → Template repository**. Add repository topics under **About** if you want the template to be discoverable.
+
 ## Project Structure
 
 ```
 workspace-template/
+├── LICENSE                 # MIT (matches package.json)
 ├── .claude/
 │   ├── agents/             # Conversational agents (personas)
 │   │   ├── engineer.js
@@ -365,5 +370,5 @@ For simpler rapid prototyping without these features, consider using a minimal s
 
 ## License
 
-MIT
+[MIT](./LICENSE)
 
