@@ -1,4 +1,13 @@
 import { test, expect } from '@playwright/test';
+import type { Page } from '@playwright/test';
+
+async function openThemeMenuAndChoose(
+  page: Page,
+  option: 'Light' | 'Dark' | 'System',
+) {
+  await page.getByRole('button', { name: /toggle theme/i }).click();
+  await page.getByRole('menuitemradio', { name: option }).click();
+}
 
 /**
  * Example E2E Test with Screenshot Verification
@@ -36,28 +45,22 @@ test.describe('Homepage', () => {
   test('should toggle dark mode correctly', async ({ page }) => {
     await page.goto('/');
 
-    // Get theme toggle button
-    const themeToggle = page.getByRole('button', { name: /toggle theme/i });
-
-    // UI Verification: Screenshot before toggle
+    // UI Verification: Screenshot before choosing dark
     await page.screenshot({
       path: 'screenshots/homepage-light-mode.png',
       fullPage: true,
     });
 
-    // Test: Click theme toggle
-    await themeToggle.click();
-
-    // Wait for theme transition
+    // Theme control is a menu: open it and select Dark (click alone does not toggle)
+    await openThemeMenuAndChoose(page, 'Dark');
     await page.waitForTimeout(300);
 
-    // UI Verification: Screenshot after toggle
+    // UI Verification: Screenshot after dark theme
     await page.screenshot({
       path: 'screenshots/homepage-dark-mode.png',
       fullPage: true,
     });
 
-    // Test: Verify dark mode class applied
     const html = page.locator('html');
     await expect(html).toHaveClass(/dark/);
   });
@@ -65,22 +68,28 @@ test.describe('Homepage', () => {
   test('should be keyboard accessible', async ({ page }) => {
     await page.goto('/');
 
-    // Test: Tab navigation works
-    await page.keyboard.press('Tab');
-
-    // Test: Theme toggle is focusable
     const themeToggle = page.getByRole('button', { name: /toggle theme/i });
+
+    // Tab until the theme control is focused (skip dev-only focusables if present)
+    for (let i = 0; i < 16; i++) {
+      if (await themeToggle.evaluate((el) => el === document.activeElement)) {
+        break;
+      }
+      await page.keyboard.press('Tab');
+    }
     await expect(themeToggle).toBeFocused();
 
-    // Test: Enter key activates toggle
+    // Enter opens the theme menu; activate Dark via keyboard
+    await page.keyboard.press('Enter');
+    await expect(page.getByRole('menu')).toBeVisible();
+    const darkOption = page.getByRole('menuitemradio', { name: 'Dark' });
+    await darkOption.focus();
     await page.keyboard.press('Enter');
     await page.waitForTimeout(300);
 
-    // Verify theme switched via keyboard
     const html = page.locator('html');
     await expect(html).toHaveClass(/dark/);
 
-    // UI Verification: Screenshot of keyboard navigation state
     await page.screenshot({
       path: 'screenshots/homepage-keyboard-nav.png',
       fullPage: true,
@@ -149,7 +158,7 @@ test.describe('Accessibility', () => {
 
     // Test: Theme toggle has accessible name
     const themeToggle = page.getByRole('button', { name: /toggle theme/i });
-    await expect(themeToggle).toHaveAccessibleName();
+    await expect(themeToggle).toHaveAccessibleName(/toggle theme/i);
 
     // Test: Main landmark exists
     const main = page.locator('main');

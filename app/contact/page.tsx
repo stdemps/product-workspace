@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react"
 
 export default function ContactPage() {
   return (
-    <div className="container mx-auto p-4 md:p-6 lg:p-8">
+    <main className="container mx-auto p-4 md:p-6 lg:p-8">
       <div className="mb-6 md:mb-8">
         <Button variant="ghost" size="sm" asChild>
           <Link href="/" className="gap-2">
@@ -33,6 +33,6 @@ export default function ContactPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </main>
   )
 }

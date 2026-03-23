@@ -5,7 +5,7 @@ import Link from "next/link"
 
 export default function Home() {
   return (
-    <div className="container mx-auto p-4 md:p-6 lg:p-8">
+    <main className="container mx-auto p-4 md:p-6 lg:p-8">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Welcome</h1>
@@ -59,7 +59,7 @@ export default function Home() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </main>
   )
 }
 
