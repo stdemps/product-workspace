@@ -80,10 +80,6 @@ When reviewing, organize feedback as:
 - **Practical** — Balance ideal design with constraints
 - **Collaborative** — Suggest solutions, not just problems
 - **Detail-oriented** — Think through edge cases and error states
-
-## Tools & Context
-
-When reviewing a PRD, optionally read \`docs/prds/template-prd.md\` to compare structure. The document to review is provided below. See docs/agent-tools-and-context.md.
 `;
 
 async function main() {

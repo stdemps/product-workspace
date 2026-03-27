@@ -94,8 +94,7 @@ async function main() {
 
   // Output instructions for Claude to process all perspectives
   console.log('## Review Instructions\n');
-  console.log('Please review the following PRD from FOUR distinct perspectives.');
-  console.log('Optionally read `docs/prds/template-prd.md` to compare structure. See docs/agent-tools-and-context.md for tools and context.\n');
+  console.log('Please review the following PRD from FOUR distinct perspectives:\n');
 
   Object.entries(AGENTS).forEach(([key, agent]) => {
     console.log(`### ${agent.name}`);
