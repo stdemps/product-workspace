@@ -97,6 +97,7 @@ python3 .cursor/skills/ui-ux-pro-max/scripts/search.py "comparison trends" --dom
 
 | Skill | Purpose |
 |-------|---------|
+| **`/paper-sync`** | Sync an implemented screen into **Paper** from code (Paper MCP or paste mode). Full spec: `.cursor/skills/paper-sync/SKILL.md`. |
 | `@vercel-react-best-practices` | React/Next.js performance patterns |
 | `@frontend-design` | Primary design skill (auto-loaded for UI work) |
 
@@ -108,8 +109,9 @@ python3 .cursor/skills/ui-ux-pro-max/scripts/search.py "comparison trends" --dom
 2. **Starting a feature:** Use PRD pipeline rules (`@pm-generate-prd`, `@designer-prd-to-ux`, etc.)
 3. **Quick question:** Reference agent rules (`@engineer`, `@designer`, `@pm`)
 4. **Building UI:** `frontend-design` skill is auto-loaded
-5. **Before shipping:** `@audit` → fix issues → `@polish`
-6. **Need specific data:** Use ui-ux-pro-max CLI for lookups
+5. **Design ↔ code alignment:** After implementing a screen, **`/paper-sync`** pushes a code-faithful frame to Paper (or chunked HTML if MCP is off).
+6. **Before shipping:** `@audit` → fix issues → `@polish`
+7. **Need specific data:** Use ui-ux-pro-max CLI for lookups
 
 ---
 
@@ -122,6 +124,7 @@ This project supports both Claude Code and Cursor. The skills are mirrored:
 | `/audit` | `@audit` |
 | `/setup-project-context` | `@setup-project-context` |
 | `/sync-research-to-context` | `@sync-research-to-context` |
+| `/paper-sync` | **`/paper-sync`** (see `.cursor/commands/paper-sync.md`) |
 | `/designer` | `@designer` rule |
 | `/pm-generate-prd` | `@pm-generate-prd` rule |
 

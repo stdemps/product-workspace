@@ -97,6 +97,7 @@ python3 .claude/skills/ui-ux-pro-max/scripts/search.py "comparison trends" --dom
 
 | Skill | Purpose |
 |-------|---------|
+| `/paper-sync` | Sync an implemented screen into **Paper** from code (Paper MCP or paste mode). Spec: `.claude/skills/paper-sync/SKILL.md` (mirror: `.cursor/skills/paper-sync/`). |
 | `/vercel-react-best-practices` | React/Next.js performance patterns |
 | `/agentation` | Add visual feedback toolbar |
 
@@ -108,5 +109,6 @@ python3 .claude/skills/ui-ux-pro-max/scripts/search.py "comparison trends" --dom
 2. **Starting a feature:** `/pm-generate-prd` → `/designer-prd-to-ux` → `/ux-to-implementation-plan`
 3. **Quick question:** `/engineer`, `/designer`, or `/pm`
 4. **Building UI:** Use `frontend-design` skill (auto-loaded)
-5. **Before shipping:** `/audit` → fix issues → `/polish`
-6. **Need specific data:** Use ui-ux-pro-max CLI for lookups
+5. **Design ↔ code alignment:** After implementing a screen, **`/paper-sync`** pushes a code-faithful frame to Paper (or chunked HTML if MCP is off).
+6. **Before shipping:** `/audit` → fix issues → `/polish`
+7. **Need specific data:** Use ui-ux-pro-max CLI for lookups

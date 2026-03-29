@@ -1,4 +1,4 @@
-# Product Workspace
+npm # Product Workspace
 
 A comprehensive product development workspace with multi-agent collaboration, quality gates, and mobile-first enforcement. Built on Next.js, TypeScript, Tailwind CSS, and shadcn/ui.
 
