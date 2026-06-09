@@ -14,7 +14,7 @@ function useBreakpoint(breakpoint: number) {
       setBelow(e.matches)
     }
     mql.addEventListener("change", onChange)
-    setBelow(mql.matches)
+    queueMicrotask(() => setBelow(mql.matches))
     return () => mql.removeEventListener("change", onChange)
   }, [breakpoint])
 

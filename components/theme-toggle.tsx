@@ -25,7 +25,9 @@ export function ThemeToggle() {
   const { theme = "system", setTheme, resolvedTheme } = useTheme()
   const [mounted, setMounted] = React.useState(false)
 
-  React.useEffect(() => setMounted(true), [])
+  React.useEffect(() => {
+    queueMicrotask(() => setMounted(true))
+  }, [])
 
   const currentLabel = THEME_LABELS[theme] ?? "System"
   const resolvedLabel = THEME_LABELS[resolvedTheme ?? theme] ?? "System"
