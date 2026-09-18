@@ -12,33 +12,30 @@
  *   /collab "What's the best approach for user onboarding?"
  */
 
-const { execFileSync } = require('child_process');
+const fs = require('fs');
 const path = require('path');
 
+// The three personas live in .claude/agents/*.md, which is also where Claude Code
+// discovers them as agents. We read them from there so there is one copy of each
+// persona, not two that can drift apart.
 const AGENTS = [
-  {
-    name: 'Engineer',
-    script: path.join(__dirname, '../agents/engineer.js')
-  },
-  {
-    name: 'Designer',
-    script: path.join(__dirname, '../agents/designer.js')
-  },
-  {
-    name: 'PM',
-    script: path.join(__dirname, '../agents/pm.js')
-  }
+  { name: 'Engineer', file: path.join(__dirname, '../../agents/engineer.md') },
+  { name: 'Designer', file: path.join(__dirname, '../../agents/designer.md') },
+  { name: 'PM', file: path.join(__dirname, '../../agents/pm.md') }
 ];
 
-async function runAgent(agentScript, question) {
+// Strip the YAML frontmatter block, leaving just the persona prose.
+function stripFrontmatter(text) {
+  const match = text.match(/^---\n[\s\S]*?\n---\n/);
+  return match ? text.slice(match[0].length).trimStart() : text;
+}
+
+function runAgent(agentFile, question) {
   try {
-    const output = execFileSync('node', [agentScript, question], {
-      encoding: 'utf-8',
-      maxBuffer: 1024 * 1024
-    });
-    return output;
+    const persona = stripFrontmatter(fs.readFileSync(agentFile, 'utf-8'));
+    return `${persona}\n---\n\n## User Request\n\n${question}\n`;
   } catch (error) {
-    return `Error running agent: ${error.message}`;
+    return `Error loading agent persona: ${error.message}`;
   }
 }
 
@@ -67,12 +64,10 @@ async function main() {
   // Run all agents in parallel
   console.log('Gathering perspectives from Engineer, Designer, and PM...\n');
 
-  const results = await Promise.all(
-    AGENTS.map(async agent => {
-      const output = await runAgent(agent.script, question);
-      return { name: agent.name, output };
-    })
-  );
+  const results = AGENTS.map(agent => ({
+    name: agent.name,
+    output: runAgent(agent.file, question)
+  }));
 
   // Output all perspectives
   results.forEach((result, index) => {

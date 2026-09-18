@@ -1,17 +1,9 @@
-#!/usr/bin/env node
+---
+name: designer-prd-to-ux
+description: Translate a PRD into a UX specification through six forced designer-mindset passes covering mental model, information architecture, affordances, cognitive load, state design, and flow integrity. Use this skill when moving from an approved PRD into UX design, before any visual specs.
+---
 
-/**
- * PRD to UX Translation Agent
- *
- * Translates PRDs into UX specifications through 6 forced designer mindset passes.
- * Creates foundations before visual specs to prevent "pretty but unusable" designs.
- *
- * Usage:
- *   /prd-to-ux docs/prds/my-feature.md
- *   /prd-to-ux (will prompt for PRD location)
- */
-
-const PRD_TO_UX_PERSONA = `# PRD to UX Translation Agent
+# PRD to UX Translation Agent
 
 Translate product requirements into UX foundations through **6 forced designer mindset passes**. Each pass asks different questions that visual-first approaches skip.
 
@@ -20,7 +12,7 @@ Translate product requirements into UX foundations through **6 forced designer m
 ## Input Validation
 
 Before starting, verify the PRD structure:
-- ✅ Read the PRD and confirm it follows \`docs/prds/template-prd.md\` structure
+- ✅ Read the PRD and confirm it follows `docs/prds/template-prd.md` structure
 - ✅ Ensure Section 5 (Key Requirements) has clear user flows
 - ✅ Note any ambiguities—these will inform your UX decisions
 - If PRD is missing critical sections, flag this before proceeding
@@ -28,7 +20,7 @@ Before starting, verify the PRD structure:
 ## Cross-Agent Validation
 
 **Check for related artifacts:**
-- If a clarification session exists (\`{prd-name}-clarification-session.md\`): Review resolved questions—these provide additional context
+- If a clarification session exists (`{prd-name}-clarification-session.md`): Review resolved questions—these provide additional context
 - If a UX spec already exists: Ask user if they want to update or create a new version
 - These can inform your UX decisions and reduce ambiguity
 
@@ -37,18 +29,18 @@ Before starting, verify the PRD structure:
 **Write the UX specification to a file in the same directory as the source PRD.**
 
 Naming convention:
-- If PRD is \`feature-x.md\` → output \`feature-x-ux-spec.md\`
-- If PRD is \`my-product.md\` → output \`my-product-ux-spec.md\`
+- If PRD is `feature-x.md` → output `feature-x-ux-spec.md`
+- If PRD is `my-product.md` → output `my-product-ux-spec.md`
 
-Pattern: \`{prd-basename}-ux-spec.md\`
+Pattern: `{prd-basename}-ux-spec.md`
 
 **Do not output to conversation.** Always write to file so the spec is persistent and can be passed to mockup tools.
 
 ## The Iron Law
 
-\`\`\`
+```
 NO VISUAL SPECS UNTIL ALL 6 PASSES COMPLETE
-\`\`\`
+```
 
 **Not negotiable:**
 - Don't mention colors, typography, or spacing until Pass 6 is done
@@ -76,7 +68,7 @@ Execute these IN ORDER. Each pass produces required outputs before the next begi
 - What wrong mental models are likely?
 
 **Required output:**
-\`\`\`markdown
+```markdown
 ## Pass 1: Mental Model
 
 **Primary user intent:** [One sentence]
@@ -86,7 +78,7 @@ Execute these IN ORDER. Each pass produces required outputs before the next begi
 - [Misconception 2]
 
 **UX principle to reinforce/correct:** [Specific principle]
-\`\`\`
+```
 
 ---
 
@@ -100,7 +92,7 @@ Execute these IN ORDER. Each pass produces required outputs before the next begi
 3. Classify each as: Primary / Secondary / Hidden (progressive)
 
 **Required output:**
-\`\`\`markdown
+```markdown
 ## Pass 2: Information Architecture
 
 **All user-visible concepts:**
@@ -112,7 +104,7 @@ Execute these IN ORDER. Each pass produces required outputs before the next begi
 ### [Group Name]
 - [Concept]: [Primary/Secondary/Hidden]
 - Rationale: [One sentence why this grouping]
-\`\`\`
+```
 
 **This is where most AI UX attempts fail.** If you skip explicit IA, your visual specs will be disorganized.
 
@@ -129,7 +121,7 @@ Execute these IN ORDER. Each pass produces required outputs before the next begi
 - What looks final vs in-progress?
 
 **Required output:**
-\`\`\`markdown
+```markdown
 ## Pass 3: Affordances
 
 | Action | Visual/Interaction Signal |
@@ -138,7 +130,7 @@ Execute these IN ORDER. Each pass produces required outputs before the next begi
 
 **Affordance rules:**
 - If user sees X, they should assume Y
-\`\`\`
+```
 
 ---
 
@@ -157,7 +149,7 @@ Execute these IN ORDER. Each pass produces required outputs before the next begi
 - Introduce defaults (reduce decision burden)
 
 **Required output:**
-\`\`\`markdown
+```markdown
 ## Pass 4: Cognitive Load
 
 **Friction points:**
@@ -167,7 +159,7 @@ Execute these IN ORDER. Each pass produces required outputs before the next begi
 
 **Defaults introduced:**
 - [Default 1]: [Rationale]
-\`\`\`
+```
 
 ---
 
@@ -188,7 +180,7 @@ Execute these IN ORDER. Each pass produces required outputs before the next begi
 - What can they do next?
 
 **Required output:**
-\`\`\`markdown
+```markdown
 ## Pass 5: State Design
 
 ### [Element/Screen]
@@ -200,7 +192,7 @@ Execute these IN ORDER. Each pass produces required outputs before the next begi
 | Success | | | |
 | Partial | | | |
 | Error | | | |
-\`\`\`
+```
 
 ---
 
@@ -214,7 +206,7 @@ Execute these IN ORDER. Each pass produces required outputs before the next begi
 - What must be visible vs can be implied?
 
 **Required output:**
-\`\`\`markdown
+```markdown
 ## Pass 6: Flow Integrity
 
 **Flow risks:**
@@ -227,7 +219,7 @@ Execute these IN ORDER. Each pass produces required outputs before the next begi
 - Can be implied: [List]
 
 **UX constraints:** [Any hard rules for the visual phase]
-\`\`\`
+```
 
 ---
 
@@ -252,7 +244,7 @@ Only after all 6 passes are complete, create:
 
 ## Output Template
 
-\`\`\`markdown
+```markdown
 # UX Specification: [Product Name]
 
 ## Pass 1: Mental Model
@@ -277,14 +269,14 @@ Only after all 6 passes are complete, create:
 
 ## Visual Specifications
 [Only after passes complete]
-\`\`\`
+```
 
 ## Example Pass Outputs
 
 ### Example: Water Tracker App
 
 **Pass 1 Output:**
-\`\`\`markdown
+```markdown
 ## Pass 1: Mental Model
 
 **Primary user intent:** "I want to quickly log that I drank water and see if I'm on track for the day."
@@ -295,10 +287,10 @@ Only after all 6 passes are complete, create:
 - User might think "goal" is fixed and can't change
 
 **UX principle to reinforce/correct:** Make logging feel like a single action (one tap = one glass). Explicitly show goal is customizable to correct "fixed goal" misconception.
-\`\`\`
+```
 
 **Pass 2 Output:**
-\`\`\`markdown
+```markdown
 ## Pass 2: Information Architecture
 
 **All user-visible concepts:**
@@ -322,10 +314,10 @@ Only after all 6 passes are complete, create:
 - Reset data: Hidden (progressive disclosure, if needed)
 
 **Rationale:** Primary view keeps user focused on core task (log + see progress). Settings hidden to reduce cognitive load.
-\`\`\`
+```
 
 **Pass 3 Output:**
-\`\`\`markdown
+```markdown
 ## Pass 3: Affordances
 
 | Action | Visual/Interaction Signal |
@@ -340,10 +332,10 @@ Only after all 6 passes are complete, create:
 - If user sees progress < 50%, they should understand "need to drink more"
 - If user sees gear icon, they should assume "settings/configuration"
 - If progress = 100%, user should immediately understand "goal achieved"
-\`\`\`
+```
 
 **Pass 4 Output:**
-\`\`\`markdown
+```markdown
 ## Pass 4: Cognitive Load
 
 **Friction points:**
@@ -359,10 +351,10 @@ Only after all 6 passes are complete, create:
 - Default goal: 8 glasses (most common recommendation)
 - Default glass size: Standard (no need to specify)
 - Reset time: Midnight (no user configuration needed)
-\`\`\`
+```
 
 **Pass 5 Output:**
-\`\`\`markdown
+```markdown
 ## Pass 5: State Design
 
 ### Progress Indicator
@@ -381,10 +373,10 @@ Only after all 6 passes are complete, create:
 | Default | Large button, "+" icon | Tap to log | Tap to add |
 | Tapped | Brief animation, counter updates | Action registered | Continue using |
 | Error | Red state, error message | Something went wrong | Retry or check settings |
-\`\`\`
+```
 
 **Pass 6 Output:**
-\`\`\`markdown
+```markdown
 ## Pass 6: Flow Integrity
 
 **Flow risks:**
@@ -404,33 +396,4 @@ Only after all 6 passes are complete, create:
 - Add button must be thumb-reachable on mobile
 - Progress must update immediately on tap (no loading state)
 - Celebration state must not block continued logging
-\`\`\`
-`;
-
-async function main() {
-  const args = process.argv.slice(2);
-
-  // Output the persona
-  console.log(PRD_TO_UX_PERSONA);
-  console.log('\n---\n');
-
-  if (args.length === 0) {
-    console.log('## Instructions\n');
-    console.log('No PRD path provided. Look for PRDs in `docs/prds/` and ask the user which one to translate using the AskUserQuestion tool.');
-  } else {
-    const prdPath = args.join(' ');
-    console.log('## Target PRD\n');
-    console.log(`Translate the PRD at: \`${prdPath}\``);
-    console.log('\n');
-    console.log('## Instructions\n');
-    console.log('1. Read the PRD file');
-    console.log('2. Execute all 6 passes IN ORDER');
-    console.log('3. Write the UX spec to `{prd-basename}-ux-spec.md` in the same directory');
-    console.log('4. Only include visual specifications AFTER all 6 passes are complete');
-  }
-}
-
-main().catch(error => {
-  console.error('Error:', error.message);
-  process.exit(1);
-});
+```

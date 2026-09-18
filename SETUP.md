@@ -43,7 +43,9 @@ Run the customization script to update project name and metadata:
 node template.config.js
 ```
 
-**If you run Playwright E2E tests:** Run this script before relying on tests that assert on the app title (e.g. "App Name"). The example tests in `e2e/example.spec.ts` expect the page title to match the name set by the template script; re-run the script after changing the project name so tests stay in sync.
+This renames the app in `package.json`, `app/layout.tsx`, `app/page.tsx` and
+`components/topbar.tsx`. The example tests in `e2e/example.spec.ts` do not look for
+a specific app name, so renaming your project will not break them.
 
 Or manually update:
 - `package.json` - Project name and version
@@ -64,7 +66,58 @@ git add .
 git commit -m "Initial commit from workspace template"
 ```
 
-### 5. Start Development Server
+### 5. Enable the Quality Gate
+
+Git does not share hooks between clones, so enable them once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+This runs before each commit and **blocks the commit** if ESLint or the
+TypeScript type check fails. It also warns about desktop-first responsive
+patterns in staged UI files.
+
+To run the checks without blocking, during rapid prototyping:
+
+```bash
+CLAUDE_PROTOTYPE_MODE=true git commit -m "message"
+```
+
+To include the Playwright suite in the gate:
+
+```bash
+RUN_TESTS=true git commit -m "message"
+```
+
+To turn the hook off entirely: `git config --unset core.hooksPath`
+
+> This gate is deliberately strict. If you want checks that warn but never
+> block, use the lighter prototyping template instead of loosening this one.
+
+### 6. Download the Test Browsers
+
+The tests drive real browsers, and `npm install` does not download them. Run this
+once per machine:
+
+```bash
+npx playwright install
+```
+
+Skip this and `npm test` fails with "Executable doesn't exist" — that means the
+browsers are missing, not that anything is wrong with your code.
+
+Then check it works:
+
+```bash
+npm test
+```
+
+`npm test` uses Desktop Chrome, which is the quick everyday check. To run every
+browser and screen size (slower, worth doing before you share work), use
+`npm run test:all` — this needs the download step above to have finished.
+
+### 7. Start Development Server
 
 ```bash
 npm run dev
@@ -72,7 +125,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### 6. Enable Playwright MCP (Optional)
+### 8. Enable Playwright MCP (Optional)
 
 This template includes a project-level MCP config so Cursor can use Playwright for browser automation (navigate, click, type, snapshot) when working on the app.
 
@@ -137,19 +190,25 @@ Never commit `.env.local` or real secrets; use your platform’s secret manager 
 
 ## Environment Variables
 
-Create a `.env.local` file for environment variables:
+Environment variables are things like API keys and database URLs — settings that
+differ between your machine and production, and that must never be committed.
+
+This project ships a template listing the ones it knows about. Copy it, then fill
+in the values you need:
 
 ```bash
-# Example: API keys, database URLs, etc.
-# NEXT_PUBLIC_API_URL=http://localhost:3000
+cp .env.example .env.local
 ```
+
+Open `.env.local` and uncomment the lines you want to use. `.env.local` is already
+ignored by git, so nothing you put in it gets committed.
 
 ## Development Workflow
 
 1. **Write PRD** → Drop into `docs/prds/`
 2. **Open in Cursor** → Context auto-loads from `.cursor/rules/`
 3. **Reference PRD** → Use `@docs/prds/your-prd.md`
-4. **Get Feedback** → Use reviewer personas: `@docs/reviewers/engineer.md`
+4. **Get Feedback** → Use reviewer personas: `@agents/engineer.md`
 5. **Build** → Start coding with all context available!
 
 ## Troubleshooting
@@ -184,7 +243,7 @@ npm run build
 
 - Read the [README.md](./README.md) for more information
 - Check out the [PRD template](./docs/prds/template-prd.md)
-- Explore the [reviewer personas](./docs/reviewers/)
+- Explore the [reviewer personas](./agents/)
 - Customize the [UI guidelines](./.cursor/rules/ui-design-guidelines.mdc) if needed
 
 ## Getting Help

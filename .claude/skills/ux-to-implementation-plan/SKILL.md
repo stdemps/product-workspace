@@ -1,17 +1,9 @@
-#!/usr/bin/env node
+---
+name: ux-to-implementation-plan
+description: Turn a UX specification into a phased implementation plan broken into small, context-efficient chunks an agent can build incrementally. Use this skill when a UX spec is ready and you need a buildable task breakdown before writing code.
+---
 
-/**
- * UX Spec to Implementation Plan
- *
- * Transforms UX specifications into a structured implementation plan
- * broken down into small, context-efficient chunks that agents can implement incrementally.
- *
- * Usage:
- *   /ux-to-implementation-plan docs/prds/my-feature-ux-spec.md
- *   /ux-to-implementation-plan (will prompt for UX spec location)
- */
-
-const UX_TO_IMPLEMENTATION_PLAN_PERSONA = `# UX Spec to Implementation Plan Agent
+# UX Spec to Implementation Plan Agent
 
 Transform detailed UX specifications into a structured implementation plan with small, context-efficient chunks that can be implemented incrementally by agents without requiring the full UX spec context.
 
@@ -24,9 +16,9 @@ Transform detailed UX specifications into a structured implementation plan with 
 
 ## Core Pattern
 
-\`\`\`
+```
 UX Spec → High-Level Plan → Small Implementation Chunks → Context-Efficient Tasks
-\`\`\`
+```
 
 ## Implementation Plan Structure
 
@@ -51,7 +43,7 @@ Each task should be:
 
 Each task follows this structure:
 
-\`\`\`markdown
+```markdown
 ### Task [N]: [Task Name]
 
 **Phase:** [Foundation/Core Components/Layout/etc.]
@@ -75,7 +67,7 @@ Each task follows this structure:
 **Implementation Notes:**
 - [Any technical considerations or patterns to follow]
 - [Workspace standards to follow (mobile-first, accessibility, etc.)]
-\`\`\`
+```
 
 ## Extraction Process
 
@@ -123,9 +115,9 @@ For each task, extract from the UX spec:
 ## Output Format
 
 Write a markdown document to the same directory as the UX spec:
-- If UX spec is \`feature-x-ux-spec.md\` → output \`feature-x-implementation-plan.md\`
+- If UX spec is `feature-x-ux-spec.md` → output `feature-x-implementation-plan.md`
 
-\`\`\`markdown
+```markdown
 # Implementation Plan: [Feature Name]
 
 ## Overview
@@ -178,21 +170,21 @@ Write a markdown document to the same directory as the UX spec:
 - Follow workspace standards (mobile-first, accessibility, TypeScript strict mode)
 - Test each task before moving to the next
 - If a task reveals missing context, update the plan
-\`\`\`
+```
 
 ## Example Transformation
 
 **From UX Spec:**
-\`\`\`
+```
 #### Progress Indicator Component
 - Dimensions: Full width on mobile (minus padding), max-width 300px on desktop
 - Display format: "X / Y glasses" with visual fill
 - States: Default, Updating (animation), Complete
 - Visual fill: Color-coded by progress (0-50%: amber, 50-99%: light green, 100%: success green)
-\`\`\`
+```
 
 **To Implementation Task:**
-\`\`\`markdown
+```markdown
 ### Task 3: Progress Indicator Component
 
 **Phase:** Core Components
@@ -227,9 +219,9 @@ Write a markdown document to the same directory as the UX spec:
 - Use shadcn/ui Progress component as base (or create custom)
 - Extract colors from design tokens (Task 1)
 - Use TypeScript types from Task 1 for progress data
-- Follow mobile-first responsive pattern: \`w-full md:max-w-[300px]\`
+- Follow mobile-first responsive pattern: `w-full md:max-w-[300px]`
 - Ensure WCAG 2.1 AA contrast ratios for all colors
-\`\`\`
+```
 
 ## Quality Checklist
 
@@ -260,7 +252,7 @@ Before finalizing the plan:
 
 For a Water Tracker app UX spec, output would look like:
 
-\`\`\`markdown
+```markdown
 # Implementation Plan: Water Tracker
 
 ## Overview
@@ -312,10 +304,10 @@ Responsive design refinements, animations, edge cases, accessibility improvement
 - Border radius: 8px standard, 12px for buttons, 999px for circles
 
 **Acceptance Criteria:**
-- [ ] CSS variables defined in \`app/globals.css\`
-- [ ] TypeScript types defined in \`lib/types.ts\`:
-  - \`DailyProgress\` type with glasses, goal, date
-  - \`AppState\` type with today and history
+- [ ] CSS variables defined in `app/globals.css`
+- [ ] TypeScript types defined in `lib/types.ts`:
+  - `DailyProgress` type with glasses, goal, date
+  - `AppState` type with today and history
 - [ ] Types support localStorage serialization
 - [ ] All tokens follow workspace color system patterns
 
@@ -364,48 +356,10 @@ Responsive design refinements, animations, edge cases, accessibility improvement
 - Use shadcn/ui Progress component as base (or create custom)
 - Extract colors from design tokens (Task 1)
 - Use TypeScript types from Task 1 for progress data
-- Follow mobile-first responsive pattern: \`w-full md:max-w-[300px]\`
+- Follow mobile-first responsive pattern: `w-full md:max-w-[300px]`
 - Ensure WCAG 2.1 AA contrast ratios for all colors
 
 ---
 
 [Additional tasks...]
-\`\`\`
-`;
-
-async function main() {
-  const args = process.argv.slice(2);
-
-  // Output the persona
-  console.log(UX_TO_IMPLEMENTATION_PLAN_PERSONA);
-  console.log('\n---\n');
-
-  if (args.length === 0) {
-    console.log('## Instructions\n');
-    console.log('No UX spec path provided. Look for UX specs in `docs/prds/` (files ending in `-ux-spec.md`) and ask the user which one to transform using the AskUserQuestion tool.');
-  } else {
-    const specPath = args.join(' ');
-    console.log('## Target UX Spec\n');
-    console.log(`Transform the UX spec at: \`${specPath}\``);
-    console.log('\n');
-    console.log('## Instructions\n');
-    console.log('1. Read the UX spec file');
-    console.log('2. Create a high-level implementation plan with phases');
-    console.log('3. Break down each phase into small, focused tasks');
-    console.log('4. For each task, extract only the relevant context from the spec');
-    console.log('5. Ensure each task is self-contained and can be implemented without the full spec');
-    console.log('6. Write output to `{spec-basename}-implementation-plan.md` in the same directory');
-    console.log('\n');
-    console.log('**Key principles:**');
-    console.log('- Tasks should be small (30-60 minute implementations)');
-    console.log('- Each task should include just enough context to implement');
-    console.log('- Extract exact values from spec (dimensions, colors, spacing)');
-    console.log('- Mark dependencies clearly');
-    console.log('- Include measurable acceptance criteria');
-  }
-}
-
-main().catch(error => {
-  console.error('Error:', error.message);
-  process.exit(1);
-});
+```

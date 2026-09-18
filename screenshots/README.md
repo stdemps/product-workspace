@@ -34,17 +34,23 @@ mv screenshots/feature-mobile.png screenshots/verified_feature-mobile.png
 
 ### 4. Git Tracking
 
-- **Unverified screenshots** (`*.png`) - Ignored by git (not tracked)
-- **Verified screenshots** (`verified_*.png`) - Tracked in version control
+**No screenshots in this directory are committed.** Every `.png` here is ignored by
+git, including `verified_` ones. The `verified_` prefix is a note to yourself and to
+the agent about what you have already checked — it is not a git flag.
 
-This ensures only approved UI states are committed.
+This is deliberate. A screenshot of a logged-in page can contain real customer
+names, email addresses and account data, and an "allow this one prefix" rule is how
+that data gets committed by accident.
+
+If you deliberately want a reference image in version control, put it somewhere
+tracked normally, such as `docs/images/`, so the decision is explicit and visible.
 
 ## TDD + UI Verification Workflow
 
 1. Tests generate screenshots automatically
 2. Review screenshots for UI correctness
-3. Rename correct screenshots with `verified_` prefix
-4. Only verified screenshots are tracked in git
+3. Rename correct screenshots with `verified_` prefix to record what you approved
+4. Nothing in `screenshots/` is committed — the prefix is for you, not for git
 
 ## Naming Convention
 

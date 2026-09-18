@@ -31,7 +31,9 @@ Tests generate screenshots in the `screenshots/` directory for visual verificati
    ```bash
    mv screenshots/homepage-mobile-375px.png screenshots/verified_homepage-mobile-375px.png
    ```
-4. **Commit verified screenshots** - Track verified UI states in version control
+4. **Note:** screenshots are never committed — everything in `screenshots/` is
+   ignored by git. The `verified_` prefix records what you approved; it does not
+   put the image in version control. See [screenshots/README.md](../screenshots/README.md).
 
 ## Test Structure
 

@@ -27,7 +27,7 @@ Recommended tools and context to give each agent (in Cursor or when using Claude
 
 - **@-mention files:** e.g. `@docs/prds/my-feature.md` or `@app/page.tsx` so the agent has the exact doc/code in context.
 - **@-mention the agent:** e.g. `@engineer` then ask your question; add file @-mentions in the same message when doing reviews.
-- **Playwright MCP:** If enabled (see [SETUP.md](../SETUP.md#6-enable-playwright-mcp-optional)), the AI can use the browser (navigate, snapshot, click, type) when you ask to “check the app” or “verify the UI.” Especially useful with `@engineer` or `@designer`.
+- **Playwright MCP:** If enabled (see [SETUP.md](../SETUP.md#8-enable-playwright-mcp-optional)), the AI can use the browser (navigate, snapshot, click, type) when you ask to “check the app” or “verify the UI.” Especially useful with `@engineer` or `@designer`.
 
 ### Tools agents use automatically
 
@@ -53,7 +53,7 @@ For **Designer** or **Engineer** UI feedback:
 ## Playwright MCP
 
 - **What:** Browser automation (navigate, snapshot, click, type, etc.) so the AI can see and interact with your app.
-- **Setup:** [SETUP.md#6 – Enable Playwright MCP](../SETUP.md#6-enable-playwright-mcp-optional). Config: `.cursor/mcp.json`.
+- **Setup:** [SETUP.md#8 – Enable Playwright MCP](../SETUP.md#8-enable-playwright-mcp-optional). Config: `.cursor/mcp.json`.
 - **Who benefits:** **Engineer** (verify behavior, debug UI), **Designer** (review layout, responsiveness, flows without you pasting screenshots).
 
 ---

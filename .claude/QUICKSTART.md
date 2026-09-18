@@ -205,18 +205,14 @@ CLAUDE_PROTOTYPE_MODE=true git commit -m "Add feature prototype"
 
 ### Problem: `/engineer` says "Unknown skill"
 
-**Fix**: The agents should be registered in `.claude/claude.json` under `"skills"`. Check that the file contains:
+**Fix**: Restart Claude Code so it picks up the agent and skill files.
 
-```json
-{
-  "skills": {
-    "engineer": {
-      "path": "./agents/engineer.js",
-      "description": "💬 Conversational: Ask technical questions..."
-    }
-  }
-}
-```
+`/engineer`, `/designer` and `/pm` are agents, defined in
+`.claude/agents/<name>.md`. Skills live in `.claude/skills/<name>/SKILL.md`.
+Both are discovered automatically — there is no registry file to update.
+
+If one is still not found, check that the file exists and that the YAML
+frontmatter at the top of it has both a `name` and a `description`.
 
 ### Problem: Quality gate fails on TypeScript errors
 
@@ -227,13 +223,11 @@ CLAUDE_PROTOTYPE_MODE=true git commit -m "Add feature prototype"
 CLAUDE_PROTOTYPE_MODE=true git commit -m "WIP: Feature prototype"
 ```
 
-### Problem: Agent script isn't executable
+### Problem: `/collab` does not run
 
-**Fix**: Make the script executable:
+**Fix**: `/collab` is backed by a script. Run it with Bash:
 ```bash
-chmod +x .claude/agents/engineer.js
-chmod +x .claude/agents/designer.js
-chmod +x .claude/agents/pm.js
+node .claude/skills/collab/collab.js "your question"
 ```
 
 ### Problem: Mobile-first warnings in quality gate

@@ -1,4 +1,4 @@
-npm # Product Workspace
+# Product Workspace
 
 A comprehensive product development workspace with multi-agent collaboration, quality gates, and mobile-first enforcement. Built on Next.js, TypeScript, Tailwind CSS, and shadcn/ui.
 
@@ -15,7 +15,7 @@ A comprehensive product development workspace with multi-agent collaboration, qu
 
 ### Quality & Enforcement
 - **Quality Gates:** Pre-commit hooks for linting, type checking, and mobile-first validation
-- **Prototype Mode:** Fast iteration mode that runs checks without blocking commits (`PROTOTYPE_MODE=1`)
+- **Prototype Mode:** Fast iteration mode that runs checks without blocking commits (`CLAUDE_PROTOTYPE_MODE=true`)
 - **Type Safety:** TypeScript strict mode enabled
 - **Accessibility:** WCAG 2.1 AA guidelines built-in
 - **Mobile-First:** Pattern validation for responsive design
@@ -59,12 +59,25 @@ A comprehensive product development workspace with multi-agent collaboration, qu
    node template.config.js
    ```
 
-4. **Start development server:**
+4. **Turn on the quality gate (once per copy of the project):**
+   ```bash
+   git config core.hooksPath .githooks
+   ```
+   Git does not carry hooks across clones, so this one command is what switches
+   on the pre-commit checks. Skip it and nothing checks your work before a commit.
+
+5. **Download the test browsers (once):**
+   ```bash
+   npx playwright install
+   ```
+   `npm install` does not do this. Without it, `npm test` cannot open a browser.
+
+6. **Start development server:**
    ```bash
    npm run dev
    ```
 
-5. **Open in Cursor:**
+7. **Open in Cursor:**
    - Open the project in Cursor
    - Drop your PRD into `docs/prds/`
    - Start coding with all context loaded!
@@ -80,21 +93,22 @@ workspace-template/
 ├── LICENSE                 # MIT (matches package.json)
 ├── .claude/
 │   ├── agents/             # Conversational agents (personas)
-│   │   ├── engineer.js
-│   │   ├── designer.js
-│   │   └── pm.js
-│   ├── skills/             # Functional skills (tasks by agent)
-│   │   ├── engineer-review.js        # Engineer skill
-│   │   ├── designer-review.js        # Designer skill
-│   │   ├── designer-brand-identity.js # Designer skill
-│   │   ├── designer-prd-to-ux.js     # Designer skill
-│   │   ├── pm-generate-prd.js        # PM skill
-│   │   ├── pm-clarify-prd.js         # PM skill
-│   │   ├── prd-review.js             # Utility skill
-│   │   └── ux-to-implementation-plan.js  # Utility skill
+│   │   ├── engineer.md
+│   │   ├── designer.md
+│   │   └── pm.md
+│   ├── skills/             # Functional skills (each is a folder with a SKILL.md)
+│   │   ├── engineer-review/          # Engineer skill
+│   │   ├── designer-review/          # Designer skill
+│   │   ├── designer-brand-identity/  # Designer skill
+│   │   ├── designer-prd-to-ux/       # Designer skill
+│   │   ├── pm-generate-prd/          # PM skill
+│   │   ├── pm-clarify-prd/           # PM skill
+│   │   ├── prd-review/               # Utility skill
+│   │   └── ux-to-implementation-plan/  # Utility skill
 │   ├── hooks/              # Quality gate hooks
 │   │   └── quality-gate.sh
-│   └── claude.json         # Claude Code configuration
+├── .githooks/              # Pre-commit hook (enable it once - see Quick Start)
+│   └── pre-commit
 ├── .cursor/
 │   └── rules/              # Auto-loaded context (available via @ mentions)
 │       ├── ui-design-guidelines.mdc
@@ -102,11 +116,15 @@ workspace-template/
 │       └── project-context.mdc
 ├── .github/
 │   └── repository-template/  # GitHub template configuration
+├── agents/                 # Reviewer personas (@-mention these for feedback)
+│   ├── engineer.md
+│   ├── designer.md
+│   ├── executive.md
+│   └── user-researcher.md
 ├── docs/
 │   ├── prds/               # PRD templates
 │   ├── research/           # Research documentation
-│   ├── prototypes/         # Design prototypes
-│   └── reviewers/          # Reviewer personas
+│   └── prototypes/         # Design prototypes
 ├── app/                    # Next.js App Router
 │   ├── layout.tsx
 │   ├── page.tsx
@@ -195,21 +213,25 @@ Files in `.cursor/rules/` are automatically loaded by Cursor and available via @
 
 ## Quality Gates
 
-Pre-commit hooks automatically run:
+Once you have enabled the gate (Quick Start step 4 — `git config core.hooksPath .githooks`),
+the pre-commit hook runs on every commit:
 1. **ESLint** - Code quality checks
 2. **TypeScript** - Type checking
 3. **Mobile-first validation** - Warns if desktop-first patterns detected in UI files
 
+If you have not run that command, none of these checks run. Hooks are per-copy of the
+project and cannot be shipped in the repository, so each new clone needs it once.
+
 ### Prototype Mode
 
-Use `PROTOTYPE_MODE=1` for rapid iteration:
+Use `CLAUDE_PROTOTYPE_MODE=true` for rapid iteration:
 
 ```bash
 # Production mode (strict - commit fails if checks fail)
 git commit -m "feat: Add feature"
 
 # Prototype mode (lenient - shows errors but allows commit)
-PROTOTYPE_MODE=1 git commit -m "WIP: Prototyping feature"
+CLAUDE_PROTOTYPE_MODE=true git commit -m "WIP: Prototyping feature"
 ```
 
 **When to use prototype mode:**
@@ -230,11 +252,11 @@ The quality gate is configured in [.claude/hooks/quality-gate.sh](.claude/hooks/
 Use `docs/prds/template-prd.md` as a starting point for your product requirements documents.
 
 ### Reviewer Personas
-Use the reviewer personas in `docs/reviewers/` to get multi-perspective feedback:
-- `@docs/reviewers/engineer.md` - Technical feasibility
-- `@docs/reviewers/designer.md` - UX and design
-- `@docs/reviewers/executive.md` - Business and strategy
-- `@docs/reviewers/user-researcher.md` - User research and validation
+Use the reviewer personas in `agents/` to get multi-perspective feedback:
+- `@agents/engineer.md` - Technical feasibility
+- `@agents/designer.md` - UX and design
+- `@agents/executive.md` - Business and strategy
+- `@agents/user-researcher.md` - User research and validation
 
 ## Customization
 
@@ -259,9 +281,18 @@ This workspace includes **pre-configured Playwright** for comprehensive end-to-e
 
 ### Quick Start
 
+First time only, download the browsers the tests drive:
+
 ```bash
-# Run all tests
+npx playwright install
+```
+
+```bash
+# Run the tests in Desktop Chrome (fast - use this day to day)
 npm test
+
+# Run in all 5 browsers and screen sizes (slower - use before a PR)
+npm run test:all
 
 # Run tests interactively
 npm run test:ui
@@ -278,7 +309,7 @@ npm run test:debug
 - ✅ **Accessibility Testing** - WCAG 2.1 AA compliance checks
 - ✅ **Multi-Browser** - Chrome, Firefox, Safari support
 - ✅ **Quality Gate Integration** - Optional test execution in pre-commit hook
-- ✅ **Playwright MCP** - Cursor can drive the browser for UI verification (see [SETUP.md](./SETUP.md#6-enable-playwright-mcp-optional))
+- ✅ **Playwright MCP** - Cursor can drive the browser for UI verification (see [SETUP.md](./SETUP.md#8-enable-playwright-mcp-optional))
 
 ### TDD + UI Verification Workflow
 
@@ -288,7 +319,9 @@ For feature development with visual verification:
 2. **Implement feature** - Write code to pass tests
 3. **Generate screenshots** - Capture UI states during test runs
 4. **Verify screenshots** - Check for correct styling, accessibility, responsiveness
-5. **Rename verified** - Add `verified_` prefix to approved screenshots
+5. **Rename verified** - Add a `verified_` prefix to record which screenshots you
+   approved. Nothing in `screenshots/` is committed — see
+   [screenshots/README.md](./screenshots/README.md) for why.
 
 ### Running Tests with Quality Gate
 
@@ -326,7 +359,9 @@ See [e2e/example.spec.ts](./e2e/example.spec.ts) for comprehensive test examples
 - `npm run build` - Build for production
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
-- `npm test` - Run E2E tests
+- `npm run typecheck` - Check TypeScript types without building
+- `npm test` - Run E2E tests in Desktop Chrome (the quick, everyday check)
+- `npm run test:all` - Run E2E tests in all 5 browsers and screen sizes
 - `npm run test:ui` - Run tests interactively
 - `npm run test:debug` - Debug tests step-by-step
 
