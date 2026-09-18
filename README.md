@@ -4,6 +4,23 @@ A comprehensive product development workspace with multi-agent collaboration, qu
 
 > **Looking for a simpler starter?** Check out other starter templates for rapid prototyping without the full product development features.
 
+## New here? Start with this
+
+Clone, run `npm install`, then open the project in Claude Code or Cursor and type:
+
+```
+/meet-your-agent
+```
+
+The agent will look around the project, explain back what it thinks you are
+building, interview you about the things the code cannot tell it, and agree with you
+how the two of you are going to work. It changes nothing until you say so.
+
+That conversation fills in `CURRENT-WORK.md` and `DESIGN_SYSTEM.md` for you, so
+later sessions start knowing your product instead of starting from nothing.
+
+**Everything below is reference.** You do not need to read it before you begin.
+
 ## Features
 
 ### Multi-Agent Collaboration
