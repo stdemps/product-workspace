@@ -277,8 +277,17 @@ concern in your wrap-up.
 Ask: **based on this project and how I work, what additional ground rules would you
 recommend?**
 
-Propose them and **discuss rather than immediately adding them.** Suggestions worth
-considering, if they fit what you learned:
+Propose them and **discuss rather than immediately adding them.**
+
+Two limits on what you propose:
+
+- **Quote the answer each rule came from.** If you cannot point at something the user
+  actually said in stage 1 or 2, do not propose it. This keeps the rules theirs
+  rather than a generic best-practice list.
+- **Five rules maximum.** A short list they remember beats a long one they skim. If
+  you have more candidates, pick the five that matter and drop the rest.
+
+Suggestions worth considering, if they fit what you learned:
 
 - Which checks must pass before any work is called done
 - Whether the user wants screenshots rather than diffs
@@ -300,6 +309,24 @@ future sessions start from this understanding rather than from nothing:
 stage of this session where you change anything, and it should still be on the
 user's explicit say-so.
 
+### Out of scope — required
+
+Before you finish, write down **three to five things this project is deliberately
+NOT doing**, drawn from what the user told you in stage 2.
+
+This is as valuable as the goals. It is what stops a future session helpfully
+building something nobody asked for, and it is the fastest way to tell whether you
+actually understood the conversation.
+
+**If you cannot fill this section, you have not understood the project well enough —
+ask another question rather than leaving it empty.**
+
+Put it in `CURRENT-WORK.md` alongside the goals, so it survives this session.
+
+Note the difference between *not yet* and *never*: "no payments in v1" and "we will
+never store health data" lead to very different decisions later. Say which each one
+is.
+
 ---
 
 ## Then start the first piece of work
@@ -309,3 +336,17 @@ Ask what they would like to build first. Apply everything just agreed.
 If they have no specific task, suggest something small and real from what you
 learned in stage 2 — small enough to finish in one session, real enough to be
 worth keeping.
+
+---
+
+## Later: tuning the setup itself
+
+This template ships a generous starter setup — a lot of skills, commands and agents,
+deliberately more than any one person needs.
+
+**Do not audit that now.** It needs real use before anyone can tell what is useful.
+After a few weeks, when the user knows what they keep reaching for and what they
+never touch, `/ai-harness-architect` right-sizes it — including switching things off.
+
+Mention it once, at the end, as a "come back to this later". Do not run it in this
+session.
