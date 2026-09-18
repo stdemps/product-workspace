@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Pre-commit hook: runs the quality gate.
+#
+# This gate BLOCKS the commit if ESLint or the TypeScript type check fails.
+# It also warns about desktop-first responsive patterns in staged UI files.
+#
+# Bypass for rapid prototyping:
+#   CLAUDE_PROTOTYPE_MODE=true git commit -m "message"
+#
+# Include the Playwright suite in the gate:
+#   RUN_TESTS=true git commit -m "message"
+
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+GATE="$ROOT/.claude/hooks/quality-gate.sh"
+
+# If the gate is missing, do not block the commit.
+[ -x "$GATE" ] || exit 0
+
+# Pass the gate's exit code through, so a failure blocks the commit.
+"$GATE"

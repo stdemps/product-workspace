@@ -304,3 +304,60 @@ Create a custom React hook called useDebounce in lib/hooks/use-debounce.ts that:
 **Expected Output:**
 A reusable hook with proper TypeScript types and cleanup logic
 
+
+---
+
+## Plan, Delegate, Then Check the Work
+
+**Category:** Development
+
+**When to use:** Any feature big enough that you want the thinking done before
+the typing starts. Also good when you want the cheap model doing the typing and
+the careful model checking it.
+
+**Context needed:** What you want built. The plan step will ask you anything it
+needs.
+
+---
+
+## Prompt
+
+```
+Write a detailed implementation plan for [X]. Don't build it yet.
+
+Then hand that plan to the executor subagent to implement.
+
+Once it's done, review the result yourself against the plan and fix anything it
+missed.
+```
+
+## Why this works
+
+Three separate jobs, done by the right thing each time:
+
+1. **Plan first, build never** - you get to read the plan and correct it while
+   changing it is still free.
+2. **The executor does the typing** - it runs on a cheaper model and is told not
+   to redesign anything. It follows the plan or stops and asks.
+3. **Someone checks the work** - the reviewing step is not the one that wrote the
+   code, so it is looking for mistakes rather than defending them.
+
+Ask for the plan to be written to a file if you want to keep it.
+
+## Example Usage
+
+**Input:**
+```
+Write a detailed implementation plan for adding a saved-searches feature to the
+job board. Don't build it yet.
+
+Then hand that plan to the executor subagent to implement.
+
+Once it's done, review the result yourself against the plan and fix anything it
+missed.
+```
+
+**Expected Output:**
+A plan you can read and correct, then an implementation that follows it, then a
+short report of what was built, what was verified, and anything the plan got
+wrong.

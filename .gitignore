@@ -10,8 +10,16 @@
 /test-results/
 /playwright-report/
 /playwright/.cache/
+# Screenshots are ignored wholesale, with NO exception by filename.
+#
+# WARNING - do not add an exception here. A screenshot of a logged-in page can
+# contain real customer names, email addresses and account data. An "allow this
+# one prefix" rule is how that data gets committed by accident: the prefix that
+# sounds like good practice is the one people reach for.
+#
+# If you deliberately want to commit a reference image, put it somewhere that is
+# tracked normally (e.g. docs/images/) so the decision is explicit and visible.
 /screenshots/*.png
-!/screenshots/verified_*.png
 
 # next.js
 /.next/

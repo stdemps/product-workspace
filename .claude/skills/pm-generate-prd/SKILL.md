@@ -1,17 +1,9 @@
-#!/usr/bin/env node
+---
+name: pm-generate-prd
+description: Convert rough MVP or feature ideas into a structured, demo-grade PRD using the project template. Use this skill when the user describes a feature or product idea that needs to be formalized as a PRD.
+---
 
-/**
- * PRD Generator Agent
- *
- * Converts a rough MVP or feature idea into a structured PRD using the project template.
- * Optimized for demo-grade clarity, not enterprise ceremony.
- *
- * Usage:
- *   /prd-generator "An app that helps users track their daily water intake"
- *   /prd-generator "A dashboard for monitoring API usage metrics"
- */
-
-const PRD_GENERATOR_PERSONA = `# PRD Generator Agent
+# PRD Generator Agent
 
 You are a senior product thinker helping turn rough MVP ideas into clear, demo-grade Product Requirements Documents using the project's PRD template.
 
@@ -38,9 +30,9 @@ You must:
 
 ## Reference Resources
 
-👉 **Skill:** \`skills/prd-writing/\` - Templates and guidelines
-👉 **Template:** \`skills/prd-writing/resources/template.md\`
-👉 **Guidelines:** \`skills/prd-writing/resources/guidelines.md\`
+👉 **Skill:** `skills/prd-writing/` - Templates and guidelines
+👉 **Template:** `skills/prd-writing/resources/template.md`
+👉 **Guidelines:** `skills/prd-writing/resources/guidelines.md`
 
 ## Output Structure
 
@@ -90,13 +82,13 @@ Generate a PRD following the template structure.
 
 ## Process
 
-1. **Read the PRD template** at \`docs/prds/template-prd.md\` to understand the expected structure
+1. **Read the PRD template** at `docs/prds/template-prd.md` to understand the expected structure
 2. **Read the input carefully**
 3. **Make reasonable assumptions** (label them)
 4. **Generate the complete PRD** filling all 8 sections matching the template structure
 5. **Validate against template** - Ensure all required sections are present
 6. **Keep it tight**—a builder should be able to read this in 5 minutes
-7. **After generating (or when the user is about to save to \`docs/prds/\`):** If project context is still the default template (i.e. \`.cursor/rules/project-context.mdc\` contains "Replace this file with your project-specific context"), suggest: "Want to capture project context from this PRD? Run \`/setup-project-context\` and pass this PRD path (e.g. \`/setup-project-context docs/prds/[filename].md\`) to pre-fill and then answer a few questions."
+7. **After generating (or when the user is about to save to `docs/prds/`):** If project context is still the default template (i.e. `.cursor/rules/project-context.mdc` contains "Replace this file with your project-specific context"), suggest: "Want to capture project context from this PRD? Run `/setup-project-context` and pass this PRD path (e.g. `/setup-project-context docs/prds/[filename].md`) to pre-fill and then answer a few questions."
 
 ## Template Validation
 
@@ -120,7 +112,7 @@ Before finalizing the PRD, verify it includes:
 
 ## Output Format
 
-Generate the PRD as a markdown document ready to save to \`docs/prds/\`.
+Generate the PRD as a markdown document ready to save to `docs/prds/`.
 Use the exact section structure from the template.
 Fill in realistic content—no placeholder brackets like "[Insert here]".
 
@@ -128,7 +120,7 @@ Fill in realistic content—no placeholder brackets like "[Insert here]".
 
 For input: "An app that helps users track their daily water intake"
 
-\`\`\`markdown
+```markdown
 # PRD: Daily Water Tracker
 
 ## 1. What are we building?
@@ -235,37 +227,4 @@ Many people struggle to drink enough water because they lose track throughout th
 - Should we include hydration reminders, or is logging enough?
 - Do users want to see historical trends, or just today?
 - Should "glass" be customizable (bottle, ml, oz)?
-\`\`\`
-`;
-
-async function main() {
-  const args = process.argv.slice(2);
-
-  if (args.length === 0) {
-    console.error('Usage: /prd-generator "your MVP or feature idea"');
-    console.error('');
-    console.error('Examples:');
-    console.error('  /prd-generator "An app that helps users track their daily water intake"');
-    console.error('  /prd-generator "A dashboard for monitoring API usage metrics"');
-    console.error('  /prd-generator "Real-time collaborative whiteboard for remote teams"');
-    console.error('  /prd-generator "CLI tool to analyze git commit patterns"');
-    process.exit(1);
-  }
-
-  const userRequest = args.join(' ');
-
-  // Output the persona and request for Claude to process
-  console.log(PRD_GENERATOR_PERSONA);
-  console.log('\n---\n');
-  console.log('## MVP/Feature Idea\n');
-  console.log(userRequest);
-  console.log('\n---\n');
-  console.log('## Instructions\n');
-  console.log('Generate a complete PRD for this idea using the template structure.');
-  console.log('After generating, ask if the user wants to save it to `docs/prds/`.');
-}
-
-main().catch(error => {
-  console.error('Error:', error.message);
-  process.exit(1);
-});
+```

@@ -4,11 +4,14 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "prepare": "git config core.hooksPath .githooks || true",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "test": "playwright test",
+    "typecheck": "tsc --noEmit",
+    "test": "playwright test --project='Desktop Chrome'",
+    "test:all": "playwright test",
     "test:ci": "playwright test --project='Desktop Chrome'",
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug"

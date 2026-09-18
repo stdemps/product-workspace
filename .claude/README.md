@@ -10,24 +10,33 @@ This directory contains Claude Code configuration, skills, and hooks for enhance
 
 ```
 .claude/
-├── claude.json          # Claude Code configuration
 ├── QUICKSTART.md        # 5-minute getting started guide
 ├── agents/              # Conversational agents (persona wrappers)
 │   ├── engineer.js      # Technical/architecture agent
 │   ├── designer.js      # UX/design agent
 │   └── pm.js            # Product management agent
-├── skills/              # Functional skills (tasks and actions)
-│   ├── engineer-review.js        # Engineer file review
-│   ├── designer-review.js        # Designer file review
-│   ├── designer-brand-identity.js # Designer: Brand tokens & styling
-│   ├── designer-prd-to-ux.js     # Designer: Translate PRDs to UX specs
-│   ├── pm-generate-prd.js        # PM: Generate PRDs from ideas
-│   ├── pm-clarify-prd.js         # PM: Refine PRDs through questioning
-│   ├── prd-review.js             # Multi-perspective PRD review
-│   ├── collab.js                 # Multi-agent collaboration
-│   └── ux-to-implementation-plan.js  # Utility: Generate implementation plan
+├── skills/              # Skills, auto-discovered by Claude Code
+│   ├── pm-generate-prd/          # PM: Generate PRDs from ideas
+│   │   └── SKILL.md
+│   ├── pm-clarify-prd/           # PM: Refine PRDs through questioning
+│   │   └── SKILL.md
+│   ├── designer-prd-to-ux/       # Designer: Translate PRDs to UX specs
+│   │   └── SKILL.md
+│   ├── ux-to-implementation-plan/ # Utility: Generate implementation plan
+│   │   └── SKILL.md
+│   ├── collab/                   # Multi-agent collaboration
+│   │   ├── SKILL.md
+│   │   └── collab.js             #   (backing script)
+│   ├── engineer-review.js        # Engineer file review (legacy format)
+│   ├── designer-review.js        # Designer file review (legacy format)
+│   ├── designer-brand-identity.js # Designer: Brand tokens (legacy format)
+│   └── prd-review.js             # Multi-perspective PRD review (legacy)
 └── hooks/               # Event hooks
     └── quality-gate.sh  # Pre-commit quality enforcement
+
+Skills in SKILL.md folders are discovered automatically — there is no
+registry file. Files still ending in .js are the older format and are not
+auto-discovered.
 ```
 
 ## Agents vs Skills
@@ -251,23 +260,34 @@ The `quality-gate.sh` hook runs before every git commit to enforce quality stand
 
 **Configuration:**
 
-The hook is referenced in `claude.json`:
-```json
-{
-  "hooks": {
-    "pre-commit": "./hooks/quality-gate.sh"
-  }
-}
+The hook runs via git's `core.hooksPath`. Enable it once per clone:
+```bash
+git config core.hooksPath .githooks
 ```
 
-To bypass the hook temporarily (not recommended):
+`.githooks/pre-commit` calls `.claude/hooks/quality-gate.sh` and passes its
+exit code through, so a failed check blocks the commit.
+
+To run the checks without blocking (rapid prototyping):
+```bash
+CLAUDE_PROTOTYPE_MODE=true git commit -m "message"
+```
+
+To include the Playwright suite in the gate:
+```bash
+RUN_TESTS=true git commit -m "message"
+```
+
+To skip the hook entirely (not recommended):
 ```bash
 git commit --no-verify -m "message"
 ```
 
 ## Configuration
 
-The `claude.json` file configures Claude Code behavior:
+Claude Code discovers skills automatically. Older reference material may
+mention a `claude.json` registry; that file has been removed and is no
+longer read. For historical context only:
 
 ```json
 {
@@ -311,49 +331,45 @@ To create a new conversational agent:
    chmod +x .claude/agents/your-agent.js
    ```
 
-3. Add it to `claude.json`:
-   ```json
-   {
-     "agents": {
-       "your-agent": {
-         "path": "./agents/your-agent.js",
-         "description": "What your agent does"
-       }
-     }
-   }
+3. Invoke it by running the script:
+   ```bash
+   node .claude/agents/your-agent.js "question"
    ```
 
-4. Invoke with `/your-agent "question"`
+   To make it discoverable as a slash command, add a
+   `.claude/skills/your-agent/SKILL.md` wrapper that tells Claude to run the
+   script — see `.claude/skills/collab/SKILL.md` for a worked example.
 
 ### Creating a New Skill
 
 To create a new functional skill:
 
-1. Create a new JavaScript file in `skills/`:
-   ```javascript
-   #!/usr/bin/env node
-
-   // Your skill logic here
-   ```
-
-2. Make it executable:
+1. Create a folder for it:
    ```bash
-   chmod +x .claude/skills/your-skill.js
+   mkdir -p .claude/skills/your-skill
    ```
 
-3. Register it in the `skills` section of `claude.json`:
-   ```json
-   {
-     "skills": {
-       "your-skill": {
-         "path": "./skills/your-skill.js",
-         "description": "What your skill does"
-       }
-     }
-   }
+2. Write `.claude/skills/your-skill/SKILL.md` with YAML frontmatter:
+
+   ```markdown
+   ---
+   name: your-skill
+   description: What it does. Use this skill when <the trigger condition>.
+   ---
+
+   # Your Skill
+
+   Instructions for Claude go here.
    ```
 
-4. Invoke with `/your-skill`
+   The `description` is what makes the skill trigger, so say **when** to use
+   it, not just what it does.
+
+3. Invoke with `/your-skill`. There is no registration step — Claude Code
+   finds it.
+
+If the skill needs to execute code, put the script in the same folder and
+have `SKILL.md` tell Claude to run it. See `.claude/skills/collab/`.
 
 ## Best Practices
 
