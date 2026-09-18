@@ -1,6 +1,6 @@
 ---
 name: agentation
-description: Add Agentation visual feedback toolbar to a Next.js project
+description: Install and wire up the Agentation visual annotation toolbar, which lets you click on your running app and leave notes for the agent instead of describing a problem in words. Use when the user says "add agentation", "set up agentation", "install the annotation toolbar", "add the feedback toolbar", or wants to point at the running app and mark up what needs changing. Handles Next.js App Router and Pages Router, and stops early if it is already installed.
 ---
 
 # Agentation Setup
