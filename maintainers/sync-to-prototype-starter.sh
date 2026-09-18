@@ -4,10 +4,10 @@
 # Only copies into existing directories so we don't create a full agent stack in a minimal repo.
 #
 # Usage:
-#   PROTOTYPE_STARTER=/path/to/prototype-starter ./scripts/sync-to-prototype-starter.sh
-#   ./scripts/sync-to-prototype-starter.sh /path/to/prototype-starter
+#   PROTOTYPE_STARTER=/path/to/prototype-starter ./maintainers/sync-to-prototype-starter.sh
+#   ./maintainers/sync-to-prototype-starter.sh /path/to/prototype-starter
 #
-# See: docs/sync-agent-updates-to-prototype-starter.md
+# See: maintainers/sync-agent-updates-to-prototype-starter.md
 
 set -e
 
@@ -39,7 +39,7 @@ fi
 if [ -d "$DEST/docs" ]; then
   echo "Copying docs/agent-tools-and-context.md ..."
   cp "$PRODUCT_ROOT/docs/agent-tools-and-context.md" "$DEST/docs/"
-  [ -f "$PRODUCT_ROOT/docs/sync-agent-updates-to-prototype-starter.md" ] && cp "$PRODUCT_ROOT/docs/sync-agent-updates-to-prototype-starter.md" "$DEST/docs/"
+  [ -f "$PRODUCT_ROOT/maintainers/sync-agent-updates-to-prototype-starter.md" ] && cp "$PRODUCT_ROOT/maintainers/sync-agent-updates-to-prototype-starter.md" "$DEST/maintainers/"
 else
   echo "Skipping docs (destination not present)"
 fi
@@ -57,8 +57,16 @@ fi
 # Claude skills
 if [ -d "$DEST/.claude/skills" ]; then
   echo "Copying .claude/skills (selected) ..."
-  for f in engineer-review.js designer-review.js designer-prd-to-ux.js ux-to-implementation-plan.js designer-brand-identity.js pm-clarify-prd.js prd-review.js; do
+  # Legacy single-file skills (still .js)
+  for f in engineer-review.js designer-review.js designer-brand-identity.js prd-review.js; do
     [ -f "$PRODUCT_ROOT/.claude/skills/$f" ] && cp "$PRODUCT_ROOT/.claude/skills/$f" "$DEST/.claude/skills/"
+  done
+  # SKILL.md folder skills (auto-discovered by Claude Code)
+  for d in pm-generate-prd pm-clarify-prd designer-prd-to-ux ux-to-implementation-plan; do
+    if [ -d "$PRODUCT_ROOT/.claude/skills/$d" ]; then
+      mkdir -p "$DEST/.claude/skills/$d"
+      cp "$PRODUCT_ROOT/.claude/skills/$d/SKILL.md" "$DEST/.claude/skills/$d/"
+    fi
   done
 else
   echo "Skipping .claude/skills (destination not present)"
@@ -73,4 +81,4 @@ else
 fi
 
 echo ""
-echo "Done. See docs/sync-agent-updates-to-prototype-starter.md for manual steps (SETUP.md, README, claude.json)."
+echo "Done. See maintainers/sync-agent-updates-to-prototype-starter.md for manual steps (SETUP.md, README)."

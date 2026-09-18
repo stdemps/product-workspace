@@ -70,34 +70,31 @@ later sessions start knowing your product instead of starting from nothing.
    ```bash
    npm install
    ```
+   This also switches on the pre-commit checks for you.
 
-3. **Run the customization script (optional):**
-   ```bash
-   node template.config.js
-   ```
-
-4. **Turn on the quality gate (once per copy of the project):**
-   ```bash
-   git config core.hooksPath .githooks
-   ```
-   Git does not carry hooks across clones, so this one command is what switches
-   on the pre-commit checks. Skip it and nothing checks your work before a commit.
-
-5. **Download the test browsers (once):**
-   ```bash
-   npx playwright install
-   ```
-   `npm install` does not do this. Without it, `npm test` cannot open a browser.
-
-6. **Start development server:**
+3. **Start it up:**
    ```bash
    npm run dev
    ```
+   Open http://localhost:3000. You should see a working page. That's it running.
 
-7. **Open in Cursor:**
-   - Open the project in Cursor
-   - Drop your PRD into `docs/prds/`
-   - Start coding with all context loaded!
+4. **Meet your agent:**
+
+   Open the project in Claude Code or Cursor and type:
+   ```
+   /meet-your-agent
+   ```
+   It will look around, explain back what it thinks you're building, and agree with
+   you how you'll work together. It changes nothing until you say so.
+
+### When you need them
+
+Two things you don't need yet. Come back when you do:
+
+- **Rename the project** — `node template.config.js` swaps the placeholder name for
+  yours.
+- **Run the tests** — `npx playwright install` downloads the browsers first (a
+  one-off), then `npm test` runs them. `npm install` doesn't fetch browsers.
 
 ### For maintainers (GitHub template)
 

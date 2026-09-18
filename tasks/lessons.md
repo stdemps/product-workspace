@@ -21,11 +21,63 @@ Newest entries go at the top, under a dated heading.
 
 ---
 
+## 2026-09-19: A file outside the expected folder is not dead code
+
+**What went wrong.** Three times in one session, files were recommended for deletion
+because they sat outside the folder the tool loads from. All three recommendations
+were wrong:
+
+- `.cursor/` (281 files) looked like a duplicate of `.claude/`. Cursor does not read
+  `.claude/` at all — deleting it would have silently removed every Cursor rule.
+- `agents/*.md` looked like stale copies of `.claude/agents/`. They are portable
+  personas for tools that are not Claude Code, referenced six times in the prompt
+  library, and `agents/README.md` says so.
+- `skills/brand-identity/` and `skills/prd-writing/` looked like skills in a folder
+  Claude Code never scans. True — but they hold five resource files (design tokens,
+  the PRD template, voice-and-tone) that exist nowhere else, read by path from eight
+  Cursor rules.
+
+**Why it happened.** One correct fact — "Claude Code only loads `.claude/skills/`" —
+got applied as a universal rule. But a repo can serve several tools at once, and a
+file can be a resource read by path rather than a skill discovered by a scanner.
+"This tool ignores it" and "nothing uses it" are different claims, and only the first
+one had been checked.
+
+**The rule.** Before calling any file redundant, grep the whole repo for its name and
+its path. If something references it, find out what that something is for. Ask "which
+tool reads this, and how does it find it?" — discovery by scan and reference by path
+have different rules. And when the answer is "delete N files", say the number out
+loud first: a big number deserves a second check, not more confidence.
+
+---
+
+## 2026-09-19: It works on my machine because my machine is not the repo
+
+**What went wrong.** Three separate things were reported as working when they only
+worked locally and shipped to nobody: the `typecheck` script existed in an
+uncommitted `package.json`, `tasks/lessons.md` was created but never `git add`ed, and
+the `executor` agent lived only in the user's global `~/.claude/` config. In the last
+case a prompt had already been written telling users to hand work to that agent.
+
+**Why it happened.** Every check was run in the working directory, where all three
+were present. Nothing was ever checked from the perspective of someone cloning the
+repo. For agents and skills this is especially easy to miss, because a global
+`~/.claude/` definition makes a project-level one look like it is working.
+
+**The rule.** For anything a user is told to run, verify it is **tracked**, not just
+present: `git ls-files -- <path>` returns nothing for a file that will not ship. When
+adding an agent or skill, check whether it resolves from the repo or from global
+config — if it only exists globally, it does not ship. And staged deletions with
+untracked replacements are the sharp edge of this: `git status --porcelain` before
+committing a migration, or the commit records the removals and not the additions.
+
+---
+
 ## Starter lessons
 
 These came from a large production project and were rewritten to apply to any
-project. They are here so the file is useful on day one. Keep them, and add your
-own above them as you go.
+project. They are here so the file was useful on day one. The dated entries above
+came from real sessions on this template - add your own at the top.
 
 ---
 
@@ -63,9 +115,11 @@ one location and reporting a conclusion about the whole system.
 generally: when a check looks absent, confirm you are looking where this project
 puts it, then prove the answer by executing it rather than by reading around it.
 
-One real caveat: `core.hooksPath` is **per clone**, not committed. A fresh clone
-of this template has it unset, so the gate genuinely will not run until someone
-runs `git config core.hooksPath .githooks`. Do that first in any new clone.
+One real caveat: `core.hooksPath` is **per clone**, not committed. This template now
+sets it from a `prepare` script, so `npm install` switches the gate on for you. If the
+gate ever looks like it is not running, check `git config core.hooksPath` before
+assuming the hook is broken - and remember `prepare` runs on `npm install`, not on a
+bare `git clone`.
 
 ---
 
