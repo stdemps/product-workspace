@@ -2,7 +2,7 @@
   "meta": {
     "brand_name": "[INSERT NAME]",
     "description": "Custom brand design tokens that customize shadcn/ui themes. These values should be implemented as CSS variables in app/globals.css following shadcn's HSL format.",
-    "implementation_note": "Values here override shadcn defaults. Implement in app/globals.css :root and .dark selectors using HSL format (e.g., '0 0% 100%' for white)."
+    "implementation_note": "Values here override shadcn defaults. Implement unwrapped HSL channels in app/globals.css :root and .dark (e.g. '--background: 0 0% 100%;'). Map them once in @theme inline as '--color-background: hsl(var(--background));'. Do not wrap both layers or colours will not paint."
   },
   "colors": {
     "note": "All color values use HSL format (H S% L%) to match shadcn/ui theme system. These override defaults in app/globals.css",
