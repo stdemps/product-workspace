@@ -19,6 +19,13 @@ how the two of you are going to work. It changes nothing until you say so.
 That conversation fills in `CURRENT-WORK.md` and `DESIGN_SYSTEM.md` for you, so
 later sessions start knowing your product instead of starting from nothing.
 
+### Want the full setup?
+
+The skills, agents and quality gate in this repo work as soon as you clone.
+About half the commands referenced in the docs come from **plugins**, which you
+install yourself. See **[SETUP-HARNESS.md](SETUP-HARNESS.md)** — ten minutes,
+and you can stop after the first step.
+
 **Everything below is reference.** You do not need to read it before you begin.
 
 ## Features

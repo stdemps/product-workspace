@@ -24,7 +24,7 @@ turning things OFF, not adding more.
 Before you ask anything, take stock of what is already here:
 
 - **Memory** — `CURRENT-WORK.md`, `DESIGN_SYSTEM.md`, `ARCHITECTURE.md`,
-  `tasks/lessons.md`, `.claude/claude.md`
+  `tasks/lessons.md`, `.claude/CLAUDE.md`
 - **Skills** — count `.claude/skills/*/SKILL.md`
 - **Agents and commands** — count `.claude/agents/*.md` and `.claude/commands/*.md`
 - **Guardrails** — `.githooks/pre-commit`, `.claude/hooks/quality-gate.sh`

@@ -42,6 +42,9 @@ firebase-debug.log
 .env*.local
 .env
 
+# personal agent settings — may contain your own infra names, never commit
+.claude/settings.local.json
+
 # vercel
 .vercel
 

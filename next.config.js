@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Don't auto-generate AGENTS.md / CLAUDE.md at the project root on `next dev`.
-  // This project's instructions live in .claude/claude.md, so the generated
+  // This project's instructions live in .claude/CLAUDE.md, so the generated
   // files were just confusing clutter.
   agentRules: false,
 
