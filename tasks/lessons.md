@@ -51,6 +51,39 @@ loud first: a big number deserves a second check, not more confidence.
 
 ---
 
+## 2026-09-19: A check that cannot fail has not passed
+
+**What went wrong.** Both repos were merged to `main` after `npm ci` was reported as
+passing. CI then failed immediately on both, on that exact command: the lockfile was
+internally inconsistent and `npm ci` refuses an inconsistent lockfile.
+
+The check had been run in the project directory, where `node_modules` was already
+populated. With nothing to install, `npm ci` had nothing to verify, printed success,
+and was believed. Copying only `package.json` and `package-lock.json` into an empty
+directory reproduced the failure in about two seconds.
+
+**Why it happened.** The command was right and the environment was wrong. `npm ci`
+only tests what it claims to test when it starts from nothing, and the whole point of
+running it was to simulate a fresh clone — the one condition the local run did not
+meet. Worse, this check had been chosen *specifically* to catch what `npm install`
+hides, so its false pass was more convincing than no check at all.
+
+**The rule.** When a check exists to simulate a different environment, run it in that
+environment. For `npm ci`, copy `package.json` and `package-lock.json` into an empty
+directory, or clone to a temp path — never run it where `node_modules` already exists.
+
+More generally: before trusting a green result, ask **what would have made this fail?**
+If the answer is "nothing, in the state I ran it in", the check proved nothing. This is
+the same trap as a test whose assertions sit behind a false `if` — see the entry below
+on tests that pass without checking anything. A check that cannot fail is not evidence,
+and reporting it as evidence spends trust that is hard to earn back.
+
+Related: `npm install` and `npm ci` disagree on purpose. `install` will repair a
+lockfile as it goes; `ci` refuses it. So after any dependency change, the lockfile
+needs the strict check, not the forgiving one.
+
+---
+
 ## 2026-09-19: It works on my machine because my machine is not the repo
 
 **What went wrong.** Three separate things were reported as working when they only
