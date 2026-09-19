@@ -1,12 +1,67 @@
 # Skills & Commands Guide
 
-Quick reference for all available AI skills and commands in this project.
+There is a lot here. **You do not need to learn it.** Find your question below,
+type the command, and ignore the rest until you need it.
 
-## Hierarchy
+## Start here
 
-1. **Impeccable commands** — Primary for UI/UX refinement and quality
-2. **Original agents** — Conversational help and PRD pipeline
-3. **ui-ux-pro-max** — Reference lookups (palettes, fonts, charts)
+| If you are... | Type this |
+|---|---|
+| Opening this project for the first time | `/meet-your-agent` |
+| About to raise a pull request | `/preflight` |
+| Wondering which of these you actually need, after a few weeks | `/ai-harness-architect` |
+
+## Find your question
+
+**"I don't know what to build yet."**
+
+| Question | Command |
+|---|---|
+| What problem are we solving? Is this scoped right? | `/pm` |
+| Is this buildable? What's the risk? | `/engineer` |
+| Is this worth building at all? | `/executive` |
+| How do I validate this with users? | `/user-researcher` |
+| Turn my rough idea into a PRD | `/pm-generate-prd` |
+| My PRD is vague — interrogate it | `/pm-clarify-prd` |
+| What do all the roles think of this PRD? | `/prd-review` |
+
+**"I know what to build. How should it work?"**
+
+| Question | Command |
+|---|---|
+| How should this flow? Where will people get stuck? | `/ux-designer` |
+| What should this button, error or empty state say? | `/ux-copywriter` |
+| Turn my PRD into a UX spec | `/designer-prd-to-ux` |
+| Turn that spec into a build plan | `/ux-to-implementation-plan` |
+
+**"It exists. Why does it look wrong?"**
+
+| Question | Command |
+|---|---|
+| Spacing, type, colour, dark mode — make it look right | `/ui-designer` |
+| Build me a new interface from scratch | `/frontend-design` |
+| Apply our brand to this | `/designer-brand-identity` |
+| Show me palettes, fonts, chart types | `/ui-ux-pro-max` |
+
+**"Is this good enough to ship?"**
+
+| Question | Command |
+|---|---|
+| Check my branch before I raise a PR | `/preflight` |
+| Can people with disabilities use this? | `/a11y-audit` |
+| Review this from a designer's eye | `/designer-review` |
+| Review this from an engineer's eye | `/engineer-review` |
+
+**"Something needs doing to the setup itself."**
+
+| Question | Command |
+|---|---|
+| Right-size my skills and tools | `/ai-harness-architect` |
+| Let me click the app and leave notes for the agent | `/agentation` |
+| Sync a screen to or from Paper | `/paper-sync` |
+
+Everything below is detail on the same commands, grouped by how they work rather
+than by what you want. Come back when you need it.
 
 ---
 
