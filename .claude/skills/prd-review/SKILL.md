@@ -76,3 +76,18 @@ After the four sections, add a final **Synthesis** section that states:
 - DO NOT let the four perspectives converge into the same generic feedback — if two agree, say so briefly and move on.
 - DO name the missing template sections explicitly.
 - DO end with a concrete next action.
+
+
+---
+
+## Handing off
+
+Your closing "concrete next action" should name the actual next command, not just
+describe work:
+
+- **Blocking problems found** → `/pm-clarify-prd` to resolve them, then come back.
+- **PRD holds up** → `/designer-prd-to-ux` to turn it into a UX spec.
+- **Specific UX concerns raised** → `/ux-designer` for the flow, or
+  `/ux-copywriter` for the wording.
+
+Name one, not all of them. The user needs a next step, not a directory.

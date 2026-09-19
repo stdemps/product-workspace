@@ -228,3 +228,22 @@ Many people struggle to drink enough water because they lose track throughout th
 - Do users want to see historical trends, or just today?
 - Should "glass" be customizable (bottle, ml, oz)?
 ```
+
+
+---
+
+## When you finish
+
+Tell the user where the PRD was saved, then offer the next step. Do not run it
+without being asked.
+
+1. **`/pm-clarify-prd`** — if any section came out thin or you had to guess. It
+   interrogates the vague parts rather than accepting them.
+2. **`/prd-review`** — get the engineer, designer, executive and researcher
+   perspectives on it before anyone builds. This is the cheapest moment to find a
+   problem.
+3. **`/designer-prd-to-ux`** — when the PRD is settled, turn it into a UX spec.
+
+Say it as one short line, e.g. "Saved to `docs/prds/saved-searches.md`. Next I'd
+run `/prd-review` on it — cheapest place to catch a problem. Or `/pm-clarify-prd`
+if sections 4 and 6 felt thin to you too."

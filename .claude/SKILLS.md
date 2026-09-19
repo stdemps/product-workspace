@@ -60,6 +60,27 @@ type the command, and ignore the rest until you need it.
 | Let me click the app and leave notes for the agent | `/agentation` |
 | Sync a screen to or from Paper | `/paper-sync` |
 
+## Where your work gets written
+
+Skills produce files. These are the folders they land in, and the templates to copy
+when you are starting something by hand.
+
+| Folder | What goes there | Templates |
+|---|---|---|
+| `docs/research/` | Interviews, synthesis, competitive scans | 3 |
+| `docs/prds/` | PRDs and one-pagers | 2 |
+| `docs/prototypes/` | Mockups, testing plans, design decisions | — |
+| `tasks/lessons.md` | What went wrong and the rule that prevents it | — |
+| `CURRENT-WORK.md` | What you are building now, and why | — |
+
+**The usual path:** talk to people → `docs/research/` → `/pm-generate-prd` →
+`/prd-review` → `/designer-prd-to-ux` → `/ux-to-implementation-plan` → the executor
+agent builds it → `/preflight` before the pull request.
+
+Each skill names the next one when it finishes, so you do not need to memorise that.
+
+---
+
 Everything below is detail on the same commands, grouped by how they work rather
 than by what you want. Come back when you need it.
 

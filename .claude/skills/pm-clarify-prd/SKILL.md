@@ -181,3 +181,18 @@ Options:
 3. Not yet determined, needs research
 4. Unlimited for MVP, add limits later
 ```
+
+
+---
+
+## When you finish
+
+Once the user has answered and the PRD is updated, say where it was saved and
+offer the next step:
+
+1. **`/prd-review`** — four perspectives on the sharpened PRD.
+2. **`/designer-prd-to-ux`** — if the PRD is now solid, turn it into a UX spec.
+
+One line, not a menu. If significant questions are still unanswered, say so
+plainly and recommend against moving on yet — an unresolved question is cheaper
+now than after the build.

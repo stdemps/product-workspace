@@ -363,3 +363,35 @@ Responsive design refinements, animations, edge cases, accessibility improvement
 
 [Additional tasks...]
 ```
+
+
+---
+
+## When you finish — hand the plan to someone
+
+**A plan nobody builds is not a deliverable.** Say where it was saved, then offer
+to have it built:
+
+> "Plan saved to `docs/prds/saved-searches-plan.md`. Want me to hand this to the
+> executor agent to implement? It follows the plan literally and stops to ask
+> rather than improvising. I'll review what it produces against the plan
+> afterwards."
+
+The **executor** agent (`.claude/agents/executor.md`) exists for exactly this. It
+implements from a written plan, does not redesign, and reports what it changed,
+what it verified and what it could not.
+
+The full loop, which the user may also invoke directly from
+`prompts/development.md`:
+
+1. Plan (this skill) — the user reads and corrects it while that is still free
+2. Build (executor agent) — follows the plan, asks rather than inventing
+3. Review (you) — check the result against the plan and fix what was missed
+
+Also worth offering, if the work is substantial:
+
+- **`/preflight`** once it is built — checks code quality, accessibility and
+  design-system fit before a pull request.
+
+Do not start building without being asked. The user may want to read the plan
+first, and that is the point of having one.

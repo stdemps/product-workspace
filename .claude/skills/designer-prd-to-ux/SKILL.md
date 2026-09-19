@@ -397,3 +397,18 @@ Only after all 6 passes are complete, create:
 - Progress must update immediately on tap (no loading state)
 - Celebration state must not block continued logging
 ```
+
+
+---
+
+## When you finish
+
+Say where the UX spec was saved, then offer the next step:
+
+1. **`/ux-to-implementation-plan`** — turn the spec into a task-by-task build plan.
+   This is the usual next move.
+2. **`/ux-copywriter`** — if the spec left real copy as `[placeholder]`. Interface
+   text is worth deciding before the build, not during it.
+3. **`/ui-designer`** — if visual decisions (spacing, type, colour) are still open.
+
+One line. Then stop and let the user choose.
