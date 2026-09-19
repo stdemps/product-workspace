@@ -63,8 +63,7 @@ High-level architecture and data flows. Update this as the project grows.
 | File | Purpose |
 |---|---|
 | `app/layout.tsx` | Root layout with providers |
-| `app/globals.css` | CSS custom properties (design tokens) |
-| `tailwind.config.ts` | Theme configuration |
+| `app/globals.css` | CSS-first Tailwind v4 config, design tokens, animations |
 | `components.json` | shadcn/ui config |
 | `DESIGN_SYSTEM.md` | Visual design rules and conventions |
 | `CURRENT-WORK.md` | Active feature tracking |

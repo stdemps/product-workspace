@@ -20,7 +20,7 @@
 
 ### Design Tokens
 
-All colours are CSS custom properties (HSL) defined in `app/globals.css`. **Never use hardcoded Tailwind colours (`text-red-500`, `bg-blue-200`) or hex values in components.** Always use semantic tokens.
+All colours are CSS custom properties (HSL) defined in `app/globals.css`. Store unwrapped channels in `:root` / `.dark` (`--background: 0 0% 100%;`) and map them once in `@theme inline` (`--color-background: hsl(var(--background));`). Do not wrap both layers. **Never use hardcoded Tailwind colours (`text-red-500`, `bg-blue-200`) or hex values in components.** Always use semantic tokens.
 
 | Token | Usage |
 |---|---|
@@ -129,7 +129,6 @@ All colours are CSS custom properties (HSL) defined in `app/globals.css`. **Neve
 
 | File | Purpose |
 |---|---|
-| `app/globals.css` | CSS custom properties (design tokens) |
-| `tailwind.config.ts` | Theme, animations, colour mapping |
+| `app/globals.css` | CSS-first Tailwind v4 config, design tokens, animations |
 | `components/ui/button.tsx` | Button variants |
 | `components.json` | shadcn/ui config |
