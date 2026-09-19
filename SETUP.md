@@ -1,6 +1,11 @@
 # Setup Guide
 
-Step-by-step instructions to get your workspace up and running.
+Step-by-step instructions to get **the code** running — Node, dependencies,
+the dev server, tests.
+
+> **Three docs, three jobs.** [README.md](README.md) explains what this
+> template is. This page gets the code running. **[SETUP-HARNESS.md](SETUP-HARNESS.md)**
+> gets the *agent* running — plugins, connectors, output style.
 
 ## Prerequisites
 
@@ -66,9 +71,12 @@ git add .
 git commit -m "Initial commit from workspace template"
 ```
 
-### 5. Enable the Quality Gate
+### 5. The Quality Gate (already on)
 
-Git does not share hooks between clones, so enable them once per clone:
+`npm install` switched this on for you, via the `prepare` script in
+`package.json`. There is nothing to run.
+
+If it ever seems to be off, turn it back on with:
 
 ```bash
 git config core.hooksPath .githooks

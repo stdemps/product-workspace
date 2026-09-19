@@ -32,7 +32,7 @@ Rules:
 - **`npm run build` is the real gate for anything visual.** Lint and typecheck each see only part of the picture; neither one builds the app. A green typecheck is not proof the app runs.
 - **For anything a user can see, open the page and look at it.** A passing test is not the same as a working screen.
 - **A green test can prove nothing.** If assertions sit behind an `if` or a `test.skip`, the test passes by skipping its own checks. Make a test fail on purpose before you trust it.
-- **Enable the pre-commit gate once per clone:** `git config core.hooksPath .githooks`. It is not committed, so a fresh clone has it off.
+- **The pre-commit gate switches itself on.** `npm install` runs the `prepare` script, which sets `core.hooksPath` to `.githooks`. If it ever seems off, run `git config core.hooksPath .githooks` by hand.
 - **Report real output.** If something fails, say so and paste it. Never claim green without running it.
 
 ## Development Workflows

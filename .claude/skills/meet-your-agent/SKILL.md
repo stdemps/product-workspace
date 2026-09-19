@@ -300,7 +300,7 @@ future sessions start from this understanding rather than from nothing:
 
 - **`CURRENT-WORK.md`** — the product context from stage 2: what is being built,
   who for, current priorities
-- **`.claude/claude.md`** (or `CLAUDE.md`) — the agreed working practices
+- **`.claude/CLAUDE.md`** — the agreed working practices
 - **`DESIGN_SYSTEM.md`** — any design direction that came up
 - **`tasks/lessons.md`** — start the habit: one entry per correction, with what
   went wrong, why, and the rule that prevents it
