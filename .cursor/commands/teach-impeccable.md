@@ -15,7 +15,7 @@ Note what you've learned and what remains unclear.
 
 ## Step 2: Ask UX-Focused Questions
 
-ask the user directly to clarify what you cannot infer. Focus only on what you couldn't infer from the codebase:
+STOP and ask the user to clarify. Focus only on what you couldn't infer from the codebase:
 
 ### Users & Purpose
 - Who uses this? What's their context when using it?
@@ -58,6 +58,6 @@ Synthesize your findings and the user's answers into a `## Design Context` secti
 [3-5 principles derived from the conversation that should guide all design decisions]
 ```
 
-Write this section to .cursorrules in the project root. If the file exists, append or update the Design Context section.
+Write this section to the project's agent instructions file: `CLAUDE.md` for Claude Code, `.cursorrules` for Cursor. If the file exists, append or update the Design Context section.
 
 Confirm completion and summarize the key design principles that will now guide all future work.

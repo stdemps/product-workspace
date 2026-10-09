@@ -207,3 +207,8 @@ try {
 - Document component props
 - Provide usage examples
 - Note any accessibility considerations
+
+### Working With This Template
+- Read `docs/template-principles.md` before adding, changing or removing a skill, command, rule, hook or setup step. Not needed for normal product work.
+- Not sure which skill or command fits a request? Check `.cursor/SKILLS.md`.
+- When a prototype is ready for review, offer to fill in a brief from `docs/prototypes/template-prototype-brief.md`. Draft it from the code, then ask the user to confirm anything marked faked or still open.

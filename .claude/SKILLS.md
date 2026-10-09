@@ -69,13 +69,14 @@ when you are starting something by hand.
 |---|---|---|
 | `docs/research/` | Interviews, synthesis, competitive scans | 3 |
 | `docs/prds/` | PRDs and one-pagers | 2 |
-| `docs/prototypes/` | Mockups, testing plans, design decisions | — |
+| `docs/prototypes/` | Prototype briefs: what is real, faked and still open | 1 |
 | `tasks/lessons.md` | What went wrong and the rule that prevents it | — |
 | `CURRENT-WORK.md` | What you are building now, and why | — |
 
 **The usual path:** talk to people → `docs/research/` → `/pm-generate-prd` →
 `/prd-review` → `/designer-prd-to-ux` → `/ux-to-implementation-plan` → the executor
-agent builds it → `/preflight` before the pull request.
+agent builds it → fill in a brief in `docs/prototypes/` → `/preflight` before the
+pull request.
 
 Each skill names the next one when it finishes, so you do not need to memorise that.
 

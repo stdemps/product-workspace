@@ -10,6 +10,9 @@
 - **Read `CURRENT-WORK.md` at the start of every session.** It tracks the active feature, branch, and what's in progress. Update it as you go.
 - **Read `DESIGN_SYSTEM.md` before making any UI changes.** It defines colour tokens, button rules, form conventions, and anti-patterns. If a section is blank, ask the user whether to fill it in based on what you're building.
 - **Read `ARCHITECTURE.md` before making structural changes.** It describes routes, data flow, and key components. Update it when you add new routes, data sources, or major components.
+- **Read `docs/template-principles.md` before changing the template itself** (skills, commands, agents, hooks or setup steps). It says who the kit is for and how it should behave. Not needed for normal product work.
+- **Not sure which skill or command fits a request? Check `.claude/SKILLS.md`.** It maps common questions to the right command.
+- **When a prototype is ready for review, offer to fill in a brief** from `docs/prototypes/template-prototype-brief.md`. Draft it from the code, then ask the user to confirm anything marked faked or still open.
 
 ## Lessons Learned
 
