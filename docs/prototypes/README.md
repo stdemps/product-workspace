@@ -1,25 +1,23 @@
-# Prototypes & Design Documentation
+# Prototypes
 
-This directory is for storing design prototypes, mockups, and testing plans.
+One short brief per prototype: what it's for, what's real, what's faked, and
+what's still open.
 
-## Structure
+## Start with the template
 
-- **Prototypes:** Design prototypes and mockups
-- **User Testing Plans:** Plans for user testing and validation
-- **Design Decisions:** Documentation of key design decisions
-- **Design System:** Links to design system documentation
+Copy `template-prototype-brief.md`, rename it with today's date, fill it in.
 
-## Best Practices
+Naming: `prototype-2026-09-19-checkout.md`. Date first so the folder sorts itself.
 
-- Include design rationale
-- Document user testing results
-- Link to design files (Figma, etc.)
-- Version control design decisions
-- Include accessibility considerations
+## Why bother
 
-## Example Files
+A prototype that looks finished hides its guesses. The brief is what an
+engineer, or their agent, reads to understand what you made without asking
+you. It is also how you remember next month why you made each choice.
 
-- `prototype-01-feature-name.md`
-- `user-testing-plan-feature.md`
-- `design-decisions-2024.md`
+Write it while you build. Update **Still open** each time you make a guess.
 
+## How this connects to the rest of the workspace
+
+- **Before:** link the PRD from `docs/prds/` and any research from `docs/research/`
+- **After:** **`/preflight`** before the pull request, and attach the brief to it

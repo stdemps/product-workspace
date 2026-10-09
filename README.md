@@ -6,11 +6,25 @@ A comprehensive product development workspace with multi-agent collaboration, qu
 
 ## New here? Start with this
 
-Clone, run `npm install`, then open the project in Claude Code or Cursor and type:
+**1. Let your agent set it up.** Open Claude Code or Cursor in any folder and paste this:
+
+```
+Set up https://github.com/stdemps/product-workspace as a new project for me.
+Ask me which folder to put it in before you create anything, and don't
+overwrite anything already there. Give it a fresh git history, not linked to
+the template. Install what it needs (Node.js 20.9 or newer), run npm install,
+start it with npm run dev, and give me the link to open. Do the technical
+steps yourself and tell me if you need my permission. Finish by telling me
+how to open the new folder in my editor.
+```
+
+**2. Meet your agent.** Open the new folder in Claude Code or Cursor and type:
 
 ```
 /meet-your-agent
 ```
+
+Rather do it by hand? See [Quick Start](#quick-start).
 
 The agent will look around the project, explain back what it thinks you are
 building, interview you about the things the code cannot tell it, and agree with you
@@ -67,7 +81,7 @@ and you can stop after the first step.
 
 1. **Clone this repository:**
    ```bash
-   git clone https://github.com/yourusername/product-workspace.git my-project
+   git clone https://github.com/stdemps/product-workspace.git my-project
    cd my-project
    ```
 

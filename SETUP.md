@@ -30,7 +30,7 @@ the dev server, tests.
 **Option B: Clone Directly**
 
 ```bash
-git clone https://github.com/yourusername/workspace-template.git my-project
+git clone https://github.com/stdemps/product-workspace.git my-project
 cd my-project
 ```
 
