@@ -4,7 +4,7 @@ Capture project context by questioning the user (and optionally pre-filling from
 
 ## Step 1: Optional PRD Pre-fill
 
-If the user provided a PRD path (e.g. "use docs/prds/feature.md" or "@docs/prds/my-prd.md"), read that file first and extract:
+If the user provided a PRD path (e.g. "use docs/prds/feature.md" or "docs/prds/my-prd.md"), read that file first and extract:
 
 - **From section 1 (What are we building?):** Project/feature name, one-line description of what is being built
 - **From section 2 (Why are we building it?):** Problem statement, key pain points, business goals
@@ -14,16 +14,16 @@ Note any domain terms that appear (for Key Terminology). If no PRD path was prov
 
 ## Step 2: Ask Depth Preference
 
-Use the AskQuestion tool (or ask the user directly) to choose depth:
+Ask the user to choose depth:
 
 - **Quick (5–7 questions):** Project name, what it is, 1–2 goals, 1–2 priorities, one philosophy principle. Skip or shorten terminology and personas.
 - **Full (10–15 questions):** Cover all sections below in depth—About, Terminology, Personas, Philosophy, Priorities.
 
-Present these as clear options so the user can pick one.
+Present these as clear options (e.g. 2–4 choices) so the user can pick one.
 
 ## Step 3: Question Flow
 
-Ask questions to fill gaps and add product-level context. Use AskQuestion when possible (with 2–4 options where helpful). Map answers to the project-context structure:
+Ask questions to fill gaps and add product-level context. Ask one question at a time, with 2–4 options where helpful. Map answers to the project-context structure:
 
 ### About
 - Project/product name (if not from PRD)
@@ -83,4 +83,4 @@ Do not add the template "Instructions" or "Replace this file" text—only the se
 
 Tell the user:
 - Project context has been saved to `.cursor/rules/project-context.mdc` with `alwaysApply: true`.
-- They can edit the file anytime or re-run this command (e.g. with a new PRD) to update context.
+- They can edit the file anytime or re-run this command (e.g. `/setup-project-context docs/prds/other-prd.md`) to update context.
