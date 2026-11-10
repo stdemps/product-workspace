@@ -120,6 +120,18 @@ Files reviewed: <n>
 <Ready to raise · Ready after Critical fixes · Needs work> — one line.
 ```
 
+Example of a good finding:
+
+```
+- [Critical] src/components/SettingsSheet.tsx:162 — the close control is a `<div onClick>`.
+  Why it matters: a keyboard user cannot reach or press it, so they are stuck in the sheet.
+  Suggested fix: make it a `<button type="button" aria-label="Close settings">`; keep the same classes.
+```
+
+Example of a bad finding (never write this): "Consider improving accessibility in SettingsSheet."
+
+Show the report in chat. Do not save it to a file unless the user asks.
+
 Every finding needs a `file:line`, a plain-language *why*, and a concrete suggested fix. A finding the user can't understand or act on is noise. If a check came back clean, say so explicitly — silence reads as "skipped".
 
 ## Step 3 — Fix gate
@@ -132,4 +144,14 @@ Then:
 3. Run the project's typecheck/lint if available, so you don't hand back a broken tree.
 4. Summarise what changed, file by file, in plain language — and call out anything you deliberately skipped and why (false positives, fixes that would regress, cosmetics not worth the churn) — so the user can describe their own PR and trust what's in it.
 
-Leave committing, pushing, and opening the PR to the user (or to their `ship`/PR skill). Pre-flight's job ends at a clean, understood diff.
+Leave committing, pushing, and opening the PR to the user. Pre-flight's job ends at a clean, understood diff.
+
+## Never
+
+- **Never edit a file before the fix gate.** The report comes first, then the user chooses.
+- **Never commit, push, or open the PR.**
+- **Never report a finding without a `file:line` you opened**, or a "duplicate" without both locations.
+- **Never suggest a token, class, or component by name alone** — trace what it resolves to first.
+- **Never review files outside the branch's diff**, except to learn the project's design system.
+- **Never say "Ready to raise" while a Critical finding is open.**
+- **Never invent a standard.** If the repo has no design system, say so and skip Check C.
