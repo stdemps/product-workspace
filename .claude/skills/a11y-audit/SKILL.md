@@ -191,6 +191,10 @@ If help mechanisms (human contact details, contact forms, self-help pages, chatb
 
 ## Report Format
 
+Show the report in chat. Save it to a file only if the user asks; then use `docs/A11Y-AUDIT-<TARGET>-<MMM-YYYY>.md`.
+
+State how each result was reached. A contrast ratio is **computed** (you resolved both colours to hex and did the maths) or it is not reported. Anything you could not check from code alone (real focus order, what a screen reader announces) goes under a final **Needs a live check** list, not in the issue counts.
+
 ### Summary
 
 | Category | Issues | Critical | Major | Minor |
@@ -222,6 +226,20 @@ For each issue, document:
 - Expected: [what it should do]
 ```
 
+Example of a good issue:
+
+```
+**[MAJOR] Muted helper text fails contrast in dark theme**
+- WCAG: 1.4.3 Contrast (Minimum)
+- Location: src/components/ui/FormField.tsx:48
+- Element: helper text, `text-muted-foreground` on `bg-card`
+- Impact: low-vision users cannot read field hints in dark mode
+- Current: #6b7280 on #1f2937 = 3.04:1 (computed)
+- Expected: at least 4.5:1 — e.g. #9ca3af on #1f2937 = 5.78:1
+```
+
+Example of a bad issue (never write this): "Some text may have low contrast."
+
 **Severity definitions:**
 - **CRITICAL**: Blocks access entirely for a group of users. Missing keyboard access to core functionality, zero-contrast text, keyboard traps, no pointer alternative for drag-only interactions. WCAG Level A failures.
 - **MAJOR**: Significant difficulty but workaround exists. Poor contrast (fails AA but above 3:1), missing labels on secondary controls, inconsistent focus management, undersized targets without spacing compensation, focus obscured by sticky elements. WCAG Level AA failures.
@@ -240,3 +258,12 @@ Group by priority. For each fix, note the estimated scope (single component, des
 3. ...
 
 Do not apply fixes. The user will decide which to tackle and in what order.
+
+## Never
+
+- **Never edit code.** This skill reports only.
+- **Never report a contrast ratio you did not compute** from resolved hex values, in every theme variant.
+- **Never report an issue without a `file:line` you opened.**
+- **Never claim "Pass" for the whole target** when a dimension was skipped or could not be checked — say "Partial" and list what is unchecked.
+- **Never flag SC 4.1.1 Parsing** — it was removed in WCAG 2.2.
+- **Never pad with generic advice** ("consider screen reader users"). Every issue names an element and who it blocks.
